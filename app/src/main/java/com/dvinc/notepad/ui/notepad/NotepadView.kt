@@ -10,7 +10,6 @@ import com.dvinc.notepad.ui.base.MvpView
 
 interface NotepadView : MvpView {
     fun showEmptyView();
-    fun showSuccessMessage()
     fun showError(message: String)
     fun showNotes(notes: List<Note>)
 }

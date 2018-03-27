@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import butterknife.BindView
 import com.dvinc.notepad.R
 import com.dvinc.notepad.data.Note
@@ -51,12 +52,8 @@ class NotepadFragment : BaseFragment(), NotepadView {
         TODO("not implemented")
     }
 
-    override fun showSuccessMessage() {
-        TODO("not implemented")
-    }
-
     override fun showError(message: String) {
-        TODO("not implemented")
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showNotes(notes: List<Note>) {
