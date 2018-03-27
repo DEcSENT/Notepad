@@ -6,12 +6,13 @@
 package com.dvinc.notepad.ui.base
 
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
-open class BasePresenter<in T : MvpView> {
+open class BasePresenter<T : MvpView> {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private var view: T? = null
+    var view: T? = null
 
     fun attachView(mvpView: T) {
         view = mvpView
@@ -22,7 +23,7 @@ open class BasePresenter<in T : MvpView> {
         compositeDisposable.clear()
     }
 
-    fun addSubscription(disposable: CompositeDisposable) {
+    fun addSubscription(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
 }
