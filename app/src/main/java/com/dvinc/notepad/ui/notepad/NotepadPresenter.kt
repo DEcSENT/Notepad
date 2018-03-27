@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.ui.notepad
 
-import com.dvinc.notepad.data.NotesRepository
+import com.dvinc.notepad.data.repository.NotesRepository
 import com.dvinc.notepad.ui.base.BasePresenter
 
 class NotepadPresenter : BasePresenter<NotepadView>() {

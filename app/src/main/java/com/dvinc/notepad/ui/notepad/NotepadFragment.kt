@@ -13,7 +13,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import butterknife.BindView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.data.Note
+import com.dvinc.notepad.data.database.dao.Note
 import com.dvinc.notepad.ui.base.BaseFragment
 
 class NotepadFragment : BaseFragment(), NotepadView {

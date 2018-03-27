@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.data.Note
+import com.dvinc.notepad.data.database.dao.Note
 
 class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 

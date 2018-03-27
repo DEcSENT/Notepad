@@ -3,8 +3,9 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data
+package com.dvinc.notepad.data.repository
 
+import com.dvinc.notepad.data.database.dao.Note
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,8 +20,8 @@ class NotesRepository {
 
     private fun createNotes(): List<Note> {
         val notes = ArrayList<Note>()
-        notes.add(Note("Note 1", "Well, Kotlin isn't looks so good...", System.currentTimeMillis()))
-        notes.add(Note("Note 2", "But maybe sometimes i will learn it...", System.currentTimeMillis()))
+        notes.add(Note(0, "Note 1", "Well, Kotlin isn't looks so good...", System.currentTimeMillis()))
+        notes.add(Note(1, "Note 2", "But maybe sometimes i will learn it...", System.currentTimeMillis()))
 
         return notes
     }
