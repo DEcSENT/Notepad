@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.database.entity
+package com.dvinc.notepad.data.database.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.dvinc.notepad.data.database.dao.Note
+import com.dvinc.notepad.data.database.entity.Note
 
 @Dao
 interface NoteDao {

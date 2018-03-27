@@ -14,7 +14,7 @@ import android.widget.Toast
 import butterknife.BindView
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
-import com.dvinc.notepad.data.database.dao.Note
+import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.ui.base.BaseFragment
 import javax.inject.Inject
 

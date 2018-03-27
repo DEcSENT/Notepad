@@ -6,7 +6,7 @@
 package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
-import com.dvinc.notepad.data.database.dao.Note
+import com.dvinc.notepad.data.database.entity.Note
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
