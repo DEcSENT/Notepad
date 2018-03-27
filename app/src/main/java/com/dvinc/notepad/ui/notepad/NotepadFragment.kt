@@ -10,6 +10,10 @@ import com.dvinc.notepad.ui.base.BaseFragment
 
 class NotepadFragment : BaseFragment() {
 
+    companion object {
+        val TAG = "NotepadFragment"
+    }
+
     override fun getFragmentLayoutId(): Int {
         return R.layout.fragment_notepad
     }
