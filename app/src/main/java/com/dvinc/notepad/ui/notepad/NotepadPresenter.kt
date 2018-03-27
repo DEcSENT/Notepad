@@ -7,10 +7,11 @@ package com.dvinc.notepad.ui.notepad
 
 import com.dvinc.notepad.data.repository.NotesRepository
 import com.dvinc.notepad.ui.base.BasePresenter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotepadPresenter : BasePresenter<NotepadView>() {
-
-    private val notesRepository: NotesRepository = NotesRepository()
+@Singleton
+class NotepadPresenter @Inject constructor(private val notesRepository: NotesRepository) : BasePresenter<NotepadView>() {
 
     fun initNotes() {
         addSubscription(notesRepository.getNotes().subscribe(
