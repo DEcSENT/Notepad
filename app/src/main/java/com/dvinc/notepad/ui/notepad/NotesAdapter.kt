@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.data.Note
+import com.dvinc.notepad.data.database.entity.Note
 
 class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
@@ -23,7 +23,7 @@ class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAd
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.item_note, parent, false)
-        return ViewHolder(v);
+        return ViewHolder(v)
     }
 
     override fun getItemCount(): Int {

@@ -12,15 +12,17 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import butterknife.BindView
+import com.dvinc.notepad.App
 import com.dvinc.notepad.R
-import com.dvinc.notepad.data.Note
+import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.ui.base.BaseFragment
+import javax.inject.Inject
 
 class NotepadFragment : BaseFragment(), NotepadView {
 
     @BindView(R.id.rv_notepad) lateinit var rvNotes: RecyclerView
 
-    private var notePadPresenter: NotepadPresenter? = null
+    @Inject lateinit var notePadPresenter: NotepadPresenter
 
     companion object {
         val TAG = "NotepadFragment"
@@ -30,18 +32,18 @@ class NotepadFragment : BaseFragment(), NotepadView {
         super.onViewCreated(view, savedInstanceState)
         rvNotes.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
-        notePadPresenter = NotepadPresenter()
+        (context.applicationContext as App).appComponent.inject(this)
     }
 
     override fun onResume() {
         super.onResume()
-        notePadPresenter?.attachView(this)
-        notePadPresenter?.initNotes()
+        notePadPresenter.attachView(this)
+        notePadPresenter.initNotes()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        notePadPresenter?.detachView()
+        notePadPresenter.detachView()
     }
 
     override fun getFragmentLayoutId(): Int {
