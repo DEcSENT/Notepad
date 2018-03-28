@@ -12,10 +12,12 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import butterknife.BindView
+import butterknife.OnClick
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
 import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.ui.base.BaseFragment
+import com.dvinc.notepad.ui.newnote.NewNoteFragment
 import javax.inject.Inject
 
 class NotepadFragment : BaseFragment(), NotepadView {
@@ -61,5 +63,11 @@ class NotepadFragment : BaseFragment(), NotepadView {
     override fun showNotes(notes: List<Note>) {
         val adapter = NotesAdapter(notes)
         rvNotes.adapter = adapter
+    }
+
+    @OnClick(R.id.fab_new_note)
+    fun onFabClick(view: View) {
+        val newNote = NewNoteFragment()
+        newNote.show(fragmentManager, NewNoteFragment.TAG)
     }
 }
