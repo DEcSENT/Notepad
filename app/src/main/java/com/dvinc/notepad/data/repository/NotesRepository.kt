@@ -7,6 +7,7 @@ package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.database.entity.Note
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,14 +18,26 @@ import javax.inject.Singleton
 class NotesRepository @Inject constructor(private val database: NotepadDatabase) {
 
     fun getNotes(): Single<List<Note>> {
-        return Single.fromCallable{createNotes()}
+        return Single.fromCallable { database.notesDao().getNotes() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    private fun createNotes(): List<Note> {
-        database.notesDao().insertNote(Note(0, "Note 1", "Well, Kotlin isn't looks so good...", System.currentTimeMillis()))
-        database.notesDao().insertNote(Note(0, "Note 2", "But maybe sometimes i will learn it...", System.currentTimeMillis()))
-        return database.notesDao().getNotes()
+    fun addNote(note: Note): Completable {
+        return Completable.fromAction { database.notesDao().addNote(note) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun deleteNote(noteId: Int): Completable {
+        return Completable.fromAction { database.notesDao().deleteNote(noteId) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getNoteById(noteId: Int): Single<Note> {
+        return Single.fromCallable { database.notesDao().getNoteById(noteId) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }

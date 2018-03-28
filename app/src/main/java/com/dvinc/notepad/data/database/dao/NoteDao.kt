@@ -14,8 +14,14 @@ import com.dvinc.notepad.data.database.entity.Note
 interface NoteDao {
 
     @Insert
-    fun insertNote(note: Note)
+    fun addNote(note: Note)
 
     @Query("SELECT * FROM Notes")
     fun getNotes(): List<Note>
+
+    @Query("DELETE FROM Notes WHERE id = :noteId")
+    fun deleteNote(noteId: Int)
+
+    @Query("SELECT * FROM Notes WHERE id = :noteId")
+    fun getNoteById(noteId: Int): Note
 }
