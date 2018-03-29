@@ -11,11 +11,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.EditText
+import android.widget.Toast
+import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import butterknife.Unbinder
+import com.dvinc.notepad.App
 import com.dvinc.notepad.R
+import javax.inject.Inject
 
-class NewNoteFragment : DialogFragment() {
+class NewNoteFragment : DialogFragment(), NewNoteView {
+
+    @BindView(R.id.et_new_note_name) lateinit var noteName: EditText
+    @BindView(R.id.et_new_note_content) lateinit var noteContent: EditText
+
+    @Inject lateinit var presenter: NewNotePresenter
 
     private lateinit var unbinder: Unbinder
 
@@ -35,6 +46,35 @@ class NewNoteFragment : DialogFragment() {
         //Hide title
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
+        (context.applicationContext as App).appComponent.inject(this)
+
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.attachView(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.detachView()
+    }
+
+    override fun closeScreen() {
+        dismiss()
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    @OnClick(R.id.bt_new_note_add)
+    fun onAddButtonClick(view: View) {
+        val name = noteName.text.toString()
+        val content = noteContent.text.toString()
+        val currentTime = System.currentTimeMillis()
+
+        presenter.saveNewNote(name, content, currentTime)
     }
 }
