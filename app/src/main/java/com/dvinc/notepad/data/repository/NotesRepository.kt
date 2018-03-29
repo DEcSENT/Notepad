@@ -10,6 +10,7 @@ import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.di.qualifiers.IoScheduler
 import com.dvinc.notepad.di.qualifiers.UiScheduler
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import javax.inject.Inject
@@ -21,8 +22,8 @@ class NotesRepository @Inject constructor(
         private @IoScheduler val ioScheduler: Scheduler,
         private @UiScheduler val uiScheduler: Scheduler) {
 
-    fun getNotes(): Single<List<Note>> {
-        return Single.fromCallable { database.notesDao().getNotes() }
+    fun getNotes(): Flowable<List<Note>> {
+        return database.notesDao().getNotes()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
     }
