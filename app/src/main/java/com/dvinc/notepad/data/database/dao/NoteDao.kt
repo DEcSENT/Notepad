@@ -9,6 +9,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.dvinc.notepad.data.database.entity.Note
+import io.reactivex.Flowable
 
 @Dao
 interface NoteDao {
@@ -17,7 +18,7 @@ interface NoteDao {
     fun addNote(note: Note)
 
     @Query("SELECT * FROM Notes")
-    fun getNotes(): List<Note>
+    fun getNotes(): Flowable<List<Note>>
 
     @Query("DELETE FROM Notes WHERE id = :noteId")
     fun deleteNote(noteId: Int)
