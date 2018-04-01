@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
 
     <EditText
         android:id="@+id/et_new_note_name"
@@ -12,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/new_note_name"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:labelFor="@id/et_new_note_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,19 +27,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/new_note_content"
-        android:inputType="text"
+        android:inputType="textMultiLine|textCapSentences"
         android:labelFor="@+id/et_new_note_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_new_note_name" />
 
     <Button
+        android:background="@drawable/bg_add_note_button"
         android:id="@+id/bt_new_note_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:text="@string/add_note"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_new_note_content" />
