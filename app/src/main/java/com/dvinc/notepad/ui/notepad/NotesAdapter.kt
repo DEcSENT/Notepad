@@ -12,13 +12,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.dvinc.notepad.R
 import com.dvinc.notepad.data.database.entity.Note
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+
+    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyy HH:mm", Locale.getDefault())
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.name?.text = notes[position].name
         holder?.content?.text = notes[position].content
-        holder?.updateTime?.text = notes[position].updateTime.toString()
+        holder?.updateTime?.text = dateFormat.format(notes[position].updateTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
