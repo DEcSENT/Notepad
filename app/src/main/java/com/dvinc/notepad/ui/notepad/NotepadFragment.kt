@@ -20,10 +20,11 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.newnote.NewNoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.dvinc.notepad.ui.base.RecyclerViewEmpty
 
 class NotepadFragment : BaseFragment(), NotepadView {
 
-    @BindView(R.id.rv_notepad) lateinit var rvNotes: RecyclerView
+    @BindView(R.id.rv_notepad) lateinit var rvNotes: RecyclerViewEmpty
 
     @Inject lateinit var notePadPresenter: NotepadPresenter
 
@@ -33,10 +34,11 @@ class NotepadFragment : BaseFragment(), NotepadView {
         val TAG = "NotepadFragment"
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvNotes.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         rvNotes.adapter = notesAdapter
+        rvNotes.setEmptyView(view.findViewById(R.id.empty_view))
 
         (context.applicationContext as App).appComponent.inject(this)
 
