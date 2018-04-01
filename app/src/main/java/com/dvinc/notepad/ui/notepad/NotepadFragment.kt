@@ -58,10 +58,6 @@ class NotepadFragment : BaseFragment(), NotepadView {
         return R.layout.fragment_notepad
     }
 
-    override fun showEmptyView() {
-        TODO("not implemented")
-    }
-
     override fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
