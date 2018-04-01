@@ -18,4 +18,11 @@ class NotepadPresenter @Inject constructor(private val notesRepository: NotesRep
                 { notes -> view?.showNotes(notes) },
                 { error -> view?.showError(error.localizedMessage) }))
     }
+
+    fun deleteNote(noteId: Int) {
+        addSubscription(notesRepository.deleteNote(noteId).subscribe(
+                { view?.showDeletedNoteMessage() },
+                { error -> view?.showError(error.localizedMessage) }
+        ))
+    }
 }

@@ -19,12 +19,15 @@ import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.newnote.NewNoteFragment
 import javax.inject.Inject
+import android.support.v7.widget.helper.ItemTouchHelper
 
 class NotepadFragment : BaseFragment(), NotepadView {
 
     @BindView(R.id.rv_notepad) lateinit var rvNotes: RecyclerView
 
     @Inject lateinit var notePadPresenter: NotepadPresenter
+
+    private val notesAdapter: NotesAdapter = NotesAdapter()
 
     companion object {
         val TAG = "NotepadFragment"
@@ -33,8 +36,11 @@ class NotepadFragment : BaseFragment(), NotepadView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvNotes.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        rvNotes.adapter = notesAdapter
 
         (context.applicationContext as App).appComponent.inject(this)
+
+        setupSwipeToDelete()
     }
 
     override fun onResume() {
@@ -61,13 +67,37 @@ class NotepadFragment : BaseFragment(), NotepadView {
     }
 
     override fun showNotes(notes: List<Note>) {
-        val adapter = NotesAdapter(notes)
-        rvNotes.adapter = adapter
+        notesAdapter.setNotes(notes)
+    }
+
+    override fun showDeletedNoteMessage() {
+        Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
 
     @OnClick(R.id.fab_new_note)
     fun onFabClick(view: View) {
         val newNote = NewNoteFragment()
         newNote.show(fragmentManager, NewNoteFragment.TAG)
+    }
+
+    private fun setupSwipeToDelete() {
+        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                val position = viewHolder.adapterPosition
+                val deletedNoteId = notesAdapter.getNote(position)?.id?.toInt()
+                if (deletedNoteId != null) {
+                    notePadPresenter.deleteNote(deletedNoteId)
+                    notesAdapter.notifyItemChanged(position)
+                }
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(rvNotes)
     }
 }

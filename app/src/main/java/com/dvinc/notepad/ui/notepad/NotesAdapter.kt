@@ -15,14 +15,16 @@ import com.dvinc.notepad.data.database.entity.Note
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+
+    private var notes: List<Note>? = null
 
     private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyy HH:mm", Locale.getDefault())
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.name?.text = notes[position].name
-        holder?.content?.text = notes[position].content
-        holder?.updateTime?.text = dateFormat.format(notes[position].updateTime)
+        holder?.name?.text = notes?.get(position)?.name
+        holder?.content?.text = notes?.get(position)?.content
+        holder?.updateTime?.text = dateFormat.format(notes?.get(position)?.updateTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -31,7 +33,7 @@ class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAd
     }
 
     override fun getItemCount(): Int {
-        return notes.size
+        return notes?.size ?: 0
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,5 +44,8 @@ class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAd
 
     fun setNotes(notes : List<Note>) {
         this.notes = notes
+        notifyDataSetChanged()
     }
+
+    fun getNote(position: Int) = notes?.get(position)
 }

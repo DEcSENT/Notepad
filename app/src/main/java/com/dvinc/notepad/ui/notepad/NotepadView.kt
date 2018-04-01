@@ -12,4 +12,5 @@ interface NotepadView : MvpView {
     fun showEmptyView()
     fun showError(message: String)
     fun showNotes(notes: List<Note>)
+    fun showDeletedNoteMessage()
 }
