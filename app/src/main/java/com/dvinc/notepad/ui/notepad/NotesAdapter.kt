@@ -21,14 +21,14 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyy HH:mm", Locale.getDefault())
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.name?.text = notes?.get(position)?.name
-        holder?.content?.text = notes?.get(position)?.content
-        holder?.updateTime?.text = dateFormat.format(notes?.get(position)?.updateTime)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.name?.text = notes?.get(position)?.name
+        holder.content?.text = notes?.get(position)?.content
+        holder.updateTime?.text = dateFormat.format(notes?.get(position)?.updateTime)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent?.context).inflate(R.layout.item_note, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
         return ViewHolder(v)
     }
 

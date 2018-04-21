@@ -40,7 +40,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
         rvNotes.adapter = notesAdapter
         rvNotes.setEmptyView(view.findViewById(R.id.empty_view))
 
-        (context.applicationContext as App).appComponent.inject(this)
+        (context?.applicationContext as App).appComponent.inject(this)
 
         setupSwipeToDelete()
     }

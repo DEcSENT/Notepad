@@ -46,7 +46,7 @@ class NewNoteFragment : DialogFragment(), NewNoteView {
         //Hide title
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
-        (context.applicationContext as App).appComponent.inject(this)
+        (context?.applicationContext as App).appComponent.inject(this)
 
         return view
     }
