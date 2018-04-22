@@ -58,9 +58,6 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
 
-    compile 'com.jakewharton:butterknife:8.8.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'com.google.dagger:dagger:2.11'
     kapt 'com.google.dagger:dagger-compiler:2.11'
 }

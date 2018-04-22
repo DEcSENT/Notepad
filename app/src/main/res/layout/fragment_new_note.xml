@@ -35,7 +35,7 @@
 
     <Button
         android:background="@drawable/bg_add_note_button"
-        android:id="@+id/btNewNoteAdd"
+        android:id="@+id/btAddNewNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

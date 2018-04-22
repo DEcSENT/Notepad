@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.OnClick
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
 import com.dvinc.notepad.data.database.entity.Note
@@ -20,11 +18,9 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.newnote.NewNoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.dvinc.notepad.ui.base.RecyclerViewEmpty
+import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView {
-
-    @BindView(R.id.rvNotepad) lateinit var rvNotes: RecyclerViewEmpty
 
     @Inject lateinit var notePadPresenter: NotepadPresenter
 
@@ -36,12 +32,13 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvNotes.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        rvNotes.adapter = notesAdapter
-        rvNotes.setEmptyView(view.findViewById(R.id.empty_view))
+        rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        rvNotepad.adapter = notesAdapter
+        rvNotepad.setEmptyView(view.findViewById(R.id.empty_view))
 
         (context?.applicationContext as App).appComponent.inject(this)
 
+        setupFabButton()
         setupSwipeToDelete()
     }
 
@@ -72,10 +69,11 @@ class NotepadFragment : BaseFragment(), NotepadView {
         Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
 
-    @OnClick(R.id.fabNewNote)
-    fun onFabClick(view: View) {
-        val newNote = NewNoteFragment()
-        newNote.show(fragmentManager, NewNoteFragment.TAG)
+    private fun setupFabButton() {
+        fabNewNote.setOnClickListener {
+            val newNote = NewNoteFragment()
+            newNote.show(fragmentManager, NewNoteFragment.TAG)
+        }
     }
 
     private fun setupSwipeToDelete() {
@@ -96,6 +94,6 @@ class NotepadFragment : BaseFragment(), NotepadView {
         }
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(rvNotes)
+        itemTouchHelper.attachToRecyclerView(rvNotepad)
     }
 }
