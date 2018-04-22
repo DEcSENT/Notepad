@@ -13,9 +13,9 @@ import javax.inject.Inject
 class NewNotePresenter @Inject constructor(private val repository: NotesRepository) : BasePresenter<NewNoteView>() {
 
     fun saveNewNote(name: String, content: String, time: Long) {
-        repository.addNote(Note(0, name, content, time)).subscribe(
+        addSubscription(repository.addNote(Note(0, name, content, time)).subscribe(
                 { view?.closeScreen() },
                 { view?.showError(it.localizedMessage) }
-        )
+        ))
     }
 }
