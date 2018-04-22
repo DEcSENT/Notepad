@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.notepad
+package com.dvinc.notepad.ui.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

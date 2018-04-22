@@ -18,6 +18,7 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.newnote.NewNoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.dvinc.notepad.ui.adapters.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView {
