@@ -5,6 +5,7 @@
 
 package com.dvinc.notepad.ui.notepad
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -70,6 +71,21 @@ class NotepadFragment : BaseFragment(), NotepadView {
         Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
 
+    override fun showDeleteNoteDialog(notePosition: Int, swipedItemPosition: Int) {
+        val dialogBuilder = AlertDialog.Builder(context)
+        dialogBuilder.setTitle(R.string.dialog_delete_note_header)
+                .setPositiveButton(R.string.ok) { _, _ ->
+                    notePadPresenter.deleteNote(notePosition);
+                }
+                .setNegativeButton(R.string.no, { dialog, _ ->
+                    notesAdapter.notifyItemChanged(swipedItemPosition)
+                    dialog.cancel()
+                })
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
     private fun setupFabButton() {
         fabNewNote.setOnClickListener {
             val newNote = NewNoteFragment()
@@ -86,11 +102,8 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                val deletedNoteId = notesAdapter.getNote(position)?.id?.toInt()
-                if (deletedNoteId != null) {
-                    notePadPresenter.deleteNote(deletedNoteId)
-                    notesAdapter.notifyItemChanged(position)
-                }
+                val swipedNoteId = notesAdapter.getNote(position)?.id?.toInt()
+                if (swipedNoteId != null) notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
             }
         }
 

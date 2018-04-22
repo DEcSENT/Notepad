@@ -12,4 +12,5 @@ interface NotepadView : MvpView {
     fun showError(message: String)
     fun showNotes(notes: List<Note>)
     fun showDeletedNoteMessage()
+    fun showDeleteNoteDialog(notePosition: Int, swipedItemPosition: Int)
 }

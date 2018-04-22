@@ -11,7 +11,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotepadPresenter @Inject constructor(private val notesRepository: NotesRepository) : BasePresenter<NotepadView>() {
+class NotepadPresenter
+@Inject constructor(
+        private val notesRepository: NotesRepository
+) : BasePresenter<NotepadView>() {
 
     fun initNotes() {
         addSubscription(notesRepository.getNotes().subscribe(
@@ -24,5 +27,9 @@ class NotepadPresenter @Inject constructor(private val notesRepository: NotesRep
                 { view?.showDeletedNoteMessage() },
                 { error -> view?.showError(error.localizedMessage) }
         ))
+    }
+
+    fun onNoteSwiped(swipedNoteId: Int, swipedItemPosition: Int) {
+        view?.showDeleteNoteDialog(swipedNoteId, swipedItemPosition)
     }
 }
