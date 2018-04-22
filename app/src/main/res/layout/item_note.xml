@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_note_name"
+            android:id="@+id/tvNoteName"
             style="@style/item_note_header_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             tools:text="Note 1" />
 
         <TextView
-            android:id="@+id/tv_note_content"
+            android:id="@+id/tvNoteContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -36,19 +36,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_note_name"
+            app:layout_constraintTop_toBottomOf="@+id/tvNoteName"
             tools:text="Finally i try Kotlin..." />
 
         <TextView
-            android:id="@+id/tv_note_updated_time"
+            android:id="@+id/tvNoteUpdatedTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_note_name"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNoteName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_note_name"
+            app:layout_constraintTop_toTopOf="@+id/tvNoteName"
             tools:text="21.12.12 12:10" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

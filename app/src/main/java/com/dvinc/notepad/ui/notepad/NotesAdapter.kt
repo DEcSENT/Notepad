@@ -37,9 +37,9 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById<TextView>(R.id.tv_note_name)
-        val content = itemView.findViewById<TextView>(R.id.tv_note_content)
-        val updateTime = itemView.findViewById<TextView>(R.id.tv_note_updated_time)
+        val name = itemView.findViewById<TextView>(R.id.tvNoteName)
+        val content = itemView.findViewById<TextView>(R.id.tvNoteContent)
+        val updateTime = itemView.findViewById<TextView>(R.id.tvNoteUpdatedTime)
     }
 
     fun setNotes(notes : List<Note>) {

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         fragmentManager?.
                 beginTransaction()?.
-                replace(R.id.fragment_container, fragment, fragmentTag)?.
+                replace(R.id.fragmentContainer, fragment, fragmentTag)?.
                 commit()
     }
 }

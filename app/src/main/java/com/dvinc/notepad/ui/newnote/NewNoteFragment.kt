@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class NewNoteFragment : DialogFragment(), NewNoteView {
 
-    @BindView(R.id.et_new_note_name) lateinit var noteName: EditText
-    @BindView(R.id.et_new_note_content) lateinit var noteContent: EditText
+    @BindView(R.id.etNewNoteName) lateinit var noteName: EditText
+    @BindView(R.id.etNewNoteContent) lateinit var noteContent: EditText
 
     @Inject lateinit var presenter: NewNotePresenter
 

@@ -24,7 +24,7 @@ import com.dvinc.notepad.ui.base.RecyclerViewEmpty
 
 class NotepadFragment : BaseFragment(), NotepadView {
 
-    @BindView(R.id.rv_notepad) lateinit var rvNotes: RecyclerViewEmpty
+    @BindView(R.id.rvNotepad) lateinit var rvNotes: RecyclerViewEmpty
 
     @Inject lateinit var notePadPresenter: NotepadPresenter
 
@@ -72,7 +72,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
         Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
 
-    @OnClick(R.id.fab_new_note)
+    @OnClick(R.id.fabNewNote)
     fun onFabClick(view: View) {
         val newNote = NewNoteFragment()
         newNote.show(fragmentManager, NewNoteFragment.TAG)
