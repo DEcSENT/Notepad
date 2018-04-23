@@ -6,18 +6,15 @@
 package com.dvinc.notepad.ui.newnote
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
+import com.dvinc.notepad.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_new_note.*
 import javax.inject.Inject
 
-class NewNoteFragment : DialogFragment(), NewNoteView {
+class NewNoteFragment : BaseFragment(), NewNoteView {
 
     @Inject lateinit var presenter: NewNotePresenter
 
@@ -25,24 +22,12 @@ class NewNoteFragment : DialogFragment(), NewNoteView {
         val TAG = "NewNoteFragment"
     }
 
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_new_note, container)
-
-        //Hide title
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
-        (context?.applicationContext as App).appComponent.inject(this)
-
-        return view
-    }
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_new_note
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (context?.applicationContext as App).appComponent.inject(this)
 
         setupAddNewNoteButton()
     }
@@ -58,7 +43,8 @@ class NewNoteFragment : DialogFragment(), NewNoteView {
     }
 
     override fun closeScreen() {
-        dismiss()
+        //TODO: Think about good navigation
+        activity?.onBackPressed()
     }
 
     override fun showError(message: String) {
