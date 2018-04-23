@@ -19,6 +19,7 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.newnote.NewNoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.dvinc.notepad.MainActivity
 import com.dvinc.notepad.ui.adapters.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
@@ -31,6 +32,8 @@ class NotepadFragment : BaseFragment(), NotepadView {
     companion object {
         val TAG = "NotepadFragment"
     }
+
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,10 +56,6 @@ class NotepadFragment : BaseFragment(), NotepadView {
     override fun onDestroyView() {
         super.onDestroyView()
         notePadPresenter.detachView()
-    }
-
-    override fun getFragmentLayoutId(): Int {
-        return R.layout.fragment_notepad
     }
 
     override fun showError(message: String) {
@@ -89,7 +88,8 @@ class NotepadFragment : BaseFragment(), NotepadView {
     private fun setupFabButton() {
         fabNewNote.setOnClickListener {
             val newNote = NewNoteFragment()
-            newNote.show(fragmentManager, NewNoteFragment.TAG)
+            //TODO: Think about good navigation
+            (activity as MainActivity).showAndAddFragment(newNote, TAG)
         }
     }
 
