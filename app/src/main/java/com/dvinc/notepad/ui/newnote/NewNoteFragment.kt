@@ -11,24 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.EditText
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.Unbinder
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
+import kotlinx.android.synthetic.main.fragment_new_note.*
 import javax.inject.Inject
 
 class NewNoteFragment : DialogFragment(), NewNoteView {
 
-    @BindView(R.id.et_new_note_name) lateinit var noteName: EditText
-    @BindView(R.id.et_new_note_content) lateinit var noteContent: EditText
-
     @Inject lateinit var presenter: NewNotePresenter
-
-    private lateinit var unbinder: Unbinder
 
     companion object {
         val TAG = "NewNoteFragment"
@@ -41,14 +32,19 @@ class NewNoteFragment : DialogFragment(), NewNoteView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_note, container)
-        unbinder = ButterKnife.bind(this, view)
 
         //Hide title
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
-        (context.applicationContext as App).appComponent.inject(this)
+        (context?.applicationContext as App).appComponent.inject(this)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupAddNewNoteButton()
     }
 
     override fun onResume() {
@@ -69,12 +65,12 @@ class NewNoteFragment : DialogFragment(), NewNoteView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    @OnClick(R.id.bt_new_note_add)
-    fun onAddButtonClick(view: View) {
-        val name = noteName.text.toString()
-        val content = noteContent.text.toString()
-        val currentTime = System.currentTimeMillis()
-
-        presenter.saveNewNote(name, content, currentTime)
+    private fun setupAddNewNoteButton() {
+        btAddNewNote.setOnClickListener {
+            val name = etNewNoteName.text.toString()
+            val content = etNewNoteContent.text.toString()
+            val currentTime = System.currentTimeMillis()
+            presenter.saveNewNote(name, content, currentTime)
+        }
     }
 }

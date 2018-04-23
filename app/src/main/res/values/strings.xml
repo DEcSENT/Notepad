@@ -3,4 +3,10 @@
     <string name="new_note_name">Note name</string>
     <string name="new_note_content">Enter content…</string>
     <string name="add_note">Add</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="empty_view">Start with adding new note</string>
+    <string name="empty_view_ic_description">Empty view icon</string>
+    <string name="dialog_delete_note_header">Delete note?</string>
+    <string name="ok">YES</string>
+    <string name="no">NO</string>
 </resources>

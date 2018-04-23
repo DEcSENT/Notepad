@@ -6,7 +6,7 @@
     android:background="@android:color/white">
 
     <EditText
-        android:id="@+id/et_new_note_name"
+        android:id="@+id/etNewNoteName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -14,13 +14,13 @@
         android:layout_marginTop="8dp"
         android:hint="@string/new_note_name"
         android:inputType="textCapSentences"
-        android:labelFor="@id/et_new_note_name"
+        android:labelFor="@id/etNewNoteName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_new_note_content"
+        android:id="@+id/etNewNoteContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -28,14 +28,14 @@
         android:layout_marginTop="8dp"
         android:hint="@string/new_note_content"
         android:inputType="textMultiLine|textCapSentences"
-        android:labelFor="@+id/et_new_note_content"
+        android:labelFor="@+id/etNewNoteContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_note_name" />
+        app:layout_constraintTop_toBottomOf="@+id/etNewNoteName" />
 
     <Button
         android:background="@drawable/bg_add_note_button"
-        android:id="@+id/bt_new_note_add"
+        android:id="@+id/btAddNewNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -47,6 +47,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_note_content" />
+        app:layout_constraintTop_toBottomOf="@+id/etNewNoteContent" />
 
 </android.support.constraint.ConstraintLayout>
