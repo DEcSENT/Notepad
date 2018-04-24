@@ -17,7 +17,7 @@ interface NoteDao {
     @Insert
     fun addNote(note: Note)
 
-    @Query("SELECT * FROM Notes")
+    @Query("SELECT * FROM Notes ORDER BY id DESC")
     fun getNotes(): Flowable<List<Note>>
 
     @Query("DELETE FROM Notes WHERE id = :noteId")
