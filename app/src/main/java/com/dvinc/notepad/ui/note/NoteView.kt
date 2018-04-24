@@ -3,11 +3,11 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.newnote
+package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.ui.base.MvpView
 
-interface NewNoteView : MvpView {
+interface NoteView : MvpView {
     fun closeScreen()
     fun showError(message: String)
 }

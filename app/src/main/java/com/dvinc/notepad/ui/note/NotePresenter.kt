@@ -3,14 +3,14 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.newnote
+package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.data.repository.NotesRepository
 import com.dvinc.notepad.ui.base.BasePresenter
 import javax.inject.Inject
 
-class NewNotePresenter @Inject constructor(private val repository: NotesRepository) : BasePresenter<NewNoteView>() {
+class NotePresenter @Inject constructor(private val repository: NotesRepository) : BasePresenter<NoteView>() {
 
     fun saveNewNote(name: String, content: String, time: Long) {
         addSubscription(repository.addNote(Note(0, name, content, time)).subscribe(
