@@ -3,7 +3,7 @@ package com.dvinc.notepad
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.dvinc.notepad.ui.newnote.NewNoteFragment
+import com.dvinc.notepad.ui.note.NoteFragment
 import com.dvinc.notepad.ui.notepad.NotepadFragment
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         fragmentManager?.
                 beginTransaction()?.
                 replace(R.id.fragmentContainer, fragment, fragmentTag)?.
-                addToBackStack(NewNoteFragment.TAG)?.
+                addToBackStack(NoteFragment.TAG)?.
                 commit()
     }
 }

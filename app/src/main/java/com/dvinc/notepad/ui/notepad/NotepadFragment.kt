@@ -16,7 +16,7 @@ import com.dvinc.notepad.App
 import com.dvinc.notepad.R
 import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.ui.base.BaseFragment
-import com.dvinc.notepad.ui.newnote.NewNoteFragment
+import com.dvinc.notepad.ui.note.NoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.dvinc.notepad.MainActivity
@@ -87,9 +87,9 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     private fun setupFabButton() {
         fabNewNote.setOnClickListener {
-            val newNote = NewNoteFragment()
+            val noteFragment = NoteFragment()
             //TODO: Think about good navigation
-            (activity as MainActivity).showAndAddFragment(newNote, TAG)
+            (activity as MainActivity).showAndAddFragment(noteFragment, TAG)
         }
     }
 

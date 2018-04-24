@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.newnote
+package com.dvinc.notepad.ui.note
 
 import android.os.Bundle
 import android.view.View
@@ -14,12 +14,12 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_new_note.*
 import javax.inject.Inject
 
-class NewNoteFragment : BaseFragment(), NewNoteView {
+class NoteFragment : BaseFragment(), NoteView {
 
-    @Inject lateinit var presenter: NewNotePresenter
+    @Inject lateinit var presenter: NotePresenter
 
     companion object {
-        val TAG = "NewNoteFragment"
+        val TAG = "NoteFragment"
     }
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_new_note
