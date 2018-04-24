@@ -91,6 +91,16 @@ class NotepadFragment : BaseFragment(), NotepadView {
             //TODO: Think about good navigation
             (activity as MainActivity).showAndAddFragment(noteFragment, TAG)
         }
+
+        //Hiding fab by scroll
+        rvNotepad.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                if (dy > 0)
+                    fabNewNote.hide()
+                else if (dy < 0)
+                    fabNewNote.show()
+            }
+        })
     }
 
     private fun setupSwipeToDelete() {
