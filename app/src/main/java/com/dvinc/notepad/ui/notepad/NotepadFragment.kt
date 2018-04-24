@@ -19,7 +19,7 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.note.NoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.dvinc.notepad.MainActivity
+import com.dvinc.notepad.ui.main.MainActivity
 import com.dvinc.notepad.ui.adapters.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
