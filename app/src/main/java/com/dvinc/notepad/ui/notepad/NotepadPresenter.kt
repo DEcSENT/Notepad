@@ -18,7 +18,10 @@ class NotepadPresenter
 
     fun initNotes() {
         addSubscription(notesRepository.getNotes().subscribe(
-                { notes -> view?.showNotes(notes) },
+                { notes ->
+                    view?.setEmptyView(notes.isEmpty())
+                    view?.showNotes(notes)
+                },
                 { error -> view?.showError(error.localizedMessage) }))
     }
 
