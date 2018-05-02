@@ -1,8 +1,9 @@
-package com.dvinc.notepad
+package com.dvinc.notepad.ui.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.dvinc.notepad.R
 import com.dvinc.notepad.ui.note.NoteFragment
 import com.dvinc.notepad.ui.notepad.NotepadFragment
 

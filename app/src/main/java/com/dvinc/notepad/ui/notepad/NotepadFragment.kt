@@ -14,12 +14,13 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
-import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.ui.base.BaseFragment
 import com.dvinc.notepad.ui.note.NoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.dvinc.notepad.MainActivity
+import com.dvinc.notepad.common.visible
+import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.ui.main.MainActivity
 import com.dvinc.notepad.ui.adapters.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
@@ -39,7 +40,6 @@ class NotepadFragment : BaseFragment(), NotepadView {
         super.onViewCreated(view, savedInstanceState)
         rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         rvNotepad.adapter = notesAdapter
-        rvNotepad.setEmptyView(view.findViewById(R.id.empty_view))
 
         (context?.applicationContext as App).appComponent.inject(this)
 
@@ -66,6 +66,8 @@ class NotepadFragment : BaseFragment(), NotepadView {
         notesAdapter.setNotes(notes)
     }
 
+    override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
+
     override fun showDeletedNoteMessage() {
         Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
@@ -74,7 +76,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
         val dialogBuilder = AlertDialog.Builder(context)
         dialogBuilder.setTitle(R.string.dialog_delete_note_header)
                 .setPositiveButton(R.string.ok) { _, _ ->
-                    notePadPresenter.deleteNote(notePosition);
+                    notePadPresenter.deleteNote(notePosition)
                 }
                 .setNegativeButton(R.string.no, { dialog, _ ->
                     notesAdapter.notifyItemChanged(swipedItemPosition)
@@ -91,6 +93,16 @@ class NotepadFragment : BaseFragment(), NotepadView {
             //TODO: Think about good navigation
             (activity as MainActivity).showAndAddFragment(noteFragment, TAG)
         }
+
+        //Hiding fab by scroll
+        rvNotepad.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                if (dy > 0)
+                    fabNewNote.hide()
+                else if (dy < 0)
+                    fabNewNote.show()
+            }
+        })
     }
 
     private fun setupSwipeToDelete() {

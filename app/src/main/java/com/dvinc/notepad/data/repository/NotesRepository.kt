@@ -6,43 +6,30 @@
 package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
-import com.dvinc.notepad.data.database.entity.Note
-import com.dvinc.notepad.di.qualifiers.IoScheduler
-import com.dvinc.notepad.di.qualifiers.UiScheduler
+import com.dvinc.notepad.data.database.entity.NoteEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NotesRepository @Inject constructor(
-        private val database: NotepadDatabase,
-        private @IoScheduler val ioScheduler: Scheduler,
-        private @UiScheduler val uiScheduler: Scheduler) {
+        private val database: NotepadDatabase) {
 
-    fun getNotes(): Flowable<List<Note>> {
+    fun getNotes(): Flowable<List<NoteEntity>> {
         return database.notesDao().getNotes()
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
     }
 
-    fun addNote(note: Note): Completable {
+    fun addNote(note: NoteEntity): Completable {
         return Completable.fromAction { database.notesDao().addNote(note) }
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
     }
 
     fun deleteNote(noteId: Int): Completable {
         return Completable.fromAction { database.notesDao().deleteNote(noteId) }
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
     }
 
-    fun getNoteById(noteId: Int): Single<Note> {
+    fun getNoteById(noteId: Int): Single<NoteEntity> {
         return Single.fromCallable { database.notesDao().getNoteById(noteId) }
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
     }
 }
