@@ -47,4 +47,3 @@ class NotesInteractorImpl
                 .map { entity -> mapper.mapNote(entity) }
     }
 }
- 

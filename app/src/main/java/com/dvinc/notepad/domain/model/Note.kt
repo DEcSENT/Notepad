@@ -11,4 +11,3 @@ data class Note(var id: Long,
                 val name: String,
                 val content: String,
                 val updateTime: String)
- 
