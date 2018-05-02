@@ -7,7 +7,7 @@
 
 package com.dvinc.notepad.domain.interactors
 
-import com.dvinc.notepad.data.database.entity.Note
+import com.dvinc.notepad.domain.model.Note
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -16,7 +16,7 @@ interface NotesInteractor {
 
     fun getNotes(): Flowable<List<Note>>
 
-    fun addNote(note: Note): Completable
+    fun addNote(name: String, content: String, time: Long): Completable
 
     fun deleteNote(noteId: Int): Completable
 

@@ -10,7 +10,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "Notes")
-data class Note(
+data class NoteEntity(
         @PrimaryKey(autoGenerate = true) var id: Long,
         @ColumnInfo(name = "name") val name: String,
         @ColumnInfo(name = "content") val content: String,

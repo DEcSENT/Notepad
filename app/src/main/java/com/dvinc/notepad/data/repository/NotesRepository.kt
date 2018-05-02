@@ -6,7 +6,7 @@
 package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
-import com.dvinc.notepad.data.database.entity.Note
+import com.dvinc.notepad.data.database.entity.NoteEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -17,11 +17,11 @@ import javax.inject.Singleton
 class NotesRepository @Inject constructor(
         private val database: NotepadDatabase) {
 
-    fun getNotes(): Flowable<List<Note>> {
+    fun getNotes(): Flowable<List<NoteEntity>> {
         return database.notesDao().getNotes()
     }
 
-    fun addNote(note: Note): Completable {
+    fun addNote(note: NoteEntity): Completable {
         return Completable.fromAction { database.notesDao().addNote(note) }
     }
 
@@ -29,7 +29,7 @@ class NotesRepository @Inject constructor(
         return Completable.fromAction { database.notesDao().deleteNote(noteId) }
     }
 
-    fun getNoteById(noteId: Int): Single<Note> {
+    fun getNoteById(noteId: Int): Single<NoteEntity> {
         return Single.fromCallable { database.notesDao().getNoteById(noteId) }
     }
 }

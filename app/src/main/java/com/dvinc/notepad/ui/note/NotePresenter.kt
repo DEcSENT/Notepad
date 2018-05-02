@@ -5,7 +5,6 @@
 
 package com.dvinc.notepad.ui.note
 
-import com.dvinc.notepad.data.database.entity.Note
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.ui.base.BasePresenter
 import javax.inject.Inject
@@ -16,7 +15,7 @@ class NotePresenter
 ) : BasePresenter<NoteView>() {
 
     fun saveNewNote(name: String, content: String, time: Long) {
-        addSubscription(notesInteractor.addNote(Note(0, name, content, time)).subscribe(
+        addSubscription(notesInteractor.addNote(name, content, time).subscribe(
                 { view?.closeScreen() },
                 { view?.showError(it.localizedMessage) }
         ))

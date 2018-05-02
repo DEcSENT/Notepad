@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.ui.notepad
 
-import com.dvinc.notepad.data.database.entity.Note
+import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.ui.base.MvpView
 
 interface NotepadView : MvpView {
