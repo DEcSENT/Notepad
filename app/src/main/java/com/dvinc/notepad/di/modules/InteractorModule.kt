@@ -7,6 +7,7 @@
 
 package com.dvinc.notepad.di.modules
 
+import com.dvinc.notepad.common.rxschedulers.RxSchedulers
 import com.dvinc.notepad.data.repository.NotesRepository
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.domain.interactors.NotesInteractorImpl
@@ -18,7 +19,8 @@ class InteractorModule {
 
     @Provides
     fun provideNotesInteractor(
-            repository: NotesRepository
-    ): NotesInteractor = NotesInteractorImpl(repository)
+            repository: NotesRepository,
+            rxSchedulers: RxSchedulers
+    ): NotesInteractor = NotesInteractorImpl(repository, rxSchedulers)
 }
  
