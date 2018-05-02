@@ -19,8 +19,8 @@ import javax.inject.Singleton
 @Singleton
 class NotesRepository @Inject constructor(
         private val database: NotepadDatabase,
-        private @IoScheduler val ioScheduler: Scheduler,
-        private @UiScheduler val uiScheduler: Scheduler) {
+        @IoScheduler private val ioScheduler: Scheduler,
+        @UiScheduler private val uiScheduler: Scheduler) {
 
     fun getNotes(): Flowable<List<Note>> {
         return database.notesDao().getNotes()
