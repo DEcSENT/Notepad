@@ -13,7 +13,7 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_new_note.*
+import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 
 class NoteFragment : BaseFragment(), NoteView {
@@ -24,7 +24,7 @@ class NoteFragment : BaseFragment(), NoteView {
         val TAG = "NoteFragment"
     }
 
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_new_note
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +52,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
     override fun showMarkers(markers: List<NoteMarker>) {
         val adapter = NoteMarkersAdapter(context, R.layout.item_note_marker, markers)
-        spNewNoteType.adapter = adapter
+        spNoteType.adapter = adapter
     }
 
     override fun showError(message: String) {
@@ -60,9 +60,9 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     private fun setupAddNewNoteButton() {
-        btAddNewNote.setOnClickListener {
-            val name = etNewNoteName.text.toString()
-            val content = etNewNoteContent.text.toString()
+        btAddNote.setOnClickListener {
+            val name = etNoteName.text.toString()
+            val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
             presenter.saveNewNote(name, content, currentTime)
         }
