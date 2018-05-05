@@ -7,6 +7,7 @@ package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.database.entity.NoteEntity
+import com.dvinc.notepad.domain.model.NoteMarker
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -31,5 +32,24 @@ class NotesRepository @Inject constructor(
 
     fun getNoteById(noteId: Int): Single<NoteEntity> {
         return Single.fromCallable { database.notesDao().getNoteById(noteId) }
+    }
+
+    fun getNoteMarkers(): Single<List<NoteMarker>> {
+        return Single.just(obtainMarkers())
+    }
+
+    private fun obtainMarkers(): List<NoteMarker> {
+        val noteMarkers = ArrayList<NoteMarker>()
+        val rawMarkers = mapOf<String, String>(
+                "Default" to "FFFFFFFF",
+                "Critical" to "FFFF0000",
+                "ToDo" to "FF0000FF",
+                "Idea" to "FF00FF00")
+
+        for (marker in rawMarkers) {
+            noteMarkers.add(NoteMarker(marker.key, marker.value))
+        }
+
+        return noteMarkers
     }
 }

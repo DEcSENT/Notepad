@@ -12,6 +12,7 @@ import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.data.repository.NotesRepository
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.NoteMarker
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -45,5 +46,9 @@ class NotesInteractorImpl
         return repository.getNoteById(noteId)
                 .compose(rxSchedulers.getIoToMainTransformerSingle())
                 .map { entity -> mapper.mapNote(entity) }
+    }
+
+    override fun getMarkers(): Single<List<NoteMarker>> {
+        return repository.getNoteMarkers()
     }
 }

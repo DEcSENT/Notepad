@@ -19,6 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spNewNoteType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNewNoteName">
+    </Spinner>
+
     <EditText
         android:id="@+id/etNewNoteContent"
         android:layout_width="match_parent"
@@ -31,7 +43,7 @@
         android:labelFor="@+id/etNewNoteContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNewNoteName" />
+        app:layout_constraintTop_toBottomOf="@+id/spNewNoteType" />
 
     <Button
         android:id="@+id/btAddNewNote"

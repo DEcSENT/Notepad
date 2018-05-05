@@ -8,6 +8,7 @@
 package com.dvinc.notepad.domain.interactors
 
 import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.NoteMarker
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -21,5 +22,7 @@ interface NotesInteractor {
     fun deleteNote(noteId: Int): Completable
 
     fun getNoteById(noteId: Int): Single<Note>
+
+    fun getMarkers(): Single<List<NoteMarker>>
 }
  

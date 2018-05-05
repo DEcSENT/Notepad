@@ -14,6 +14,13 @@ class NotePresenter
         private val notesInteractor: NotesInteractor
 ) : BasePresenter<NoteView>() {
 
+    fun initView(){
+        addSubscription(notesInteractor.getMarkers().subscribe(
+                { view?.showMarkers(it) },
+                { view?.showError(it.localizedMessage) }
+        ))
+    }
+
     fun saveNewNote(name: String, content: String, time: Long) {
         addSubscription(notesInteractor.addNote(name, content, time).subscribe(
                 { view?.closeScreen() },
