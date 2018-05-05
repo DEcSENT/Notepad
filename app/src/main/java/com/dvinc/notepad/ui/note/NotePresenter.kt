@@ -21,8 +21,13 @@ class NotePresenter
         ))
     }
 
-    fun saveNewNote(name: String, content: String, time: Long) {
-        addSubscription(notesInteractor.addNote(name, content, time).subscribe(
+    fun saveNewNote(
+            name: String,
+            content: String,
+            time: Long,
+            markerColor: String,
+            markerText: String) {
+        addSubscription(notesInteractor.addNote(name, content, time, markerColor, markerText).subscribe(
                 { view?.closeScreen() },
                 { view?.showError(it.localizedMessage) }
         ))

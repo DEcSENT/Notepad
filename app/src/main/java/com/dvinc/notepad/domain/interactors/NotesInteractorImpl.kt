@@ -32,8 +32,13 @@ class NotesInteractorImpl
                 .map { entities -> mapper.mapNotes(entities) }
     }
 
-    override fun addNote(name: String, content: String, time: Long): Completable {
-        return repository.addNote(NoteEntity(0, name, content, time))
+    override fun addNote(
+            name: String,
+            content: String,
+            time: Long,
+            markerColor: String,
+            markerText: String): Completable {
+        return repository.addNote(NoteEntity(0, name, content, time, markerColor, markerText))
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 

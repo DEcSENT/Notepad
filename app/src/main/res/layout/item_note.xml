@@ -28,11 +28,11 @@
             tools:text="Note 1" />
 
         <ImageView
-            android:id="@+id/imNoteTypeIcon"
+            android:id="@+id/ivNoteTypeIcon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_note_type"
+            android:src="@drawable/ic_note_type"
             android:contentDescription="@string/note_item_icon_description"
             app:layout_constraintBottom_toBottomOf="@+id/tvNoteTypeText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/tvNoteName"
-            app:layout_constraintEnd_toStartOf="@+id/imNoteTypeIcon"
+            app:layout_constraintEnd_toStartOf="@+id/ivNoteTypeIcon"
             app:layout_constraintTop_toTopOf="@+id/tvNoteName"
             tools:text="ToDo" />
 

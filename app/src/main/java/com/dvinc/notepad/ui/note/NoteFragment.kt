@@ -64,7 +64,9 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            presenter.saveNewNote(name, content, currentTime)
+            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
+            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+            presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
         }
     }
 }

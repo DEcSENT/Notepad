@@ -21,7 +21,13 @@ class NoteMapper {
     fun mapNotes(notesEntities: List<NoteEntity>) = notesEntities.map { note -> mapNote(note) }
 
     fun mapNote(entity: NoteEntity): Note {
-        return Note(entity.id, entity.name, entity.content, mapNoteTimeToString(entity.updateTime))
+        return Note(
+                entity.id,
+                entity.name,
+                entity.content,
+                mapNoteTimeToString(entity.updateTime),
+                entity.markerColor,
+                entity.markerText)
     }
 
     private fun mapNoteTimeToString(time: Long): String {
