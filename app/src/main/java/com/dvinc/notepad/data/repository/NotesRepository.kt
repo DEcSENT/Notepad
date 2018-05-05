@@ -41,10 +41,10 @@ class NotesRepository @Inject constructor(
     private fun obtainMarkers(): List<NoteMarker> {
         val noteMarkers = ArrayList<NoteMarker>()
         val rawMarkers = mapOf<String, String>(
-                "Default" to "FFFFFFFF",
-                "Critical" to "FFFF0000",
-                "ToDo" to "FF0000FF",
-                "Idea" to "FF00FF00")
+                "Default" to "#FFFFFFFF",
+                "Critical" to "#FFFF0000",
+                "ToDo" to "#FF0000FF",
+                "Idea" to "#FF00FF00")
 
         for (marker in rawMarkers) {
             noteMarkers.add(NoteMarker(marker.key, marker.value))

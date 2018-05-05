@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.NoteMarker
+import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_new_note.*
 import javax.inject.Inject
@@ -50,7 +51,8 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun showMarkers(markers: List<NoteMarker>) {
-        //TODO: init spinner
+        val adapter = NoteMarkersAdapter(context, R.layout.item_note_marker, markers)
+        spNewNoteType.adapter = adapter
     }
 
     override fun showError(message: String) {
