@@ -14,4 +14,6 @@ data class NoteEntity(
         @PrimaryKey(autoGenerate = true) var id: Long,
         @ColumnInfo(name = "name") val name: String,
         @ColumnInfo(name = "content") val content: String,
-        @ColumnInfo(name = "update_time") val updateTime: Long)
+        @ColumnInfo(name = "update_time") val updateTime: Long,
+        @ColumnInfo(name = "markerColor") val markerColor: String,
+        @ColumnInfo(name = "markerText") val markerText: String)

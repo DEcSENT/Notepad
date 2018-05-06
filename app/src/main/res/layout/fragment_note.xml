@@ -6,7 +6,7 @@
     android:background="@android:color/white">
 
     <EditText
-        android:id="@+id/etNewNoteName"
+        android:id="@+id/etNoteName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -14,13 +14,25 @@
         android:layout_marginTop="8dp"
         android:hint="@string/new_note_name"
         android:inputType="textCapSentences"
-        android:labelFor="@id/etNewNoteName"
+        android:labelFor="@id/etNoteName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spNoteType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNoteName">
+    </Spinner>
+
     <EditText
-        android:id="@+id/etNewNoteContent"
+        android:id="@+id/etNoteContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -28,13 +40,13 @@
         android:layout_marginTop="8dp"
         android:hint="@string/new_note_content"
         android:inputType="textMultiLine|textCapSentences"
-        android:labelFor="@+id/etNewNoteContent"
+        android:labelFor="@+id/etNoteContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNewNoteName" />
+        app:layout_constraintTop_toBottomOf="@+id/spNoteType" />
 
     <Button
-        android:id="@+id/btAddNewNote"
+        android:id="@+id/btAddNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

@@ -10,8 +10,10 @@ import android.view.View
 import android.widget.Toast
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
+import com.dvinc.notepad.domain.model.NoteMarker
+import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_new_note.*
+import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 
 class NoteFragment : BaseFragment(), NoteView {
@@ -22,7 +24,7 @@ class NoteFragment : BaseFragment(), NoteView {
         val TAG = "NoteFragment"
     }
 
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_new_note
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,6 +37,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
+        presenter.initView()
     }
 
     override fun onPause() {
@@ -47,16 +50,23 @@ class NoteFragment : BaseFragment(), NoteView {
         activity?.onBackPressed()
     }
 
+    override fun showMarkers(markers: List<NoteMarker>) {
+        val adapter = NoteMarkersAdapter(context, R.layout.item_note_marker, markers)
+        spNoteType.adapter = adapter
+    }
+
     override fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     private fun setupAddNewNoteButton() {
-        btAddNewNote.setOnClickListener {
-            val name = etNewNoteName.text.toString()
-            val content = etNewNoteContent.text.toString()
+        btAddNote.setOnClickListener {
+            val name = etNoteName.text.toString()
+            val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            presenter.saveNewNote(name, content, currentTime)
+            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
+            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+            presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
         }
     }
 }

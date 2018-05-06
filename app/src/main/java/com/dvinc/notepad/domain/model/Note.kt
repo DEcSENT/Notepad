@@ -10,4 +10,6 @@ package com.dvinc.notepad.domain.model
 data class Note(var id: Long,
                 val name: String,
                 val content: String,
-                val updateTime: String)
+                val updateTime: String,
+                val markerColor: String,
+                val markerText: String)

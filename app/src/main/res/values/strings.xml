@@ -9,4 +9,5 @@
     <string name="dialog_delete_note_header">Delete note?</string>
     <string name="ok">YES</string>
     <string name="no">NO</string>
+    <string name="note_item_icon_description">Note type icon</string>
 </resources>
