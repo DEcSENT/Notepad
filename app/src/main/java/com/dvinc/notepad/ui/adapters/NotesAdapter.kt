@@ -19,14 +19,18 @@ import com.dvinc.notepad.domain.model.Note
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     private var notes: List<Note>? = null
+    private var noteClickListener: (noteId: Long) -> Unit = {}
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name?.text = notes?.get(position)?.name
-        holder.content?.text = notes?.get(position)?.content
-        holder.updateTime?.text = notes?.get(position)?.updateTime
+        val note = notes?.get(position)
+        holder.name?.text = note?.name
+        holder.content?.text = note?.content
+        holder.updateTime?.text = note?.updateTime
         holder.markerIcon?.drawable?.mutate()?.
-                setColorFilter(Color.parseColor(notes?.get(position)?.markerColor), PorterDuff.Mode.MULTIPLY)
-        holder.markerText?.text = notes?.get(position)?.markerText
+                setColorFilter(Color.parseColor(note?.markerColor), PorterDuff.Mode.MULTIPLY)
+        holder.markerText?.text = note?.markerText
+
+        holder.itemView.setOnClickListener { noteClickListener.invoke(note?.id ?: 0) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,4 +56,8 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     }
 
     fun getNote(position: Int) = notes?.get(position)
+
+    fun setOnNoteClickListener(listener: (noteId: Long) -> Unit) {
+        noteClickListener = listener
+    }
 }

@@ -45,6 +45,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
         setupFabButton()
         setupSwipeToDelete()
+        setupNotesAdapterClickListener()
     }
 
     override fun onResume() {
@@ -121,5 +122,12 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(rvNotepad)
+    }
+
+    private fun setupNotesAdapterClickListener() {
+        notesAdapter.setOnNoteClickListener {
+            //TODO: handle note click
+            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+        }
     }
 }
