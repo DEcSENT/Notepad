@@ -58,17 +58,17 @@ class NotepadFragment : BaseFragment(), NotepadView {
         notePadPresenter.detachView()
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
     override fun showNotes(notes: List<Note>) {
         notesAdapter.setNotes(notes)
     }
 
     override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
 
-    override fun showDeletedNoteMessage() {
+    override fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showMessage(message: String) {
         Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
 

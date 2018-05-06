@@ -6,13 +6,12 @@
 package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.domain.model.NoteMarker
+import com.dvinc.notepad.ui.base.MessageView
 import com.dvinc.notepad.ui.base.MvpView
 
-interface NoteView : MvpView {
+interface NoteView : MvpView, MessageView {
 
     fun closeScreen()
-
-    fun showError(message: String)
 
     fun showMarkers(markers: List<NoteMarker>)
 }

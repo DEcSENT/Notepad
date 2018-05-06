@@ -55,8 +55,12 @@ class NoteFragment : BaseFragment(), NoteView {
         spNoteType.adapter = adapter
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    override fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showMessage(message: String) {
+        //Temporarily empty
     }
 
     private fun setupAddNewNoteButton() {
