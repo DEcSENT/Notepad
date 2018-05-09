@@ -126,8 +126,8 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     private fun setupNotesAdapterClickListener() {
         notesAdapter.setOnNoteClickListener {
-            //TODO: handle note click
-            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+            //TODO: Think about good navigation
+            (activity as MainActivity).showAndAddFragment(NoteFragment.newInstance(it), NoteFragment.TAG)
         }
     }
 }

@@ -20,9 +20,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
     @Inject lateinit var presenter: NotePresenter
 
-    companion object {
-        val TAG = "NoteFragment"
-    }
+    private val noteId: Long? = arguments?.getLong(NOTE_ID, 0)
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
@@ -71,6 +69,19 @@ class NoteFragment : BaseFragment(), NoteView {
             val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
             val markerText = (spNoteType.selectedItem as NoteMarker).markerName
             presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+        }
+    }
+
+    companion object {
+        const val TAG = "NoteFragment"
+        const val NOTE_ID = "noteId"
+
+        fun newInstance(noteId: Long): NoteFragment {
+            return NoteFragment().apply {
+                arguments?.apply {
+                    putLong(NOTE_ID, noteId)
+                }
+            }
         }
     }
 }
