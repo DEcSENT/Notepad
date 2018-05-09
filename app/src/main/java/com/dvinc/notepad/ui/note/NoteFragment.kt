@@ -20,7 +20,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
     @Inject lateinit var presenter: NotePresenter
 
-    private val noteId: Long? = arguments?.getLong(NOTE_ID, 0)
+    private val noteId: Long? get() = arguments?.getLong(NOTE_ID, 0)
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
@@ -29,7 +29,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
         (context?.applicationContext as App).appComponent.inject(this)
 
-        setupAddNewNoteButton()
+        setupAddNoteButton()
     }
 
     override fun onResume() {
@@ -61,14 +61,19 @@ class NoteFragment : BaseFragment(), NoteView {
         //Temporarily empty
     }
 
-    private fun setupAddNewNoteButton() {
+    private fun setupAddNoteButton() {
         btAddNote.setOnClickListener {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
             val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
             val markerText = (spNoteType.selectedItem as NoteMarker).markerName
-            presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+
+            if (noteId != null && noteId != 0L) {
+                presenter.editNote(noteId ?: 0, name, content, currentTime, markerColor, markerText)
+            } else {
+                presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+            }
         }
     }
 
@@ -78,7 +83,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
         fun newInstance(noteId: Long): NoteFragment {
             return NoteFragment().apply {
-                arguments?.apply {
+                arguments = Bundle().apply {
                     putLong(NOTE_ID, noteId)
                 }
             }
