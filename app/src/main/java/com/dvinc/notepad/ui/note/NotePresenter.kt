@@ -14,11 +14,12 @@ class NotePresenter
         private val notesInteractor: NotesInteractor
 ) : BasePresenter<NoteView>() {
 
-    fun initView(){
-        addSubscription(notesInteractor.getMarkers().subscribe(
-                { view?.showMarkers(it) },
-                { view?.showError(it.localizedMessage) }
-        ))
+    fun initView() {
+        addSubscription(notesInteractor.getMarkers()
+                .subscribe(
+                        { view?.showMarkers(it) },
+                        { view?.showError(it.localizedMessage) }
+                ))
     }
 
     fun saveNewNote(
@@ -27,9 +28,24 @@ class NotePresenter
             time: Long,
             markerColor: String,
             markerText: String) {
-        addSubscription(notesInteractor.addNote(name, content, time, markerColor, markerText).subscribe(
-                { view?.closeScreen() },
-                { view?.showError(it.localizedMessage) }
-        ))
+        addSubscription(notesInteractor.addNote(name, content, time, markerColor, markerText)
+                .subscribe(
+                        { view?.closeScreen() },
+                        { view?.showError(it.localizedMessage) }
+                ))
+    }
+
+    fun editNote(
+            noteId: Long,
+            name: String,
+            content: String,
+            time: Long,
+            markerColor: String,
+            markerText: String) {
+        addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerColor, markerText)
+                .subscribe(
+                        { view?.closeScreen() },
+                        { view?.showError(it.localizedMessage) }
+                ))
     }
 }

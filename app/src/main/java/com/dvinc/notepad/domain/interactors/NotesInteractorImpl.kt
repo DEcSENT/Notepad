@@ -37,8 +37,21 @@ class NotesInteractorImpl
             content: String,
             time: Long,
             markerColor: String,
-            markerText: String): Completable {
+            markerText: String
+    ): Completable {
         return repository.addNote(NoteEntity(0, name, content, time, markerColor, markerText))
+                .compose(rxSchedulers.getIoToMainTransformerCompletable())
+    }
+
+    override fun updateNote(
+            noteId: Long,
+            name: String,
+            content: String,
+            time: Long,
+            markerColor: String,
+            markerText: String
+    ): Completable {
+        return repository.updateNote(NoteEntity(noteId, name, content, time, markerColor, markerText))
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 

@@ -30,6 +30,7 @@ class NoteFragment : BaseFragment(), NoteView {
         (context?.applicationContext as App).appComponent.inject(this)
 
         setupAddNoteButton()
+        setupEditNoteButton()
     }
 
     override fun onResume() {
@@ -69,10 +70,20 @@ class NoteFragment : BaseFragment(), NoteView {
             val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
             val markerText = (spNoteType.selectedItem as NoteMarker).markerName
 
-            if (noteId != null && noteId != 0L) {
-                presenter.editNote(noteId ?: 0, name, content, currentTime, markerColor, markerText)
-            } else {
-                presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+            presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+        }
+    }
+
+    private fun setupEditNoteButton() {
+        btEditNote.setOnClickListener {
+            val name = etNoteName.text.toString()
+            val content = etNoteContent.text.toString()
+            val currentTime = System.currentTimeMillis()
+            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
+            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+
+            noteId?.let {
+                presenter.editNote(it, name, content, currentTime, markerColor, markerText)
             }
         }
     }

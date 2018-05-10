@@ -8,6 +8,7 @@ package com.dvinc.notepad.data.database.dao
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import io.reactivex.Flowable
 
@@ -25,4 +26,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM Notes WHERE id = :noteId")
     fun getNoteById(noteId: Int): NoteEntity
+
+    @Update
+    fun updateNote(note: NoteEntity)
 }
