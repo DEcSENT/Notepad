@@ -36,7 +36,7 @@ interface NotesInteractor {
 
     fun deleteNote(noteId: Int): Completable
 
-    fun getNoteById(noteId: Int): Single<Note>
+    fun getNoteById(noteId: Long): Single<Note>
 
     fun getMarkers(): Single<List<NoteMarker>>
 }

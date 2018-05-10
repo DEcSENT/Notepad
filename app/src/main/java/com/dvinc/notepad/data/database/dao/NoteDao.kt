@@ -25,7 +25,7 @@ interface NoteDao {
     fun deleteNote(noteId: Int)
 
     @Query("SELECT * FROM Notes WHERE id = :noteId")
-    fun getNoteById(noteId: Int): NoteEntity
+    fun getNoteById(noteId: Long): NoteEntity
 
     @Update
     fun updateNote(note: NoteEntity)

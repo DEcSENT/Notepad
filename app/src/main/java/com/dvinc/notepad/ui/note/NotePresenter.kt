@@ -7,6 +7,7 @@ package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.ui.base.BasePresenter
+import io.reactivex.Single
 import javax.inject.Inject
 
 class NotePresenter
@@ -14,10 +15,23 @@ class NotePresenter
         private val notesInteractor: NotesInteractor
 ) : BasePresenter<NoteView>() {
 
-    fun initView() {
+    fun initView(noteId: Long?) {
         addSubscription(notesInteractor.getMarkers()
+                .doOnSuccess { view?.showMarkers(it) }
+                .flatMap {
+                    Single.just(
+                            when (noteId) {
+                                null -> 0
+                                else -> noteId
+                            })
+                }
+                .filter { noteId != 0L }
+                .flatMapSingle { notesInteractor.getNoteById(it) }
                 .subscribe(
-                        { view?.showMarkers(it) },
+                        {
+                            view?.showNote(it);
+                            view?.setNoteButton(true)
+                        },
                         { view?.showError(it.localizedMessage) }
                 ))
     }

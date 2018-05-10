@@ -60,7 +60,7 @@ class NotesInteractorImpl
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
-    override fun getNoteById(noteId: Int): Single<Note> {
+    override fun getNoteById(noteId: Long): Single<Note> {
         return repository.getNoteById(noteId)
                 .compose(rxSchedulers.getIoToMainTransformerSingle())
                 .map { entity -> mapper.mapNote(entity) }

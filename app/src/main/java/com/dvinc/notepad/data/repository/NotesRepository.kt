@@ -34,7 +34,7 @@ class NotesRepository @Inject constructor(
         return Completable.fromAction { database.notesDao().updateNote(note) }
     }
 
-    fun getNoteById(noteId: Int): Single<NoteEntity> {
+    fun getNoteById(noteId: Long): Single<NoteEntity> {
         return Single.fromCallable { database.notesDao().getNoteById(noteId) }
     }
 
