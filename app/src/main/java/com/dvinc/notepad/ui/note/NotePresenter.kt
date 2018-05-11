@@ -18,19 +18,13 @@ class NotePresenter
     fun initView(noteId: Long?) {
         addSubscription(notesInteractor.getMarkers()
                 .doOnSuccess { view?.showMarkers(it) }
-                .flatMap {
-                    Single.just(
-                            when (noteId) {
-                                null -> 0
-                                else -> noteId
-                            })
-                }
-                .filter { noteId != 0L }
-                .flatMapSingle { notesInteractor.getNoteById(it) }
+                .flatMap { notesInteractor.getNoteById(noteId) }
                 .subscribe(
                         {
-                            view?.showNote(it);
-                            view?.setNoteButton(true)
+                            if (it.id != 0L) {
+                                view?.showNote(it)
+                                view?.setNoteButton(true)
+                            }
                         },
                         { view?.showError(it.localizedMessage) }
                 ))

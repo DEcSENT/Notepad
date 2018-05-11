@@ -60,10 +60,19 @@ class NotesInteractorImpl
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
-    override fun getNoteById(noteId: Long): Single<Note> {
-        return repository.getNoteById(noteId)
-                .compose(rxSchedulers.getIoToMainTransformerSingle())
-                .map { entity -> mapper.mapNote(entity) }
+    override fun getNoteById(noteId: Long?): Single<Note> {
+        /*
+        * Well, this place contain some bad code, need to refactor it later.
+        * The problem is in filtering noteId and null. Rx operator .filter can't handle this.
+        */
+        return if (noteId == null) {
+            //Returning default empty note. Bad place here.
+            Single.just(Note(0, "", "", "", "", ""))
+        } else {
+            repository.getNoteById(noteId)
+                    .compose(rxSchedulers.getIoToMainTransformerSingle())
+                    .map { entity -> mapper.mapNote(entity) }
+        }
     }
 
     override fun getMarkers(): Single<List<NoteMarker>> {
