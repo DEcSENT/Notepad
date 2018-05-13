@@ -25,9 +25,10 @@ class NotepadPresenter
                 { error -> view?.showError(error.localizedMessage) }))
     }
 
+    //TODO: Add message provider
     fun deleteNote(noteId: Int) {
         addSubscription(notesInteractor.deleteNote(noteId).subscribe(
-                { view?.showDeletedNoteMessage() },
+                { view?.showMessage("Note successfully deleted") },
                 { error -> view?.showError(error.localizedMessage) }
         ))
     }

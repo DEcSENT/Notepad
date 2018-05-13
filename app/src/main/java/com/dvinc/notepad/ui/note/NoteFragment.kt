@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.Toast
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.visible
+import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
@@ -20,9 +22,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
     @Inject lateinit var presenter: NotePresenter
 
-    companion object {
-        val TAG = "NoteFragment"
-    }
+    private val noteId: Long? get() = arguments?.getLong(NOTE_ID, 0)
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
@@ -31,13 +31,14 @@ class NoteFragment : BaseFragment(), NoteView {
 
         (context?.applicationContext as App).appComponent.inject(this)
 
-        setupAddNewNoteButton()
+        setupAddNoteButton()
+        setupEditNoteButton()
     }
 
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
-        presenter.initView()
+        presenter.initView(noteId)
     }
 
     override fun onPause() {
@@ -55,18 +56,62 @@ class NoteFragment : BaseFragment(), NoteView {
         spNoteType.adapter = adapter
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    override fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
     }
 
-    private fun setupAddNewNoteButton() {
+    override fun showMessage(message: String) {
+        //Temporarily empty
+    }
+
+    override fun setNoteButton(isEditMode: Boolean) {
+        if (isEditMode) {
+            btAddNote.visible(!isEditMode)
+            btEditNote.visible(isEditMode)
+        }
+    }
+
+    override fun showNote(note: Note) {
+        etNoteName.setText(note.name)
+        etNoteContent.setText(note.content)
+    }
+
+    private fun setupAddNoteButton() {
         btAddNote.setOnClickListener {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
             val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
             val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+
             presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+        }
+    }
+
+    private fun setupEditNoteButton() {
+        btEditNote.setOnClickListener {
+            val name = etNoteName.text.toString()
+            val content = etNoteContent.text.toString()
+            val currentTime = System.currentTimeMillis()
+            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
+            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+
+            noteId?.let {
+                presenter.editNote(it, name, content, currentTime, markerColor, markerText)
+            }
+        }
+    }
+
+    companion object {
+        const val TAG = "NoteFragment"
+        const val NOTE_ID = "noteId"
+
+        fun newInstance(noteId: Long): NoteFragment {
+            return NoteFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(NOTE_ID, noteId)
+                }
+            }
         }
     }
 }

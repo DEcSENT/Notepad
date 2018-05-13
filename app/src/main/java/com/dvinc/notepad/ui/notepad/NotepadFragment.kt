@@ -45,6 +45,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
         setupFabButton()
         setupSwipeToDelete()
+        setupNotesAdapterClickListener()
     }
 
     override fun onResume() {
@@ -58,17 +59,17 @@ class NotepadFragment : BaseFragment(), NotepadView {
         notePadPresenter.detachView()
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
     override fun showNotes(notes: List<Note>) {
         notesAdapter.setNotes(notes)
     }
 
     override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
 
-    override fun showDeletedNoteMessage() {
+    override fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showMessage(message: String) {
         Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
     }
 
@@ -121,5 +122,12 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(rvNotepad)
+    }
+
+    private fun setupNotesAdapterClickListener() {
+        notesAdapter.setOnNoteClickListener {
+            //TODO: Think about good navigation
+            (activity as MainActivity).showAndAddFragment(NoteFragment.newInstance(it), NoteFragment.TAG)
+        }
     }
 }

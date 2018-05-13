@@ -7,6 +7,7 @@ package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.ui.base.BasePresenter
+import io.reactivex.Single
 import javax.inject.Inject
 
 class NotePresenter
@@ -14,11 +15,19 @@ class NotePresenter
         private val notesInteractor: NotesInteractor
 ) : BasePresenter<NoteView>() {
 
-    fun initView(){
-        addSubscription(notesInteractor.getMarkers().subscribe(
-                { view?.showMarkers(it) },
-                { view?.showError(it.localizedMessage) }
-        ))
+    fun initView(noteId: Long?) {
+        addSubscription(notesInteractor.getMarkers()
+                .doOnSuccess { view?.showMarkers(it) }
+                .flatMap { notesInteractor.getNoteById(noteId) }
+                .subscribe(
+                        {
+                            if (it.id != 0L) {
+                                view?.showNote(it)
+                                view?.setNoteButton(true)
+                            }
+                        },
+                        { view?.showError(it.localizedMessage) }
+                ))
     }
 
     fun saveNewNote(
@@ -27,9 +36,24 @@ class NotePresenter
             time: Long,
             markerColor: String,
             markerText: String) {
-        addSubscription(notesInteractor.addNote(name, content, time, markerColor, markerText).subscribe(
-                { view?.closeScreen() },
-                { view?.showError(it.localizedMessage) }
-        ))
+        addSubscription(notesInteractor.addNote(name, content, time, markerColor, markerText)
+                .subscribe(
+                        { view?.closeScreen() },
+                        { view?.showError(it.localizedMessage) }
+                ))
+    }
+
+    fun editNote(
+            noteId: Long,
+            name: String,
+            content: String,
+            time: Long,
+            markerColor: String,
+            markerText: String) {
+        addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerColor, markerText)
+                .subscribe(
+                        { view?.closeScreen() },
+                        { view?.showError(it.localizedMessage) }
+                ))
     }
 }
