@@ -8,6 +8,7 @@ package com.dvinc.notepad.ui.note
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.visible
@@ -47,8 +48,9 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun closeScreen() {
-        //TODO: Think about good navigation
-        activity?.onBackPressed()
+        activity?.let {
+            findNavController(it, R.id.nav_host_fragment).navigateUp()
+        }
     }
 
     override fun showMarkers(markers: List<NoteMarker>) {
@@ -103,15 +105,6 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     companion object {
-        const val TAG = "NoteFragment"
         const val NOTE_ID = "noteId"
-
-        fun newInstance(noteId: Long): NoteFragment {
-            return NoteFragment().apply {
-                arguments = Bundle().apply {
-                    putLong(NOTE_ID, noteId)
-                }
-            }
-        }
     }
 }

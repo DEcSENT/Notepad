@@ -15,13 +15,13 @@ import android.widget.Toast
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
 import com.dvinc.notepad.ui.base.BaseFragment
-import com.dvinc.notepad.ui.note.NoteFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.visible
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.ui.main.MainActivity
 import com.dvinc.notepad.ui.adapters.NotesAdapter
+import com.dvinc.notepad.ui.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView {
@@ -29,10 +29,6 @@ class NotepadFragment : BaseFragment(), NotepadView {
     @Inject lateinit var notePadPresenter: NotepadPresenter
 
     private val notesAdapter: NotesAdapter = NotesAdapter()
-
-    companion object {
-        val TAG = "NotepadFragment"
-    }
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
@@ -90,9 +86,10 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     private fun setupFabButton() {
         fabNewNote.setOnClickListener {
-            val noteFragment = NoteFragment()
-            //TODO: Think about good navigation
-            (activity as MainActivity).showAndAddFragment(noteFragment, TAG)
+            activity?.let {
+                findNavController(it, R.id.nav_host_fragment)
+                        .navigate(R.id.action_notepadFragment_to_noteFragment)
+            }
         }
 
         //Hiding fab by scroll
@@ -126,8 +123,12 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     private fun setupNotesAdapterClickListener() {
         notesAdapter.setOnNoteClickListener {
-            //TODO: Think about good navigation
-            (activity as MainActivity).showAndAddFragment(NoteFragment.newInstance(it), NoteFragment.TAG)
+            val noteId = it
+            activity?.let {
+                val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
+                findNavController(it, R.id.nav_host_fragment)
+                        .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
+            }
         }
     }
 }
