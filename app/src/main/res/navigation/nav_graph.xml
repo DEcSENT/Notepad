@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/notepadFragment">
+
+    <fragment
+        android:id="@+id/notepadFragment"
+        android:name="com.dvinc.notepad.ui.notepad.NotepadFragment"
+        android:label="NotepadFragment">
+        <argument
+            android:name="noteId"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_notepadFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.dvinc.notepad.ui.note.NoteFragment"
+        android:label="NoteFragment" />
+</navigation>
