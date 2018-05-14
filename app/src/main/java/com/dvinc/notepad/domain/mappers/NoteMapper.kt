@@ -18,9 +18,9 @@ class NoteMapper {
     private val sdfWeek = SimpleDateFormat("d MMM", Locale.getDefault())
     private val sdfMonth = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
 
-    fun mapNotes(notesEntities: List<NoteEntity>) = notesEntities.map { note -> mapNote(note) }
+    fun mapEntitiesToNotes(entities: List<NoteEntity>) = entities.map { entity -> mapEntityToNote(entity) }
 
-    fun mapNote(entity: NoteEntity): Note {
+    fun mapEntityToNote(entity: NoteEntity): Note {
         return Note(
                 entity.id,
                 entity.name,
@@ -28,6 +28,15 @@ class NoteMapper {
                 mapNoteTimeToString(entity.updateTime),
                 entity.markerColor,
                 entity.markerText)
+    }
+
+    fun createEntity(name: String,
+                     content: String,
+                     time: Long,
+                     markerColor: String,
+                     markerText: String,
+                     id: Long = 0): NoteEntity {
+        return NoteEntity(id, name, content, time, markerColor, markerText)
     }
 
     private fun mapNoteTimeToString(time: Long): String {
