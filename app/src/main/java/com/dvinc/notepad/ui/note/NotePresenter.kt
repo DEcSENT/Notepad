@@ -7,7 +7,6 @@ package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.ui.base.BasePresenter
-import io.reactivex.Single
 import javax.inject.Inject
 
 class NotePresenter
@@ -16,7 +15,7 @@ class NotePresenter
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
-        addSubscription(notesInteractor.getMarkers()
+        addSubscription(notesInteractor.getNoteMarkers()
                 .doOnSuccess { view?.showMarkers(it) }
                 .flatMap { notesInteractor.getNoteById(noteId) }
                 .subscribe(

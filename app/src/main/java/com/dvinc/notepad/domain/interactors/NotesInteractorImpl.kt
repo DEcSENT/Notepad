@@ -9,7 +9,8 @@ package com.dvinc.notepad.domain.interactors
 
 import com.dvinc.notepad.common.rxschedulers.RxSchedulers
 import com.dvinc.notepad.data.database.entity.NoteEntity
-import com.dvinc.notepad.data.repository.NotesRepository
+import com.dvinc.notepad.data.repositories.MarkersRepository
+import com.dvinc.notepad.data.repositories.NotesRepository
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
@@ -20,14 +21,15 @@ import javax.inject.Inject
 
 class NotesInteractorImpl
 @Inject constructor(
-        private val repository: NotesRepository,
+        private val notesRepository: NotesRepository,
+        private val markersRepository: MarkersRepository,
         private val rxSchedulers: RxSchedulers
 ) : NotesInteractor {
 
     private val mapper: NoteMapper = NoteMapper()
 
     override fun getNotes(): Flowable<List<Note>> {
-        return repository.getNotes()
+        return notesRepository.getNotes()
                 .compose(rxSchedulers.getIoToMainTransformerFlowable())
                 .map { entities -> mapper.mapNotes(entities) }
     }
@@ -39,7 +41,7 @@ class NotesInteractorImpl
             markerColor: String,
             markerText: String
     ): Completable {
-        return repository.addNote(NoteEntity(0, name, content, time, markerColor, markerText))
+        return notesRepository.addNote(NoteEntity(0, name, content, time, markerColor, markerText))
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
@@ -51,12 +53,12 @@ class NotesInteractorImpl
             markerColor: String,
             markerText: String
     ): Completable {
-        return repository.updateNote(NoteEntity(noteId, name, content, time, markerColor, markerText))
+        return notesRepository.updateNote(NoteEntity(noteId, name, content, time, markerColor, markerText))
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
     override fun deleteNote(noteId: Int): Completable {
-        return repository.deleteNote(noteId)
+        return notesRepository.deleteNoteById(noteId)
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
@@ -69,13 +71,13 @@ class NotesInteractorImpl
             //Returning default empty note. Bad place here.
             Single.just(Note(0, "", "", "", "", ""))
         } else {
-            repository.getNoteById(noteId)
+            notesRepository.getNoteById(noteId)
                     .compose(rxSchedulers.getIoToMainTransformerSingle())
                     .map { entity -> mapper.mapNote(entity) }
         }
     }
 
-    override fun getMarkers(): Single<List<NoteMarker>> {
-        return repository.getNoteMarkers()
+    override fun getNoteMarkers(): Single<List<NoteMarker>> {
+        return markersRepository.getMarkers()
     }
 }

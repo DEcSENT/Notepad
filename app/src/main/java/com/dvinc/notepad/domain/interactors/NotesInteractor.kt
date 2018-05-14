@@ -38,6 +38,6 @@ interface NotesInteractor {
 
     fun getNoteById(noteId: Long?): Single<Note>
 
-    fun getMarkers(): Single<List<NoteMarker>>
+    fun getNoteMarkers(): Single<List<NoteMarker>>
 }
  
