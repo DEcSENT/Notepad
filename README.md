@@ -13,7 +13,7 @@ Work in progress.
 - Room
 - Stetho
 - Android Google Support things
-- **Android Navigation**
+- **Navigation Architecture Component**
 
 ### Architecture
 - MVP 
