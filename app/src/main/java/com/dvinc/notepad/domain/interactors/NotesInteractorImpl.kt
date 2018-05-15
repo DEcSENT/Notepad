@@ -67,7 +67,7 @@ class NotesInteractorImpl
         * Well, this place contain some bad code, need to refactor it later.
         * The problem is in filtering id and null. Rx operator .filter can't handle this.
         */
-        return if (id == null) {
+        return if (id == null || id == 0L) {
             //Returning default empty note. Bad place here.
             Single.just(Note(0, "", "", "", "", ""))
         } else {
