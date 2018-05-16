@@ -83,8 +83,8 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
-            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+            val markerColor = (spNoteType.selectedItem as NoteMarker).color
+            val markerText = (spNoteType.selectedItem as NoteMarker).name
 
             presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
         }
@@ -95,8 +95,8 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
-            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+            val markerColor = (spNoteType.selectedItem as NoteMarker).color
+            val markerText = (spNoteType.selectedItem as NoteMarker).name
 
             noteId?.let {
                 presenter.editNote(it, name, content, currentTime, markerColor, markerText)

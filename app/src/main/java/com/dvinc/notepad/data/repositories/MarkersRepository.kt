@@ -23,9 +23,9 @@ class MarkersRepository {
                 "Critical" to "#FFFF0000",
                 "ToDo" to "#FF0000FF",
                 "Idea" to "#FF00FF00")
-
+        var index = 0
         for (marker in rawMarkers) {
-            noteMarkers.add(NoteMarker(marker.key, marker.value))
+            noteMarkers.add(NoteMarker(index++, marker.key, marker.value))
         }
 
         return noteMarkers

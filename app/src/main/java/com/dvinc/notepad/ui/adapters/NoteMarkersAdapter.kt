@@ -42,8 +42,8 @@ class NoteMarkersAdapter(context: Context?, resource: Int, objects: List<NoteMar
         val markerIcon = view.findViewById<ImageView>(R.id.ivMarkerIcon)
         val markerText = view.findViewById<TextView>(R.id.tvMarkerText)
 
-        markerIcon.drawable.mutate().setColorFilter(Color.parseColor(marker.markerColor), PorterDuff.Mode.MULTIPLY)
-        markerText.text = marker.markerName
+        markerIcon.drawable.mutate().setColorFilter(Color.parseColor(marker.color), PorterDuff.Mode.MULTIPLY)
+        markerText.text = marker.name
 
         return view
     }

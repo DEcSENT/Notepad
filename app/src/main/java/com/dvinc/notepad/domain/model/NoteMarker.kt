@@ -7,5 +7,6 @@
 
 package com.dvinc.notepad.domain.model
 
-data class NoteMarker(val markerName: String,
-                      val markerColor: String)
+data class NoteMarker(val id: Int,
+                      val name: String,
+                      val color: String)
