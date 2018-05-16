@@ -21,8 +21,7 @@ interface NotesInteractor {
             name: String,
             content: String,
             time: Long,
-            markerColor: String,
-            markerText: String
+            markerId: Int
     ): Completable
 
     fun updateNote(
@@ -30,8 +29,7 @@ interface NotesInteractor {
             name: String,
             content: String,
             time: Long,
-            markerColor: String,
-            markerText: String
+            markerId: Int
     ): Completable
 
     fun deleteNote(noteId: Int): Completable

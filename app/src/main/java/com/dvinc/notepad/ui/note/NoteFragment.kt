@@ -76,6 +76,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun showNote(note: Note) {
         etNoteName.setText(note.name)
         etNoteContent.setText(note.content)
+        spNoteType.setSelection(note.markerId)
     }
 
     private fun setupAddNoteButton() {
@@ -83,10 +84,9 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerColor = (spNoteType.selectedItem as NoteMarker).color
-            val markerText = (spNoteType.selectedItem as NoteMarker).name
+            val markerId = spNoteType.selectedItemId.toInt()
 
-            presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+            presenter.saveNewNote(name, content, currentTime, markerId)
         }
     }
 
@@ -95,11 +95,10 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerColor = (spNoteType.selectedItem as NoteMarker).color
-            val markerText = (spNoteType.selectedItem as NoteMarker).name
+            val markerId = spNoteType.selectedItemId.toInt()
 
             noteId?.let {
-                presenter.editNote(it, name, content, currentTime, markerColor, markerText)
+                presenter.editNote(it, name, content, currentTime, markerId)
             }
         }
     }

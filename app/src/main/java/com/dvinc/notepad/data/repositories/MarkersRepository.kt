@@ -16,7 +16,7 @@ class MarkersRepository {
         return Single.just(obtainMarkers())
     }
 
-    private fun obtainMarkers(): List<NoteMarker> {
+    fun obtainMarkers(): List<NoteMarker> {
         val noteMarkers = ArrayList<NoteMarker>()
         val rawMarkers = mapOf(
                 "Note" to "#000000",

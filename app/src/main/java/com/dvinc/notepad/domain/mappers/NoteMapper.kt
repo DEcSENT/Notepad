@@ -9,6 +9,7 @@ package com.dvinc.notepad.domain.mappers
 
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.NoteMarker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,25 +19,27 @@ class NoteMapper {
     private val sdfWeek = SimpleDateFormat("d MMM", Locale.getDefault())
     private val sdfMonth = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
 
-    fun mapEntitiesToNotes(entities: List<NoteEntity>) = entities.map { entity -> mapEntityToNote(entity) }
+    fun mapEntitiesToNotes(entities: List<NoteEntity>, markers: List<NoteMarker>)
+            = entities.map { entity -> mapEntityToNote(entity, markers) }
 
-    fun mapEntityToNote(entity: NoteEntity): Note {
+    fun mapEntityToNote(entity: NoteEntity, markers: List<NoteMarker>): Note {
+        val marker = markers[entity.markerId]
         return Note(
                 entity.id,
                 entity.name,
                 entity.content,
                 mapNoteTimeToString(entity.updateTime),
-                entity.markerColor,
-                entity.markerText)
+                entity.markerId,
+                marker.color,
+                marker.name)
     }
 
     fun createEntity(name: String,
                      content: String,
                      time: Long,
-                     markerColor: String,
-                     markerText: String,
+                     markerId: Int,
                      id: Long = 0): NoteEntity {
-        return NoteEntity(id, name, content, time, markerColor, markerText)
+        return NoteEntity(id, name, content, time, markerId)
     }
 
     private fun mapNoteTimeToString(time: Long): String {

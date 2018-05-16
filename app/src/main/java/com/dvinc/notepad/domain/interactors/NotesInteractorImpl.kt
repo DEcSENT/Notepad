@@ -18,6 +18,10 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
+/*
+ * This interactor is under construction.
+ * The main idea is obtain all needed data from different sources and prepare it for presenter and view.
+ */
 class NotesInteractorImpl
 @Inject constructor(
         private val notesRepository: NotesRepository,
@@ -28,19 +32,21 @@ class NotesInteractorImpl
 
     override fun getNotes(): Flowable<List<Note>> {
         return notesRepository.getNotes()
+                .map { entities ->
+                    val markers = markersRepository.obtainMarkers()
+                    noteMapper.mapEntitiesToNotes(entities, markers)
+                }
                 .compose(rxSchedulers.getIoToMainTransformerFlowable())
-                .map { entities -> noteMapper.mapEntitiesToNotes(entities) }
     }
 
     override fun addNote(
             name: String,
             content: String,
             time: Long,
-            markerColor: String,
-            markerText: String
+            markerId: Int
     ): Completable {
         return notesRepository.addNote(
-                noteMapper.createEntity(name, content, time, markerColor, markerText))
+                noteMapper.createEntity(name, content, time, markerId))
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
@@ -49,11 +55,10 @@ class NotesInteractorImpl
             name: String,
             content: String,
             time: Long,
-            markerColor: String,
-            markerText: String
+            markerId: Int
     ): Completable {
         return notesRepository.updateNote(
-                noteMapper.createEntity(name, content, time, markerColor, markerText, noteId))
+                noteMapper.createEntity(name, content, time, markerId, noteId))
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
@@ -69,11 +74,14 @@ class NotesInteractorImpl
         */
         return if (id == null || id == 0L) {
             //Returning default empty note. Bad place here.
-            Single.just(Note(0, "", "", "", "", ""))
+            Single.just(Note(0, "", "", "", 0,"",  ""))
         } else {
             notesRepository.getNoteById(id)
                     .compose(rxSchedulers.getIoToMainTransformerSingle())
-                    .map { entity -> noteMapper.mapEntityToNote(entity) }
+                    .map { entity ->
+                        val markers = markersRepository.obtainMarkers()
+                        noteMapper.mapEntityToNote(entity, markers)
+                    }
         }
     }
 
