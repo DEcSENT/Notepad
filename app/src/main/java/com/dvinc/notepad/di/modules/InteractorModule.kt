@@ -8,9 +8,11 @@
 package com.dvinc.notepad.di.modules
 
 import com.dvinc.notepad.common.rxschedulers.RxSchedulers
-import com.dvinc.notepad.data.repository.NotesRepository
+import com.dvinc.notepad.data.repositories.MarkersRepository
+import com.dvinc.notepad.data.repositories.NotesRepository
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.domain.interactors.NotesInteractorImpl
+import com.dvinc.notepad.domain.mappers.NoteMapper
 import dagger.Module
 import dagger.Provides
 
@@ -19,8 +21,9 @@ class InteractorModule {
 
     @Provides
     fun provideNotesInteractor(
-            repository: NotesRepository,
+            notesRepository: NotesRepository,
+            markersRepository: MarkersRepository,
+            noteMapper: NoteMapper,
             rxSchedulers: RxSchedulers
-    ): NotesInteractor = NotesInteractorImpl(repository, rxSchedulers)
+    ): NotesInteractor = NotesInteractorImpl(notesRepository, markersRepository, noteMapper, rxSchedulers)
 }
- 

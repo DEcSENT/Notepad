@@ -21,11 +21,11 @@ interface NoteDao {
     @Query("SELECT * FROM Notes ORDER BY id DESC")
     fun getNotes(): Flowable<List<NoteEntity>>
 
-    @Query("DELETE FROM Notes WHERE id = :noteId")
-    fun deleteNote(noteId: Int)
+    @Query("DELETE FROM Notes WHERE id = :id")
+    fun deleteNoteById(id: Int)
 
-    @Query("SELECT * FROM Notes WHERE id = :noteId")
-    fun getNoteById(noteId: Long): NoteEntity
+    @Query("SELECT * FROM Notes WHERE id = :id")
+    fun getNoteById(id: Long): NoteEntity
 
     @Update
     fun updateNote(note: NoteEntity)

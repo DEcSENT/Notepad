@@ -1,0 +1,29 @@
+def android_support_version = '27.1.1'
+def constraint_layout_version = '1.1.0'
+def android_arch_component_version = '1.0.0-alpha01'
+def dagger_version = '2.11'
+def rxJava_version = '2.1.3'
+def rxAndroid_version = '2.0.1'
+def android_room_version = '1.0.0'
+def stetho_version = '1.5.0'
+
+ext{
+    support_library = "com.android.support:appcompat-v7:$android_support_version"
+    support_design = "com.android.support:design:$android_support_version"
+    support_card_view = "com.android.support:cardview-v7:$android_support_version"
+    constraint_layout = "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+    arch_component_navigation_fragment = "android.arch.navigation:navigation-fragment:$android_arch_component_version"
+    arch_component_navigation_ui = "android.arch.navigation:navigation-ui:$android_arch_component_version"
+
+    dagger = "com.google.dagger:dagger:$dagger_version"
+    dagger_processor = "com.google.dagger:dagger-compiler:$dagger_version"
+
+    rxjava = "io.reactivex.rxjava2:rxjava:$rxJava_version"
+    rxandroid = "io.reactivex.rxjava2:rxandroid:$rxAndroid_version"
+
+    android_room =  "android.arch.persistence.room:runtime:$android_room_version"
+    android_room_processor =  "android.arch.persistence.room:compiler:$android_room_version"
+    android_room_rx = "android.arch.persistence.room:rxjava2:$android_room_version"
+
+    stetho = "com.facebook.stetho:stetho:$stetho_version"
+}

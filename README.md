@@ -13,7 +13,7 @@ Work in progress.
 - Room
 - Stetho
 - Android Google Support things
-- **Android Navigation**
+- **Navigation Architecture Component**
 
 ### Architecture
 - MVP 
@@ -21,6 +21,7 @@ Work in progress.
 
 ### What next
 - Bug fix and optimization
+- Dagger custom scopes
 - UI and unit tests
 - CI
 - User profile and synchronization with cloud
