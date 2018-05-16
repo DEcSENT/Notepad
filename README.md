@@ -21,6 +21,7 @@ Work in progress.
 
 ### What next
 - Bug fix and optimization
+- Dagger custom scopes
 - UI and unit tests
 - CI
 - User profile and synchronization with cloud
