@@ -17,4 +17,3 @@ class MapperModule {
     @Provides
     fun provideNoteMapper(): NoteMapper = NoteMapper()
 }
- 

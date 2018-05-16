@@ -24,4 +24,3 @@ class DataModule {
     @Provides
     fun providesMarkersRepository(): MarkersRepository = MarkersRepository()
 }
- 

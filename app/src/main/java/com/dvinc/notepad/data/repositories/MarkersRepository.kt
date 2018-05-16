@@ -31,4 +31,3 @@ class MarkersRepository {
         return noteMarkers
     }
 }
- 

@@ -27,4 +27,3 @@ class InteractorModule {
             rxSchedulers: RxSchedulers
     ): NotesInteractor = NotesInteractorImpl(notesRepository, markersRepository, noteMapper, rxSchedulers)
 }
- 

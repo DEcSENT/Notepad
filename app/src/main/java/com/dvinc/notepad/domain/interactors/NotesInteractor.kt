@@ -40,4 +40,3 @@ interface NotesInteractor {
 
     fun getNoteMarkers(): Single<List<NoteMarker>>
 }
- 
