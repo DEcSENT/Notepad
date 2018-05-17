@@ -18,6 +18,8 @@ import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 class NoteFragment : BaseFragment(), NoteView {
 
@@ -48,6 +50,7 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun closeScreen() {
+        hideKeyboard()
         activity?.let {
             findNavController(it, R.id.nav_host_fragment).navigateUp()
         }
@@ -101,6 +104,11 @@ class NoteFragment : BaseFragment(), NoteView {
                 presenter.editNote(it, name, content, currentTime, markerId)
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     companion object {
