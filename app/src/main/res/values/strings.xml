@@ -10,5 +10,8 @@
     <string name="ok">YES</string>
     <string name="no">NO</string>
     <string name="note_item_icon_description">Note type icon</string>
-    <string name="edit_note">Edit</string>
+    <string name="note_toolbar_header">Note</string>
+    <string name="note_edit">Edit</string>
+
+    <string name="notepad_toolbar_header">Notepad</string>
 </resources>

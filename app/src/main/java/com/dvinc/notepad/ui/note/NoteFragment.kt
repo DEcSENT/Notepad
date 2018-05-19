@@ -34,6 +34,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
         (context?.applicationContext as App).appComponent.inject(this)
 
+        setupToolbar()
         setupAddNoteButton()
         setupEditNoteButton()
     }
@@ -80,6 +81,14 @@ class NoteFragment : BaseFragment(), NoteView {
         etNoteName.setText(note.name)
         etNoteContent.setText(note.content)
         spNoteType.setSelection(note.markerId)
+    }
+
+    private fun setupToolbar() {
+        toolbarNote.setNavigationOnClickListener {
+            activity?.let {
+                findNavController(it, R.id.nav_host_fragment).navigateUp()
+            }
+        }
     }
 
     private fun setupAddNoteButton() {
