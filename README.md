@@ -25,3 +25,8 @@ Work in progress.
 - UI and unit tests
 - CI
 - User profile and synchronization with cloud
+
+### Screens
+
+<img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad1.png" width="299" height="602"><img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad4.png" width="299" height="602">
+<img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad3.png" width="299" height="602"><img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad2.png" width="299" height="602">
