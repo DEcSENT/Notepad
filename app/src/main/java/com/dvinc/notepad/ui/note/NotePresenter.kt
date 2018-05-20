@@ -33,9 +33,8 @@ class NotePresenter
             name: String,
             content: String,
             time: Long,
-            markerColor: String,
-            markerText: String) {
-        addSubscription(notesInteractor.addNote(name, content, time, markerColor, markerText)
+            markerId: Int) {
+        addSubscription(notesInteractor.addNote(name, content, time, markerId)
                 .subscribe(
                         { view?.closeScreen() },
                         { view?.showError(it.localizedMessage) }
@@ -47,9 +46,8 @@ class NotePresenter
             name: String,
             content: String,
             time: Long,
-            markerColor: String,
-            markerText: String) {
-        addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerColor, markerText)
+            markerId: Int) {
+        addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerId)
                 .subscribe(
                         { view?.closeScreen() },
                         { view?.showError(it.localizedMessage) }

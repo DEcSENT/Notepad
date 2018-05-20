@@ -16,16 +16,16 @@ class MarkersRepository {
         return Single.just(obtainMarkers())
     }
 
-    private fun obtainMarkers(): List<NoteMarker> {
+    fun obtainMarkers(): List<NoteMarker> {
         val noteMarkers = ArrayList<NoteMarker>()
         val rawMarkers = mapOf(
                 "Note" to "#000000",
                 "Critical" to "#FFFF0000",
                 "ToDo" to "#FF0000FF",
                 "Idea" to "#FF00FF00")
-
+        var index = 0
         for (marker in rawMarkers) {
-            noteMarkers.add(NoteMarker(marker.key, marker.value))
+            noteMarkers.add(NoteMarker(index++, marker.key, marker.value))
         }
 
         return noteMarkers

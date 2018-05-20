@@ -18,6 +18,8 @@ import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 class NoteFragment : BaseFragment(), NoteView {
 
@@ -32,6 +34,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
         (context?.applicationContext as App).appComponent.inject(this)
 
+        setupToolbar()
         setupAddNoteButton()
         setupEditNoteButton()
     }
@@ -48,6 +51,7 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun closeScreen() {
+        hideKeyboard()
         activity?.let {
             findNavController(it, R.id.nav_host_fragment).navigateUp()
         }
@@ -76,6 +80,15 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun showNote(note: Note) {
         etNoteName.setText(note.name)
         etNoteContent.setText(note.content)
+        spNoteType.setSelection(note.markerId)
+    }
+
+    private fun setupToolbar() {
+        toolbarNote.setNavigationOnClickListener {
+            activity?.let {
+                findNavController(it, R.id.nav_host_fragment).navigateUp()
+            }
+        }
     }
 
     private fun setupAddNoteButton() {
@@ -83,10 +96,9 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
-            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+            val markerId = spNoteType.selectedItemId.toInt()
 
-            presenter.saveNewNote(name, content, currentTime, markerColor, markerText)
+            presenter.saveNewNote(name, content, currentTime, markerId)
         }
     }
 
@@ -95,13 +107,17 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerColor = (spNoteType.selectedItem as NoteMarker).markerColor
-            val markerText = (spNoteType.selectedItem as NoteMarker).markerName
+            val markerId = spNoteType.selectedItemId.toInt()
 
             noteId?.let {
-                presenter.editNote(it, name, content, currentTime, markerColor, markerText)
+                presenter.editNote(it, name, content, currentTime, markerId)
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     companion object {
