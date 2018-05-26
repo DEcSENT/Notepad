@@ -34,11 +34,13 @@ class NotePresenter
             content: String,
             time: Long,
             markerId: Int) {
-        addSubscription(notesInteractor.addNote(name, content, time, markerId)
-                .subscribe(
-                        { view?.closeScreen() },
-                        { view?.showError(it.localizedMessage) }
-                ))
+        if (isNoteNameNotEmpty(name)) {
+            addSubscription(notesInteractor.addNote(name, content, time, markerId)
+                    .subscribe(
+                            { view?.closeScreen() },
+                            { view?.showError(it.localizedMessage) }
+                    ))
+        }
     }
 
     fun editNote(
@@ -47,10 +49,22 @@ class NotePresenter
             content: String,
             time: Long,
             markerId: Int) {
-        addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerId)
-                .subscribe(
-                        { view?.closeScreen() },
-                        { view?.showError(it.localizedMessage) }
-                ))
+        if (isNoteNameNotEmpty(name)) {
+            addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerId)
+                    .subscribe(
+                            { view?.closeScreen() },
+                            { view?.showError(it.localizedMessage) }
+                    ))
+        }
+    }
+
+    private fun isNoteNameNotEmpty(name: String): Boolean {
+        return if (name.isEmpty()) {
+            view?.setNoteNameEmptyError(true)
+            false
+        } else {
+            view?.setNoteNameEmptyError(false)
+            true
+        }
     }
 }

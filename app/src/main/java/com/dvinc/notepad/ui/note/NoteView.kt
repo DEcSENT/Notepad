@@ -19,4 +19,6 @@ interface NoteView : MvpView, MessageView {
     fun setNoteButton(isEditMode: Boolean)
 
     fun showNote(note: Note)
+
+    fun setNoteNameEmptyError(isVisible: Boolean)
 }

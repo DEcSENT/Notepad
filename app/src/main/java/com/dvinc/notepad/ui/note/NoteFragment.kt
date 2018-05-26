@@ -83,6 +83,14 @@ class NoteFragment : BaseFragment(), NoteView {
         spNoteType.setSelection(note.markerId)
     }
 
+    override fun setNoteNameEmptyError(isVisible: Boolean) {
+        if (isVisible) {
+            etNoteName.error = context?.getString(R.string.message_empty_note_name)
+        } else {
+            etNoteName.error = null
+        }
+    }
+
     private fun setupToolbar() {
         toolbarNote.setNavigationOnClickListener {
             activity?.let {
