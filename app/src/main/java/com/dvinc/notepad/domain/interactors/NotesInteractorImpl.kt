@@ -39,29 +39,6 @@ class NotesInteractorImpl
                 .compose(rxSchedulers.getIoToMainTransformerFlowable())
     }
 
-    override fun addNote(
-            name: String,
-            content: String,
-            time: Long,
-            markerId: Int
-    ): Completable {
-        return notesRepository.addNote(
-                noteMapper.createEntity(name, content, time, markerId))
-                .compose(rxSchedulers.getIoToMainTransformerCompletable())
-    }
-
-    override fun updateNote(
-            noteId: Long,
-            name: String,
-            content: String,
-            time: Long,
-            markerId: Int
-    ): Completable {
-        return notesRepository.updateNote(
-                noteMapper.createEntity(name, content, time, markerId, noteId))
-                .compose(rxSchedulers.getIoToMainTransformerCompletable())
-    }
-
     override fun deleteNote(noteId: Int): Completable {
         return notesRepository.deleteNoteById(noteId)
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
@@ -87,5 +64,23 @@ class NotesInteractorImpl
 
     override fun getNoteMarkers(): Single<List<NoteMarker>> {
         return markersRepository.getMarkers()
+    }
+
+    override fun addNoteInfo(
+            noteId: Long?,
+            name: String,
+            content: String,
+            time: Long,
+            markerId: Int
+    ): Completable {
+        return if (noteId != null && noteId != 0L) {
+            notesRepository.updateNote(
+                    noteMapper.createEntity(name, content, time, markerId, noteId))
+                    .compose(rxSchedulers.getIoToMainTransformerCompletable())
+        } else {
+            notesRepository.addNote(
+                    noteMapper.createEntity(name, content, time, markerId))
+                    .compose(rxSchedulers.getIoToMainTransformerCompletable())
+        }
     }
 }

@@ -29,28 +29,14 @@ class NotePresenter
                 ))
     }
 
-    fun saveNewNote(
+    fun onClickNoteButton(
+            noteId: Long?,
             name: String,
             content: String,
             time: Long,
             markerId: Int) {
         if (isNoteNameNotEmpty(name)) {
-            addSubscription(notesInteractor.addNote(name, content, time, markerId)
-                    .subscribe(
-                            { view?.closeScreen() },
-                            { view?.showError(it.localizedMessage) }
-                    ))
-        }
-    }
-
-    fun editNote(
-            noteId: Long,
-            name: String,
-            content: String,
-            time: Long,
-            markerId: Int) {
-        if (isNoteNameNotEmpty(name)) {
-            addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerId)
+            addSubscription(notesInteractor.addNoteInfo(noteId, name, content, time, markerId)
                     .subscribe(
                             { view?.closeScreen() },
                             { view?.showError(it.localizedMessage) }

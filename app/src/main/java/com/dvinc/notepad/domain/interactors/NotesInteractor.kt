@@ -17,24 +17,17 @@ interface NotesInteractor {
 
     fun getNotes(): Flowable<List<Note>>
 
-    fun addNote(
-            name: String,
-            content: String,
-            time: Long,
-            markerId: Int
-    ): Completable
-
-    fun updateNote(
-            noteId: Long,
-            name: String,
-            content: String,
-            time: Long,
-            markerId: Int
-    ): Completable
-
     fun deleteNote(noteId: Int): Completable
 
     fun getNoteById(id: Long?): Single<Note>
 
     fun getNoteMarkers(): Single<List<NoteMarker>>
+
+    fun addNoteInfo(
+            noteId: Long?,
+            name: String,
+            content: String,
+            time: Long,
+            markerId: Int
+    ): Completable
 }

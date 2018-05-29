@@ -35,8 +35,7 @@ class NoteFragment : BaseFragment(), NoteView {
         (context?.applicationContext as App).appComponent.inject(this)
 
         setupToolbar()
-        setupAddNoteButton()
-        setupEditNoteButton()
+        setupNoteButton()
     }
 
     override fun onResume() {
@@ -99,27 +98,14 @@ class NoteFragment : BaseFragment(), NoteView {
         }
     }
 
-    private fun setupAddNoteButton() {
+    private fun setupNoteButton() {
         btAddNote.setOnClickListener {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
             val markerId = spNoteType.selectedItemId.toInt()
 
-            presenter.saveNewNote(name, content, currentTime, markerId)
-        }
-    }
-
-    private fun setupEditNoteButton() {
-        btEditNote.setOnClickListener {
-            val name = etNoteName.text.toString()
-            val content = etNoteContent.text.toString()
-            val currentTime = System.currentTimeMillis()
-            val markerId = spNoteType.selectedItemId.toInt()
-
-            noteId?.let {
-                presenter.editNote(it, name, content, currentTime, markerId)
-            }
+            presenter.onClickNoteButton(noteId, name, content, currentTime, markerId)
         }
     }
 
