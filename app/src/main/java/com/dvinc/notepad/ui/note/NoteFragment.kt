@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.visible
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
@@ -71,8 +70,9 @@ class NoteFragment : BaseFragment(), NoteView {
 
     override fun setNoteButton(isEditMode: Boolean) {
         if (isEditMode) {
-            btAddNote.visible(!isEditMode)
-            btEditNote.visible(isEditMode)
+            btAddNote.setText(R.string.note_edit)
+        } else {
+            btAddNote.setText(R.string.note_add)
         }
     }
 
