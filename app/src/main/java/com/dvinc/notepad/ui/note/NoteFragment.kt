@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.App
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.visible
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import com.dvinc.notepad.common.visible
 
 class NoteFragment : BaseFragment(), NoteView {
 
@@ -35,8 +35,7 @@ class NoteFragment : BaseFragment(), NoteView {
         (context?.applicationContext as App).appComponent.inject(this)
 
         setupToolbar()
-        setupAddNoteButton()
-        setupEditNoteButton()
+        setupNoteButton()
     }
 
     override fun onResume() {
@@ -47,11 +46,11 @@ class NoteFragment : BaseFragment(), NoteView {
 
     override fun onPause() {
         super.onPause()
+        hideKeyboard()
         presenter.detachView()
     }
 
     override fun closeScreen() {
-        hideKeyboard()
         activity?.let {
             findNavController(it, R.id.nav_host_fragment).navigateUp()
         }
@@ -70,10 +69,12 @@ class NoteFragment : BaseFragment(), NoteView {
         //Temporarily empty
     }
 
-    override fun setNoteButton(isEditMode: Boolean) {
+    override fun setEditMode(isEditMode: Boolean) {
+        groupNote.visible(true)
         if (isEditMode) {
-            btAddNote.visible(!isEditMode)
-            btEditNote.visible(isEditMode)
+            btAddNote.setText(R.string.note_edit)
+        } else {
+            btAddNote.setText(R.string.note_add)
         }
     }
 
@@ -81,6 +82,14 @@ class NoteFragment : BaseFragment(), NoteView {
         etNoteName.setText(note.name)
         etNoteContent.setText(note.content)
         spNoteType.setSelection(note.markerId)
+    }
+
+    override fun setNoteNameEmptyError(isVisible: Boolean) {
+        if (isVisible) {
+            etNoteName.error = context?.getString(R.string.message_empty_note_name)
+        } else {
+            etNoteName.error = null
+        }
     }
 
     private fun setupToolbar() {
@@ -91,27 +100,14 @@ class NoteFragment : BaseFragment(), NoteView {
         }
     }
 
-    private fun setupAddNoteButton() {
+    private fun setupNoteButton() {
         btAddNote.setOnClickListener {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
             val markerId = spNoteType.selectedItemId.toInt()
 
-            presenter.saveNewNote(name, content, currentTime, markerId)
-        }
-    }
-
-    private fun setupEditNoteButton() {
-        btEditNote.setOnClickListener {
-            val name = etNoteName.text.toString()
-            val content = etNoteContent.text.toString()
-            val currentTime = System.currentTimeMillis()
-            val markerId = spNoteType.selectedItemId.toInt()
-
-            noteId?.let {
-                presenter.editNote(it, name, content, currentTime, markerId)
-            }
+            presenter.onClickNoteButton(noteId, name, content, currentTime, markerId)
         }
     }
 

@@ -15,42 +15,44 @@ class NotePresenter
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
-        addSubscription(notesInteractor.getNoteMarkers()
-                .doOnSuccess { view?.showMarkers(it) }
-                .flatMap { notesInteractor.getNoteById(noteId) }
-                .subscribe(
-                        {
-                            if (it.id != 0L) {
+        if (noteId != null && noteId != 0L) {
+            addSubscription(notesInteractor.getNoteMarkers()
+                    .doOnSuccess { view?.showMarkers(it) }
+                    .flatMap { notesInteractor.getNoteById(noteId) }
+                    .subscribe(
+                            {
                                 view?.showNote(it)
-                                view?.setNoteButton(true)
-                            }
-                        },
-                        { view?.showError(it.localizedMessage) }
-                ))
+                                view?.setEditMode(true)
+                            },
+                            { view?.showError(it.localizedMessage) }
+                    ))
+        } else {
+            view?.setEditMode(false)
+        }
     }
 
-    fun saveNewNote(
+    fun onClickNoteButton(
+            noteId: Long?,
             name: String,
             content: String,
             time: Long,
             markerId: Int) {
-        addSubscription(notesInteractor.addNote(name, content, time, markerId)
-                .subscribe(
-                        { view?.closeScreen() },
-                        { view?.showError(it.localizedMessage) }
-                ))
+        if (isNoteNameNotEmpty(name)) {
+            addSubscription(notesInteractor.addNoteInfo(noteId, name, content, time, markerId)
+                    .subscribe(
+                            { view?.closeScreen() },
+                            { view?.showError(it.localizedMessage) }
+                    ))
+        }
     }
 
-    fun editNote(
-            noteId: Long,
-            name: String,
-            content: String,
-            time: Long,
-            markerId: Int) {
-        addSubscription(notesInteractor.updateNote(noteId, name, content, time, markerId)
-                .subscribe(
-                        { view?.closeScreen() },
-                        { view?.showError(it.localizedMessage) }
-                ))
+    private fun isNoteNameNotEmpty(name: String): Boolean {
+        return if (name.isEmpty()) {
+            view?.setNoteNameEmptyError(true)
+            false
+        } else {
+            view?.setNoteNameEmptyError(false)
+            true
+        }
     }
 }
