@@ -44,22 +44,13 @@ class NotesInteractorImpl
                 .compose(rxSchedulers.getIoToMainTransformerCompletable())
     }
 
-    override fun getNoteById(id: Long?): Single<Note> {
-        /*
-        * Well, this place contain some bad code, need to refactor it later.
-        * The problem is in filtering id and null. Rx operator .filter can't handle this.
-        */
-        return if (id == null || id == 0L) {
-            //Returning default empty note. Bad place here.
-            Single.just(Note(0, "", "", "", 0,"",  ""))
-        } else {
-            notesRepository.getNoteById(id)
-                    .compose(rxSchedulers.getIoToMainTransformerSingle())
-                    .map { entity ->
-                        val markers = markersRepository.obtainMarkers()
-                        noteMapper.mapEntityToNote(entity, markers)
-                    }
-        }
+    override fun getNoteById(id: Long): Single<Note> {
+        return notesRepository.getNoteById(id)
+                .compose(rxSchedulers.getIoToMainTransformerSingle())
+                .map { entity ->
+                    val markers = markersRepository.obtainMarkers()
+                    noteMapper.mapEntityToNote(entity, markers)
+                }
     }
 
     override fun getNoteMarkers(): Single<List<NoteMarker>> {

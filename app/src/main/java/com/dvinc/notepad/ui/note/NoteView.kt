@@ -16,7 +16,7 @@ interface NoteView : MvpView, MessageView {
 
     fun showMarkers(markers: List<NoteMarker>)
 
-    fun setNoteButton(isEditMode: Boolean)
+    fun setEditMode(isEditMode: Boolean)
 
     fun showNote(note: Note)
 

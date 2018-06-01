@@ -15,18 +15,20 @@ class NotePresenter
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
-        addSubscription(notesInteractor.getNoteMarkers()
-                .doOnSuccess { view?.showMarkers(it) }
-                .flatMap { notesInteractor.getNoteById(noteId) }
-                .subscribe(
-                        {
-                            if (it.id != 0L) {
+        if (noteId != null && noteId != 0L) {
+            addSubscription(notesInteractor.getNoteMarkers()
+                    .doOnSuccess { view?.showMarkers(it) }
+                    .flatMap { notesInteractor.getNoteById(noteId) }
+                    .subscribe(
+                            {
                                 view?.showNote(it)
-                                view?.setNoteButton(true)
-                            }
-                        },
-                        { view?.showError(it.localizedMessage) }
-                ))
+                                view?.setEditMode(true)
+                            },
+                            { view?.showError(it.localizedMessage) }
+                    ))
+        } else {
+            view?.setEditMode(false)
+        }
     }
 
     fun onClickNoteButton(

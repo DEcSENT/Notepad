@@ -69,7 +69,8 @@ class NoteFragment : BaseFragment(), NoteView {
         //Temporarily empty
     }
 
-    override fun setNoteButton(isEditMode: Boolean) {
+    override fun setEditMode(isEditMode: Boolean) {
+        groupNote.visible(true)
         if (isEditMode) {
             btAddNote.setText(R.string.note_edit)
         } else {
@@ -78,7 +79,6 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun showNote(note: Note) {
-        groupNote.visible(true)
         etNoteName.setText(note.name)
         etNoteContent.setText(note.content)
         spNoteType.setSelection(note.markerId)
