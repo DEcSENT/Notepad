@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import com.dvinc.notepad.common.visible
 
 class NoteFragment : BaseFragment(), NoteView {
 
@@ -77,6 +78,7 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun showNote(note: Note) {
+        groupNote.visible(true)
         etNoteName.setText(note.name)
         etNoteContent.setText(note.content)
         spNoteType.setSelection(note.markerId)
