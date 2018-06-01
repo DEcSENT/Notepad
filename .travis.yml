@@ -3,28 +3,51 @@ jdk: oraclejdk8
 sudo: false
 
 env:
- global:
-    - ANDROID_API_LEVEL=27
-    - ANDROID_BUILD_TOOLS_VERSION=27.0.1
+    matrix:
+        - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
+        - ANDROID_TARGET=android-21 ANDROID_ABI=armeabi-v7a
+    global:
+        - ADB_INSTALL_TIMEOUT=10
+
+before_cache:
+    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
 
 android:
- components:
-    - tools
-    - platform-tools
-    # The BuildTools version used by your project
-    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-    # The SDK version used to compile your project
-    - android-$ANDROID_API_LEVEL
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-$ANDROID_API_LEVEL
+    update_sdk: true
+    components:
+        - platform-tools
+        - tools
+        - build-tools-26.0.1
+        - android-21
+        - android-19
+        - android-26
+
+        # Additional components
+        - extra-google-google_play_services
+        - extra-google-m2repository
+        - extra-android-m2repository
+
+        # System images
+        - sys-img-armeabi-v7a-android-19
+        - sys-img-armeabi-v7a-android-21
 
 licenses:
+    - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-before_install:
-- yes | sdkmanager "platforms;android-27"
+before_script:
+    # Check and allow permissions
+    - chmod +x gradlew
+
+    # Setup AVD
+    - android list targets
+    - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+    - emulator -avd test -no-skin -no-audio -no-window &
