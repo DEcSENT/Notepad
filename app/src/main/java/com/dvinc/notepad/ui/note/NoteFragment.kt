@@ -45,11 +45,11 @@ class NoteFragment : BaseFragment(), NoteView {
 
     override fun onPause() {
         super.onPause()
+        hideKeyboard()
         presenter.detachView()
     }
 
     override fun closeScreen() {
-        hideKeyboard()
         activity?.let {
             findNavController(it, R.id.nav_host_fragment).navigateUp()
         }
