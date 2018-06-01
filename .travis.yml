@@ -1,53 +1,26 @@
 language: android
 jdk: oraclejdk8
-sudo: false
-
-env:
-    matrix:
-        - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
-        - ANDROID_TARGET=android-21 ANDROID_ABI=armeabi-v7a
-    global:
-        - ADB_INSTALL_TIMEOUT=10
-
-before_cache:
-    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
-cache:
-  directories:
-    - $HOME/.gradle/daemon
-    - $HOME/.gradle/native
-    - $HOME/.gradle/wrapper
+os: linux
+sudo: required
 
 android:
-    update_sdk: true
-    components:
-        - platform-tools
-        - tools
-        - build-tools-26.0.1
-        - android-21
-        - android-19
-        - android-26
-
-        # Additional components
-        - extra-google-google_play_services
-        - extra-google-m2repository
-        - extra-android-m2repository
-
-        # System images
-        - sys-img-armeabi-v7a-android-19
-        - sys-img-armeabi-v7a-android-21
-
-licenses:
-    - 'android-sdk-preview-license-52d11cd2'
+  components:
+    - tools
+    - tools
+    - platfom-tools
+    - build-tools-25.0.2
+    - android-25
+    - extra-android-m2repository
+  licenses:
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
 
-before_script:
-    # Check and allow permissions
-    - chmod +x gradlew
+# Accept ConstraintLayout license
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+  - chmod +x gradlew
+  - ./gradlew dependencies || true
 
-    # Setup AVD
-    - android list targets
-    - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
-    - emulator -avd test -no-skin -no-audio -no-window &
+script: ./gradlew build --stacktrace
