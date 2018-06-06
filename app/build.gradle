@@ -8,6 +8,8 @@ apply plugin: 'kotlin-kapt'
 
 apply from: rootProject.file('dependencies.gradle')
 
+//apply from: rootProject.file('jacoco.gradle')
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -44,6 +46,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.8.9'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
