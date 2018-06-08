@@ -27,7 +27,14 @@ class NotePresenter
                             { view?.showError(it.localizedMessage) }
                     ))
         } else {
-            view?.setEditMode(false)
+            addSubscription(notesInteractor.getNoteMarkers()
+                    .subscribe(
+                            {
+                                view?.showMarkers(it)
+                                view?.setEditMode(false)
+                            },
+                            { view?.showError(it.localizedMessage) }
+                    ))
         }
     }
 
