@@ -8,15 +8,16 @@
 package com.dvinc.notepad.data.repositories
 
 import com.dvinc.notepad.domain.model.NoteMarker
+import com.dvinc.notepad.domain.repositories.MarkersRepository
 import io.reactivex.Single
 
-class MarkersRepository {
+class MarkersDataRepository : MarkersRepository {
 
-    fun getMarkers(): Single<List<NoteMarker>> {
+    override fun getMarkers(): Single<List<NoteMarker>> {
         return Single.just(obtainMarkers())
     }
 
-    fun obtainMarkers(): List<NoteMarker> {
+    override fun obtainMarkers(): List<NoteMarker> {
         val noteMarkers = ArrayList<NoteMarker>()
         val rawMarkers = mapOf(
                 "Note" to "#000000",

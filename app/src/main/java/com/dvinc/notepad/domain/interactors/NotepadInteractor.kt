@@ -8,10 +8,10 @@
 package com.dvinc.notepad.domain.interactors
 
 import com.dvinc.notepad.common.rxschedulers.RxSchedulers
-import com.dvinc.notepad.data.repositories.MarkersRepository
-import com.dvinc.notepad.data.repositories.NotesRepository
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.repositories.MarkersRepository
+import com.dvinc.notepad.domain.repositories.NotesRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import javax.inject.Inject
