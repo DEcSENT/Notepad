@@ -7,7 +7,6 @@
 
 package com.dvinc.notepad.di.modules
 
-import com.dvinc.notepad.common.rxschedulers.RxSchedulers
 import com.dvinc.notepad.domain.interactors.NotepadInteractor
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.domain.mappers.NoteMapper
@@ -23,15 +22,13 @@ class InteractorModule {
     fun provideNotesInteractor(
             notesRepository: NotesRepository,
             markersRepository: MarkersRepository,
-            noteMapper: NoteMapper,
-            rxSchedulers: RxSchedulers
-    ): NotesInteractor = NotesInteractor(notesRepository, markersRepository, noteMapper, rxSchedulers)
+            noteMapper: NoteMapper
+    ): NotesInteractor = NotesInteractor(notesRepository, markersRepository, noteMapper)
 
     @Provides
     fun provideNotepadInteractor(
             notesRepository: NotesRepository,
             markersRepository: MarkersRepository,
-            noteMapper: NoteMapper,
-            rxSchedulers: RxSchedulers
-    ): NotepadInteractor = NotepadInteractor(notesRepository, markersRepository, noteMapper, rxSchedulers)
+            noteMapper: NoteMapper
+    ): NotepadInteractor = NotepadInteractor(notesRepository, markersRepository, noteMapper)
 }

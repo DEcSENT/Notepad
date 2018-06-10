@@ -7,7 +7,7 @@
 
 package com.dvinc.notepad.domain.interactors
 
-import com.dvinc.notepad.common.rxschedulers.RxSchedulers
+import com.dvinc.notepad.common.applyIoToMainSchedulers
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
@@ -25,17 +25,17 @@ class NotesInteractor
 @Inject constructor(
         private val notesRepository: NotesRepository,
         private val markersRepository: MarkersRepository,
-        private val noteMapper: NoteMapper,
-        private val rxSchedulers: RxSchedulers
+        private val noteMapper: NoteMapper
 ){
 
     fun getNoteById(id: Long): Single<Note> {
         return notesRepository.getNoteById(id)
-                .compose(rxSchedulers.getIoToMainTransformerSingle())
                 .map { entity ->
                     val markers = markersRepository.obtainMarkers()
                     noteMapper.mapEntityToNote(entity, markers)
                 }
+                .applyIoToMainSchedulers()
+
     }
 
     fun getNoteMarkers(): Single<List<NoteMarker>> {
@@ -52,11 +52,11 @@ class NotesInteractor
         return if (noteId != null && noteId != 0L) {
             notesRepository.updateNote(
                     noteMapper.createEntity(name, content, time, markerId, noteId))
-                    .compose(rxSchedulers.getIoToMainTransformerCompletable())
+                    .applyIoToMainSchedulers()
         } else {
             notesRepository.addNote(
                     noteMapper.createEntity(name, content, time, markerId))
-                    .compose(rxSchedulers.getIoToMainTransformerCompletable())
+                    .applyIoToMainSchedulers()
         }
     }
 }

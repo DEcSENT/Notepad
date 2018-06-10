@@ -7,8 +7,6 @@ package com.dvinc.notepad.di.modules
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.dvinc.notepad.common.rxschedulers.RxSchedulers
-import com.dvinc.notepad.common.rxschedulers.RxSchedulersImpl
 import com.dvinc.notepad.data.database.NotepadDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,7 +20,4 @@ class AppModule(private val context: Context) {
     @Provides
     fun providesAppDatabase(context: Context): NotepadDatabase =
             Room.databaseBuilder(context, NotepadDatabase::class.java, "notepad").build()
-
-    @Provides
-    fun provideRxSchedulers(): RxSchedulers = RxSchedulersImpl()
 }

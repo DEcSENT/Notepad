@@ -7,7 +7,7 @@
 
 package com.dvinc.notepad.domain.interactors
 
-import com.dvinc.notepad.common.rxschedulers.RxSchedulers
+import com.dvinc.notepad.common.applyIoToMainSchedulers
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repositories.MarkersRepository
@@ -19,8 +19,7 @@ import javax.inject.Inject
 class NotepadInteractor @Inject constructor(
         private val notesRepository: NotesRepository,
         private val markersRepository: MarkersRepository,
-        private val noteMapper: NoteMapper,
-        private val rxSchedulers: RxSchedulers
+        private val noteMapper: NoteMapper
 ) {
 
     fun getNotes(): Flowable<List<Note>> {
@@ -29,11 +28,11 @@ class NotepadInteractor @Inject constructor(
                     val markers = markersRepository.obtainMarkers()
                     noteMapper.mapEntitiesToNotes(entities, markers)
                 }
-                .compose(rxSchedulers.getIoToMainTransformerFlowable())
+                .applyIoToMainSchedulers()
     }
 
     fun deleteNote(noteId: Int): Completable {
         return notesRepository.deleteNoteById(noteId)
-                .compose(rxSchedulers.getIoToMainTransformerCompletable())
+                .applyIoToMainSchedulers()
     }
 }
