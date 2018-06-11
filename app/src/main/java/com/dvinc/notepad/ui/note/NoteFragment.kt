@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
-import com.dvinc.notepad.App
+import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
@@ -32,7 +32,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (context?.applicationContext as App).appComponent.inject(this)
+        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
 
         setupToolbar()
         setupNoteButton()
