@@ -8,12 +8,15 @@
 package com.dvinc.notepad.domain.interactors
 
 import com.dvinc.notepad.common.applyIoToMainSchedulers
+import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.domain.repositories.MarkersRepository
 import com.dvinc.notepad.domain.repositories.NotesRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 class NotepadInteractor @Inject constructor(
@@ -24,10 +27,10 @@ class NotepadInteractor @Inject constructor(
 
     fun getNotes(): Flowable<List<Note>> {
         return notesRepository.getNotes()
-                .map { entities ->
-                    val markers = markersRepository.obtainMarkers()
-                    noteMapper.mapEntitiesToNotes(entities, markers)
-                }
+                .zipWith(markersRepository.getMarkers().toFlowable(), BiFunction<List<NoteEntity>, List<NoteMarker>, List<Note>>
+                { entity, markers ->
+                    noteMapper.mapEntitiesToNotes(entity, markers)
+                })
                 .applyIoToMainSchedulers()
     }
 

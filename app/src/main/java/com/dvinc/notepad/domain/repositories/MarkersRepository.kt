@@ -13,7 +13,4 @@ import io.reactivex.Single
 interface MarkersRepository {
 
     fun getMarkers(): Single<List<NoteMarker>>
-
-    //TODO: This is non-reactive duplicate, fix it
-    fun obtainMarkers(): List<NoteMarker>
 }
