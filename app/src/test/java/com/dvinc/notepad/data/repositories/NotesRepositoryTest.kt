@@ -11,7 +11,6 @@ import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.database.dao.NoteDao
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import io.reactivex.Flowable
-import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,7 +26,7 @@ class NotesRepositoryTest {
     private lateinit var dataBase: NotepadDatabase
 
     @Mock
-    private lateinit var repository: NotesRepository
+    private lateinit var repository: NotesDataRepository
 
     @Mock
     private lateinit var notesDao: NoteDao
@@ -38,7 +37,7 @@ class NotesRepositoryTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        repository = NotesRepository(dataBase)
+        repository = NotesDataRepository(dataBase)
 
 
         `when`(dataBase.notesDao()).thenReturn(notesDao)

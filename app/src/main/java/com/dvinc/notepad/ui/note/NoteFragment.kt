@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
-import com.dvinc.notepad.App
+import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
@@ -26,13 +26,14 @@ class NoteFragment : BaseFragment(), NoteView {
     @Inject lateinit var presenter: NotePresenter
 
     private val noteId: Long? get() = arguments?.getLong(NOTE_ID, 0)
+    private var noteInfoBundle: Bundle? = null
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (context?.applicationContext as App).appComponent.inject(this)
+        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
 
         setupToolbar()
         setupNoteButton()
@@ -50,6 +51,19 @@ class NoteFragment : BaseFragment(), NoteView {
         presenter.detachView()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        noteInfoBundle = savedInstanceState
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.apply {
+            val markerId = spNoteType.selectedItemId.toInt()
+            putInt(NOTE_MARKER_ID, markerId)
+        }
+    }
+
     override fun closeScreen() {
         activity?.let {
             findNavController(it, R.id.nav_host_fragment).navigateUp()
@@ -59,6 +73,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun showMarkers(markers: List<NoteMarker>) {
         val adapter = NoteMarkersAdapter(context, R.layout.item_note_marker, markers)
         spNoteType.adapter = adapter
+        restoreSelectedMarker()
     }
 
     override fun showError(errorMessage: String) {
@@ -79,9 +94,13 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun showNote(note: Note) {
-        etNoteName.setText(note.name)
-        etNoteContent.setText(note.content)
-        spNoteType.setSelection(note.markerId)
+        if (noteInfoBundle != null) {
+            restoreSelectedMarker()
+        } else {
+            etNoteName.setText(note.name)
+            etNoteContent.setText(note.content)
+            spNoteType.setSelection(note.markerId)
+        }
     }
 
     override fun setNoteNameEmptyError(isVisible: Boolean) {
@@ -116,7 +135,16 @@ class NoteFragment : BaseFragment(), NoteView {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
+    private fun restoreSelectedMarker() {
+        val noteBundle = noteInfoBundle
+        if (noteBundle != null && noteBundle.containsKey(NOTE_MARKER_ID)) {
+            val markerSelection = noteBundle.getInt(NOTE_MARKER_ID)
+            spNoteType.setSelection(markerSelection)
+        }
+    }
+
     companion object {
         const val NOTE_ID = "noteId"
+        const val NOTE_MARKER_ID = "noteMarkerId"
     }
 }

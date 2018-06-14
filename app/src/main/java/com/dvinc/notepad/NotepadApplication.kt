@@ -11,7 +11,7 @@ import com.dvinc.notepad.di.components.DaggerAppComponent
 import com.dvinc.notepad.di.modules.AppModule
 import com.facebook.stetho.Stetho
 
-class App : Application() {
+class NotepadApplication : Application() {
 
     lateinit var appComponent: AppComponent
 

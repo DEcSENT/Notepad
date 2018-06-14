@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.dvinc.notepad.App
+import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.ui.base.BaseFragment
 import javax.inject.Inject
@@ -37,7 +37,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
         rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         rvNotepad.adapter = notesAdapter
 
-        (context?.applicationContext as App).appComponent.inject(this)
+        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
 
         setupFabButton()
         setupSwipeToDelete()
