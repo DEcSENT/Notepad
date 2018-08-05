@@ -1,4 +1,4 @@
-package com.dvinc.notepad.ui.main
+package com.dvinc.notepad.presentation.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.adapters
+package com.dvinc.notepad.presentation.adapters
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -16,7 +16,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.ui.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 
 class NoteMarkersAdapter(
         private val cntxt: Context?,

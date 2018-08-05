@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.model
+package com.dvinc.notepad.presentation.model
 
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes

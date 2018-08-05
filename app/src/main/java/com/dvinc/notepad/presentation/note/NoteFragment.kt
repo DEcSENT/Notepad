@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.note
+package com.dvinc.notepad.presentation.note
 
 import android.os.Bundle
 import android.view.View
@@ -12,14 +12,14 @@ import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
-import com.dvinc.notepad.ui.base.BaseFragment
+import com.dvinc.notepad.presentation.adapters.NoteMarkersAdapter
+import com.dvinc.notepad.presentation.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.ui.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 
 class NoteFragment : BaseFragment(), NoteView {
 

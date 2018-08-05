@@ -3,11 +3,11 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.notepad
+package com.dvinc.notepad.presentation.notepad
 
-import com.dvinc.notepad.ui.base.MessageView
-import com.dvinc.notepad.ui.base.MvpView
-import com.dvinc.notepad.ui.model.NoteUi
+import com.dvinc.notepad.presentation.base.MessageView
+import com.dvinc.notepad.presentation.base.MvpView
+import com.dvinc.notepad.presentation.model.NoteUi
 
 interface NotepadView : MvpView, MessageView {
 

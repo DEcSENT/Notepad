@@ -3,6 +3,6 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.base
+package com.dvinc.notepad.presentation.base
 
 interface MvpView

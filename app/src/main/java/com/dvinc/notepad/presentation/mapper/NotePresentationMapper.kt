@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.mapper
+package com.dvinc.notepad.presentation.mapper
 
 import com.dvinc.notepad.domain.model.MarkerType
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.ui.model.MarkerTypeUi
-import com.dvinc.notepad.ui.model.NoteUi
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.model.NoteUi
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject

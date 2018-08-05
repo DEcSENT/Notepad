@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.adapters
+package com.dvinc.notepad.presentation.adapters
 
 import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.ui.model.NoteUi
+import com.dvinc.notepad.presentation.model.NoteUi
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 

@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.notepad
+package com.dvinc.notepad.presentation.notepad
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,14 +14,14 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
-import com.dvinc.notepad.ui.base.BaseFragment
+import com.dvinc.notepad.presentation.base.BaseFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.ui.adapters.NotesAdapter
-import com.dvinc.notepad.ui.model.NoteUi
-import com.dvinc.notepad.ui.note.NoteFragment
+import com.dvinc.notepad.presentation.adapters.NotesAdapter
+import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.presentation.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView {
