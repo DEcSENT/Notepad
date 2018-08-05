@@ -7,7 +7,7 @@
 
 package com.dvinc.notepad.domain.interactors
 
-import com.dvinc.notepad.common.applyIoToMainSchedulers
+import com.dvinc.notepad.common.extension.applyIoToMainSchedulers
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note

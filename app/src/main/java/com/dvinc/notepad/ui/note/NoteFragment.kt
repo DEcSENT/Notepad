@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import com.dvinc.notepad.common.visible
+import com.dvinc.notepad.common.extension.visible
 
 class NoteFragment : BaseFragment(), NoteView {
 

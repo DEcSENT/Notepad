@@ -18,7 +18,7 @@ import com.dvinc.notepad.ui.base.BaseFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
-import com.dvinc.notepad.common.visible
+import com.dvinc.notepad.common.extension.visible
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.ui.adapters.NotesAdapter
 import com.dvinc.notepad.ui.note.NoteFragment
