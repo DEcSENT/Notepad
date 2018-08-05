@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.notepad
+package com.dvinc.notepad.presentation.ui.notepad
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,28 +14,28 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
-import com.dvinc.notepad.presentation.base.BaseFragment
+import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.presentation.adapters.NotesAdapter
+import com.dvinc.notepad.presentation.adapters.NoteAdapter
 import com.dvinc.notepad.presentation.model.NoteUi
-import com.dvinc.notepad.presentation.note.NoteFragment
+import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView {
 
     @Inject lateinit var notePadPresenter: NotepadPresenter
 
-    private val notesAdapter: NotesAdapter = NotesAdapter()
+    private val noteAdapter: NoteAdapter = NoteAdapter()
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        rvNotepad.adapter = notesAdapter
+        rvNotepad.adapter = noteAdapter
 
         (context?.applicationContext as NotepadApplication).appComponent.inject(this)
 
@@ -56,7 +56,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
     }
 
     override fun showNotes(notes: List<NoteUi>) {
-        notesAdapter.setNotes(notes)
+        noteAdapter.setNotes(notes)
     }
 
     override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
@@ -76,7 +76,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
                     notePadPresenter.deleteNote(notePosition)
                 }
                 .setNegativeButton(R.string.no) { dialog, _ ->
-                    notesAdapter.notifyItemChanged(swipedItemPosition)
+                    noteAdapter.notifyItemChanged(swipedItemPosition)
                     dialog.cancel()
                 }
 
@@ -112,7 +112,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                val swipedNoteId = notesAdapter.getNote(position)?.id?.toInt()
+                val swipedNoteId = noteAdapter.getNote(position)?.id?.toInt()
                 if (swipedNoteId != null) notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
             }
         }
@@ -122,7 +122,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
     }
 
     private fun setupNotesAdapterClickListener() {
-        notesAdapter.setOnNoteClickListener {
+        noteAdapter.setOnNoteClickListener {
             val noteId = it
             activity?.let {
                 val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }

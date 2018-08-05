@@ -18,7 +18,7 @@ import android.widget.TextView
 import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 
-class NoteMarkersAdapter(
+class MarkerAdapter(
         private val cntxt: Context?,
         private val layoutId: Int,
         private val markers: List<MarkerTypeUi>

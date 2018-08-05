@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.note
+package com.dvinc.notepad.presentation.ui.note
 
 import android.os.Bundle
 import android.view.View
@@ -12,8 +12,8 @@ import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.presentation.adapters.NoteMarkersAdapter
-import com.dvinc.notepad.presentation.base.BaseFragment
+import com.dvinc.notepad.presentation.adapters.MarkerAdapter
+import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import android.content.Context
@@ -72,7 +72,7 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun showMarkers(markers: List<MarkerTypeUi>) {
-        val adapter = NoteMarkersAdapter(context, R.layout.item_note_marker, markers)
+        val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
         spNoteType.adapter = adapter
         restoreSelectedMarker()
     }

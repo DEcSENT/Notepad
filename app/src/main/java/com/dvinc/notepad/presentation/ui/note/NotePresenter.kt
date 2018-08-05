@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.note
+package com.dvinc.notepad.presentation.ui.note
 
 import com.dvinc.notepad.domain.usecase.NoteUseCase
-import com.dvinc.notepad.presentation.base.BasePresenter
+import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import javax.inject.Inject

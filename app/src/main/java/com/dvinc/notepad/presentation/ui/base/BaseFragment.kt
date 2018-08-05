@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.base
+package com.dvinc.notepad.presentation.ui.base
 
 import android.support.annotation.LayoutRes
 import android.os.Bundle

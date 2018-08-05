@@ -7,8 +7,8 @@ package com.dvinc.notepad.di.component
 
 import com.dvinc.notepad.di.module.AppModule
 import com.dvinc.notepad.di.module.DataModule
-import com.dvinc.notepad.presentation.note.NoteFragment
-import com.dvinc.notepad.presentation.notepad.NotepadFragment
+import com.dvinc.notepad.presentation.ui.note.NoteFragment
+import com.dvinc.notepad.presentation.ui.notepad.NotepadFragment
 import dagger.Component
 import javax.inject.Singleton
 

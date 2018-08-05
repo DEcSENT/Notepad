@@ -15,7 +15,7 @@ import android.widget.TextView
 import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.NoteUi
 
-class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
     private var notes: List<NoteUi>? = null
     private var noteClickListener: (noteId: Long) -> Unit = {}

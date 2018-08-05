@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/notepadFragment"
-        android:name="com.dvinc.notepad.presentation.notepad.NotepadFragment"
+        android:name="com.dvinc.notepad.presentation.ui.notepad.NotepadFragment"
         android:label="NotepadFragment">
         <argument
             android:name="noteId"
@@ -16,6 +16,6 @@
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.dvinc.notepad.presentation.note.NoteFragment"
+        android:name="com.dvinc.notepad.presentation.ui.note.NoteFragment"
         android:label="NoteFragment" />
 </navigation>
