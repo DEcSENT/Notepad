@@ -8,22 +8,21 @@
 package com.dvinc.notepad.ui.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.widget.ArrayAdapter
-import com.dvinc.notepad.domain.model.NoteMarker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.dvinc.notepad.R
+import com.dvinc.notepad.ui.model.MarkerTypeUi
 
-class NoteMarkersAdapter(context: Context?, resource: Int, objects: List<NoteMarker>) : ArrayAdapter<NoteMarker>(context, resource, objects) {
-
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val markers: List<NoteMarker> = objects
-    private val layoutId: Int = resource
+class NoteMarkersAdapter(
+        private val cntxt: Context?,
+        private val layoutId: Int,
+        private val markers: List<MarkerTypeUi>
+) : ArrayAdapter<MarkerTypeUi>(cntxt, layoutId, markers) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return createItemView(position, parent)
@@ -34,7 +33,7 @@ class NoteMarkersAdapter(context: Context?, resource: Int, objects: List<NoteMar
     }
 
     private fun createItemView(position: Int, parent: ViewGroup?): View {
-        val view = inflater.inflate(layoutId, parent, false)
+        val view = LayoutInflater.from(context).inflate(layoutId, parent, false)
 
         val marker = markers[position]
 
@@ -42,8 +41,11 @@ class NoteMarkersAdapter(context: Context?, resource: Int, objects: List<NoteMar
         val markerIcon = view.findViewById<ImageView>(R.id.ivMarkerIcon)
         val markerText = view.findViewById<TextView>(R.id.tvMarkerText)
 
-        markerIcon.drawable.mutate().setColorFilter(Color.parseColor(marker.color), PorterDuff.Mode.MULTIPLY)
-        markerText.text = marker.name
+        //TODO: refactor this
+        cntxt?.let {
+            markerIcon.drawable.mutate().setColorFilter(it.resources.getColor(marker.markerColor), PorterDuff.Mode.MULTIPLY)
+            markerText.text = it.getString(marker.markerName)
+        }
 
         return view
     }

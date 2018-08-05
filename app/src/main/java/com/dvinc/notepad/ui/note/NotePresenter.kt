@@ -7,16 +7,20 @@ package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.domain.usecase.NoteUseCase
 import com.dvinc.notepad.ui.base.BasePresenter
+import com.dvinc.notepad.ui.mapper.NotePresentationMapper
+import com.dvinc.notepad.ui.model.MarkerTypeUi
 import javax.inject.Inject
 
 class NotePresenter
 @Inject constructor(
-        private val noteUseCase: NoteUseCase
+        private val noteUseCase: NoteUseCase,
+        private val noteMapper: NotePresentationMapper
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
         if (noteId != null && noteId != 0L) {
             addSubscription(noteUseCase.getNoteMarkers()
+                    .map { noteMapper.mapMarker(it) }
                     .doOnSuccess { view?.showMarkers(it) }
                     .flatMap { noteUseCase.getNoteById(noteId) }
                     .subscribe(
@@ -28,6 +32,7 @@ class NotePresenter
                     ))
         } else {
             addSubscription(noteUseCase.getNoteMarkers()
+                    .map { noteMapper.mapMarker(it) }
                     .subscribe(
                             {
                                 view?.showMarkers(it)
@@ -43,9 +48,11 @@ class NotePresenter
             name: String,
             content: String,
             time: Long,
-            markerId: Int) {
+            markerTypeUi: MarkerTypeUi) {
         if (isNoteNameNotEmpty(name)) {
-            addSubscription(noteUseCase.addNoteInfo(noteId, name, content, time, markerId)
+            //TODO: update and adding logic
+            val newNote = noteMapper.createNote(noteId ?: 0, name, content, time, markerTypeUi)
+            addSubscription(noteUseCase.addNoteInfo(newNote)
                     .subscribe(
                             { view?.closeScreen() },
                             { view?.showError(it.localizedMessage) }

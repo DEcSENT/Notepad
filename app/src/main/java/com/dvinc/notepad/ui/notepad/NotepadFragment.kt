@@ -19,8 +19,8 @@ import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.ui.adapters.NotesAdapter
+import com.dvinc.notepad.ui.model.NoteUi
 import com.dvinc.notepad.ui.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
@@ -55,7 +55,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
         notePadPresenter.detachView()
     }
 
-    override fun showNotes(notes: List<Note>) {
+    override fun showNotes(notes: List<NoteUi>) {
         notesAdapter.setNotes(notes)
     }
 
@@ -75,10 +75,10 @@ class NotepadFragment : BaseFragment(), NotepadView {
                 .setPositiveButton(R.string.ok) { _, _ ->
                     notePadPresenter.deleteNote(notePosition)
                 }
-                .setNegativeButton(R.string.no, { dialog, _ ->
+                .setNegativeButton(R.string.no) { dialog, _ ->
                     notesAdapter.notifyItemChanged(swipedItemPosition)
                     dialog.cancel()
-                })
+                }
 
         val dialog = dialogBuilder.create()
         dialog.show()

@@ -5,13 +5,13 @@
 
 package com.dvinc.notepad.ui.notepad
 
-import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.ui.base.MessageView
 import com.dvinc.notepad.ui.base.MvpView
+import com.dvinc.notepad.ui.model.NoteUi
 
 interface NotepadView : MvpView, MessageView {
 
-    fun showNotes(notes: List<Note>)
+    fun showNotes(notes: List<NoteUi>)
 
     fun setEmptyView(isVisible: Boolean)
 

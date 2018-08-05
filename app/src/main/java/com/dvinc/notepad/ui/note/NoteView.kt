@@ -6,15 +6,15 @@
 package com.dvinc.notepad.ui.note
 
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.ui.base.MessageView
 import com.dvinc.notepad.ui.base.MvpView
+import com.dvinc.notepad.ui.model.MarkerTypeUi
 
 interface NoteView : MvpView, MessageView {
 
     fun closeScreen()
 
-    fun showMarkers(markers: List<NoteMarker>)
+    fun showMarkers(markers: List<MarkerTypeUi>)
 
     fun setEditMode(isEditMode: Boolean)
 

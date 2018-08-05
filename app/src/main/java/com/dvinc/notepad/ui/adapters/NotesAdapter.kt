@@ -5,7 +5,6 @@
 
 package com.dvinc.notepad.ui.adapters
 
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,23 +13,26 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.ui.model.NoteUi
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
-    private var notes: List<Note>? = null
+    private var notes: List<NoteUi>? = null
     private var noteClickListener: (noteId: Long) -> Unit = {}
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = notes?.get(position)
-        holder.name?.text = note?.name
-        holder.content?.text = note?.content
-        holder.updateTime?.text = note?.updateTime
-        holder.markerIcon?.drawable?.mutate()?.
-                setColorFilter(Color.parseColor(note?.markerColor), PorterDuff.Mode.MULTIPLY)
-        holder.markerText?.text = note?.markerText
-
-        holder.itemView.setOnClickListener { noteClickListener.invoke(note?.id ?: 0) }
+        with(holder) {
+            val note = notes?.get(position)
+            name?.text = note?.name
+            content?.text = note?.content
+            updateTime?.text = note?.updateTime
+            //TODO: Refactor this
+            markerIcon?.drawable?.mutate()?.setColorFilter(itemView.context.resources.getColor(
+                    note?.markerType?.markerColor ?: 0),
+                    PorterDuff.Mode.MULTIPLY)
+            markerText?.text = itemView.context.getText(note?.markerType?.markerName ?: 0)
+            itemView.setOnClickListener { noteClickListener.invoke(note?.id ?: 0) }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +52,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
         val markerText = itemView.findViewById<TextView>(R.id.tvNoteTypeText)
     }
 
-    fun setNotes(notes : List<Note>) {
+    fun setNotes(notes: List<NoteUi>) {
         this.notes = notes
         notifyDataSetChanged()
     }

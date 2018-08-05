@@ -25,6 +25,24 @@ class NotePresentationMapper @Inject constructor() {
         return notes.map { fromDomainToUi(it) }
     }
 
+    fun mapMarker(markers: List<MarkerType>): List<MarkerTypeUi> {
+        return markers.map { mapMarker(it) }
+    }
+
+    fun createNote(noteId: Long,
+                   name: String,
+                   content: String,
+                   time: Long,
+                   markerTypeUi: MarkerTypeUi): Note {
+        return Note(
+                id = noteId,
+                name = name,
+                content = content,
+                updateTime = time,
+                markerType = mapMarker(markerTypeUi)
+        )
+    }
+
     private fun fromDomainToUi(note: Note): NoteUi {
         return with(note) {
             NoteUi(
@@ -59,6 +77,15 @@ class NotePresentationMapper @Inject constructor() {
             MarkerType.CRITICAL -> MarkerTypeUi.CRITICAL
             MarkerType.TODO -> MarkerTypeUi.TODO
             MarkerType.IDEA -> MarkerTypeUi.IDEA
+        }
+    }
+
+    private fun mapMarker(marker: MarkerTypeUi): MarkerType {
+        return when (marker) {
+            MarkerTypeUi.NOTE -> MarkerType.NOTE
+            MarkerTypeUi.CRITICAL -> MarkerType.CRITICAL
+            MarkerTypeUi.TODO -> MarkerType.TODO
+            MarkerTypeUi.IDEA -> MarkerType.IDEA
         }
     }
 }

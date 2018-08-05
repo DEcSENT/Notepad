@@ -12,7 +12,6 @@ import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.ui.adapters.NoteMarkersAdapter
 import com.dvinc.notepad.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
@@ -20,6 +19,7 @@ import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import com.dvinc.notepad.common.extension.visible
+import com.dvinc.notepad.ui.model.MarkerTypeUi
 
 class NoteFragment : BaseFragment(), NoteView {
 
@@ -70,7 +70,7 @@ class NoteFragment : BaseFragment(), NoteView {
         }
     }
 
-    override fun showMarkers(markers: List<NoteMarker>) {
+    override fun showMarkers(markers: List<MarkerTypeUi>) {
         val adapter = NoteMarkersAdapter(context, R.layout.item_note_marker, markers)
         spNoteType.adapter = adapter
         restoreSelectedMarker()
@@ -99,7 +99,8 @@ class NoteFragment : BaseFragment(), NoteView {
         } else {
             etNoteName.setText(note.name)
             etNoteContent.setText(note.content)
-            spNoteType.setSelection(note.markerId)
+            //TODO: select marker here
+            //spNoteType.setSelection(note.markerId)
         }
     }
 
@@ -124,9 +125,9 @@ class NoteFragment : BaseFragment(), NoteView {
             val name = etNoteName.text.toString()
             val content = etNoteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerId = spNoteType.selectedItemId.toInt()
+            val markerType = spNoteType.selectedItem as MarkerTypeUi
 
-            presenter.onClickNoteButton(noteId, name, content, currentTime, markerId)
+            presenter.onClickNoteButton(noteId, name, content, currentTime, markerType)
         }
     }
 
