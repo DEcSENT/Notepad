@@ -7,20 +7,20 @@
 
 package com.dvinc.notepad.domain.repository
 
-import com.dvinc.notepad.data.database.entity.NoteEntity
+import com.dvinc.notepad.domain.model.Note
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface NoteRepository {
 
-    fun getNotes(): Flowable<List<NoteEntity>>
+    fun getNotes(): Flowable<List<Note>>
 
-    fun addNote(note: NoteEntity): Completable
+    fun addNote(note: Note): Completable
 
     fun deleteNoteById(id: Int): Completable
 
-    fun updateNote(note: NoteEntity): Completable
+    fun updateNote(note: Note): Completable
 
-    fun getNoteById(id: Long): Single<NoteEntity>
+    fun getNoteById(id: Long): Single<Note>
 }

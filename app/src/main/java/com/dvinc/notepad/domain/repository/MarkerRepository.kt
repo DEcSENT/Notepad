@@ -7,10 +7,10 @@
 
 package com.dvinc.notepad.domain.repository
 
-import com.dvinc.notepad.domain.model.NoteMarker
+import com.dvinc.notepad.domain.model.MarkerType
 import io.reactivex.Single
 
 interface MarkerRepository {
 
-    fun getMarkers(): Single<List<NoteMarker>>
+    fun getMarkers(): Single<List<MarkerType>>
 }
