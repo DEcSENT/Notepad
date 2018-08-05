@@ -11,8 +11,13 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "Notes")
 data class NoteEntity(
-        @PrimaryKey(autoGenerate = true) var id: Long,
-        @ColumnInfo(name = "name") val name: String,
-        @ColumnInfo(name = "content") val content: String,
-        @ColumnInfo(name = "update_time") val updateTime: Long,
-        @ColumnInfo(name = "markerId") val markerId: Int)
+        @PrimaryKey(autoGenerate = true)
+        var id: Long,
+        @ColumnInfo(name = "name")
+        val name: String,
+        @ColumnInfo(name = "content")
+        val content: String,
+        @ColumnInfo(name = "update_time")
+        val updateTime: Long,
+        @ColumnInfo(name = "marker_type")
+        val markerType: MarkerTypeEntity)

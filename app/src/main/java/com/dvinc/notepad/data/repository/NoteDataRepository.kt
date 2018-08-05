@@ -6,7 +6,8 @@
 package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.dao.NoteDao
-import com.dvinc.notepad.data.database.entity.NoteEntity
+import com.dvinc.notepad.data.mapper.NoteDataMapper
+import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repository.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -15,26 +16,33 @@ import javax.inject.Inject
 
 class NoteDataRepository
 @Inject constructor(
-        private val noteDao: NoteDao
+        private val noteDao: NoteDao,
+        private val noteMapper: NoteDataMapper
 ): NoteRepository {
 
-    override fun getNotes(): Flowable<List<NoteEntity>> {
+    override fun getNotes(): Flowable<List<Note>> {
         return noteDao.getNotes()
+                .map { noteMapper.fromEntityToDomain(it) }
     }
 
-    override fun addNote(note: NoteEntity): Completable {
-        return Completable.fromAction { noteDao.addNote(note) }
+    override fun addNote(note: Note): Completable {
+        return Single.just(noteMapper.fromDomainToEntity(note)).flatMapCompletable {
+            Completable.fromAction { noteDao.addNote(it) }
+        }
     }
 
     override fun deleteNoteById(id: Int): Completable {
         return Completable.fromAction { noteDao.deleteNoteById(id) }
     }
 
-    override fun updateNote(note: NoteEntity): Completable {
-        return Completable.fromAction { noteDao.updateNote(note) }
+    override fun updateNote(note: Note): Completable {
+        return Single.just(noteMapper.fromDomainToEntity(note)).flatMapCompletable {
+            Completable.fromAction { noteDao.updateNote(it) }
+        }
     }
 
-    override fun getNoteById(id: Long): Single<NoteEntity> {
+    override fun getNoteById(id: Long): Single<Note> {
         return Single.fromCallable { noteDao.getNoteById(id) }
+                .map { noteMapper.fromEntityToDomain(it) }
     }
 }
