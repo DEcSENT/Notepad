@@ -1,40 +1,36 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-
 apply from: rootProject.file('dependencies.gradle')
+apply from: rootProject.file('versions.gradle')
 
 //apply from: rootProject.file('jacoco.gradle')
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion versions.compileSdk
     defaultConfig {
-        applicationId "com.dvinc.notepad"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        applicationId versions.appId
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.code
+        versionName versions.name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
             minifyEnabled false
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
     }
 
     kapt {
