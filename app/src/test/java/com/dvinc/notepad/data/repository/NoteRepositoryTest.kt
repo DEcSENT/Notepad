@@ -7,7 +7,6 @@
 
 package com.dvinc.notepad.data.repository
 
-import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.database.dao.NoteDao
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import io.reactivex.Flowable
@@ -23,7 +22,7 @@ import org.mockito.MockitoAnnotations
 class NoteRepositoryTest {
 
     @Mock
-    private lateinit var dataBase: NotepadDatabase
+    private lateinit var noteDao: NoteDao
 
     @Mock
     private lateinit var repository: NoteDataRepository
@@ -37,43 +36,41 @@ class NoteRepositoryTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        repository = NoteDataRepository(dataBase)
+        repository = NoteDataRepository(noteDao)
 
 
-        `when`(dataBase.notesDao()).thenReturn(notesDao)
+        `when`(noteDao.getNotes()).thenReturn(Flowable.just(listOf(testNote)))
 
-        `when`(dataBase.notesDao().getNotes()).thenReturn(Flowable.just(listOf(testNote)))
-
-        `when`(dataBase.notesDao().getNoteById(testId.toLong())).thenReturn(testNote)
+        `when`(noteDao.getNoteById(testId.toLong())).thenReturn(testNote)
     }
 
     @Test
     fun getNotesTest() {
         repository.getNotes()
-        verify(dataBase.notesDao()).getNotes()
+        verify(noteDao).getNotes()
     }
 
     @Test
     fun addNoteTest() {
         repository.addNote(testNote).subscribe()
-        verify(dataBase.notesDao()).addNote(testNote)
+        verify(noteDao).addNote(testNote)
     }
 
     @Test
     fun deleteNoteTest() {
         repository.deleteNoteById(testId).subscribe()
-        verify(dataBase.notesDao()).deleteNoteById(testId)
+        verify(noteDao).deleteNoteById(testId)
     }
 
     @Test
     fun updateNoteTest() {
         repository.updateNote(testNote).subscribe()
-        verify(dataBase.notesDao()).updateNote(testNote)
+        verify(noteDao).updateNote(testNote)
     }
 
     @Test
     fun getNoteByIdTest() {
         repository.getNoteById(testId.toLong()).subscribe()
-        verify(dataBase.notesDao()).getNoteById(testId.toLong())
+        verify(noteDao).getNoteById(testId.toLong())
     }
 }
