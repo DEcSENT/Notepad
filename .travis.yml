@@ -13,10 +13,6 @@ android:
   - sys-img-armeabi-v7a-android-19
   - sys-img-armeabi-v7a-android-21
   - sys-img-armeabi-v7a-android-25
-  licences :
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
 
 #Defining android targets
 env:
@@ -44,4 +40,9 @@ before_install:
 install:
   - chmod +x ./gradlew
 
-script: ./gradlew clean assembleDebug
+script:
+  - ./gradlew check
+  - ./gradlew jacocoTestReport
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
