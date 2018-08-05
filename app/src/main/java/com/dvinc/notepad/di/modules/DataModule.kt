@@ -8,8 +8,8 @@
 package com.dvinc.notepad.di.modules
 
 import com.dvinc.notepad.data.database.NotepadDatabase
-import com.dvinc.notepad.data.repositories.MarkersDataRepository
-import com.dvinc.notepad.data.repositories.NotesDataRepository
+import com.dvinc.notepad.data.repository.MarkersDataRepository
+import com.dvinc.notepad.data.repository.NotesDataRepository
 import com.dvinc.notepad.domain.repositories.MarkersRepository
 import com.dvinc.notepad.domain.repositories.NotesRepository
 import dagger.Module

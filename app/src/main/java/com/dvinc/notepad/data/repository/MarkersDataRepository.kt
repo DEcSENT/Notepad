@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.repositories
+package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.domain.repositories.MarkersRepository

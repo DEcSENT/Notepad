@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.repositories
+package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.database.dao.NoteDao
