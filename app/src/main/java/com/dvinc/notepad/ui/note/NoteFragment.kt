@@ -102,8 +102,8 @@ class NoteFragment : BaseFragment(), NoteView {
         } else {
             etNoteName.setText(note.name)
             etNoteContent.setText(note.content)
-            //TODO: select marker here
-            //spNoteType.setSelection(note.markerId)
+            //TODO: Think about this - using ordinal isn't good idea
+            spNoteType.setSelection(note.markerType.ordinal)
         }
     }
 
