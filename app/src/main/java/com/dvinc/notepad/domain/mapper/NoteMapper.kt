@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.mappers
+package com.dvinc.notepad.domain.mapper
 
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.model.Note

@@ -1,4 +1,4 @@
-package com.dvinc.notepad.domain.mappers
+package com.dvinc.notepad.domain.mapper
 
 import com.dvinc.notepad.domain.model.NoteMarker
 import org.junit.Test

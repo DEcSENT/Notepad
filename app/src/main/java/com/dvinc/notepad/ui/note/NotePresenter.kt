@@ -5,20 +5,20 @@
 
 package com.dvinc.notepad.ui.note
 
-import com.dvinc.notepad.domain.interactors.NotesInteractor
+import com.dvinc.notepad.domain.usecase.NoteUseCase
 import com.dvinc.notepad.ui.base.BasePresenter
 import javax.inject.Inject
 
 class NotePresenter
 @Inject constructor(
-        private val notesInteractor: NotesInteractor
+        private val noteUseCase: NoteUseCase
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
         if (noteId != null && noteId != 0L) {
-            addSubscription(notesInteractor.getNoteMarkers()
+            addSubscription(noteUseCase.getNoteMarkers()
                     .doOnSuccess { view?.showMarkers(it) }
-                    .flatMap { notesInteractor.getNoteById(noteId) }
+                    .flatMap { noteUseCase.getNoteById(noteId) }
                     .subscribe(
                             {
                                 view?.showNote(it)
@@ -27,7 +27,7 @@ class NotePresenter
                             { view?.showError(it.localizedMessage) }
                     ))
         } else {
-            addSubscription(notesInteractor.getNoteMarkers()
+            addSubscription(noteUseCase.getNoteMarkers()
                     .subscribe(
                             {
                                 view?.showMarkers(it)
@@ -45,7 +45,7 @@ class NotePresenter
             time: Long,
             markerId: Int) {
         if (isNoteNameNotEmpty(name)) {
-            addSubscription(notesInteractor.addNoteInfo(noteId, name, content, time, markerId)
+            addSubscription(noteUseCase.addNoteInfo(noteId, name, content, time, markerId)
                     .subscribe(
                             { view?.closeScreen() },
                             { view?.showError(it.localizedMessage) }

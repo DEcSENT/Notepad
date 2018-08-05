@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.ui.notepad
 
-import com.dvinc.notepad.domain.interactors.NotepadInteractor
+import com.dvinc.notepad.domain.usecase.NotepadUseCase
 import com.dvinc.notepad.ui.base.BasePresenter
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,11 +13,11 @@ import javax.inject.Singleton
 @Singleton
 class NotepadPresenter
 @Inject constructor(
-        private val notepadInteractor: NotepadInteractor
+        private val notepadUseCase: NotepadUseCase
 ) : BasePresenter<NotepadView>() {
 
     fun initNotes() {
-        addSubscription(notepadInteractor.getNotes().subscribe(
+        addSubscription(notepadUseCase.getNotes().subscribe(
                 { notes ->
                     view?.setEmptyView(notes.isEmpty())
                     view?.showNotes(notes)
@@ -27,7 +27,7 @@ class NotepadPresenter
 
     //TODO: Add message provider
     fun deleteNote(noteId: Int) {
-        addSubscription(notepadInteractor.deleteNote(noteId).subscribe(
+        addSubscription(notepadUseCase.deleteNote(noteId).subscribe(
                 { view?.showMessage("Note successfully deleted") },
                 { error -> view?.showError(error.localizedMessage) }
         ))
