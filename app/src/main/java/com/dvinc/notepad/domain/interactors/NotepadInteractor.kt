@@ -12,22 +12,22 @@ import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
-import com.dvinc.notepad.domain.repositories.MarkersRepository
-import com.dvinc.notepad.domain.repositories.NotesRepository
+import com.dvinc.notepad.domain.repository.MarkerRepository
+import com.dvinc.notepad.domain.repository.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 class NotepadInteractor @Inject constructor(
-        private val notesRepository: NotesRepository,
-        private val markersRepository: MarkersRepository,
+        private val noteRepository: NoteRepository,
+        private val markerRepository: MarkerRepository,
         private val noteMapper: NoteMapper
 ) {
 
     fun getNotes(): Flowable<List<Note>> {
-        return notesRepository.getNotes()
-                .zipWith(markersRepository.getMarkers().toFlowable(), BiFunction<List<NoteEntity>, List<NoteMarker>, List<Note>>
+        return noteRepository.getNotes()
+                .zipWith(markerRepository.getMarkers().toFlowable(), BiFunction<List<NoteEntity>, List<NoteMarker>, List<Note>>
                 { entity, markers ->
                     noteMapper.mapEntitiesToNotes(entity, markers)
                 })
@@ -35,7 +35,7 @@ class NotepadInteractor @Inject constructor(
     }
 
     fun deleteNote(noteId: Int): Completable {
-        return notesRepository.deleteNoteById(noteId)
+        return noteRepository.deleteNoteById(noteId)
                 .applyIoToMainSchedulers()
     }
 }

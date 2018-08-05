@@ -10,8 +10,8 @@ package com.dvinc.notepad.di.modules
 import com.dvinc.notepad.domain.interactors.NotepadInteractor
 import com.dvinc.notepad.domain.interactors.NotesInteractor
 import com.dvinc.notepad.domain.mappers.NoteMapper
-import com.dvinc.notepad.domain.repositories.MarkersRepository
-import com.dvinc.notepad.domain.repositories.NotesRepository
+import com.dvinc.notepad.domain.repository.MarkerRepository
+import com.dvinc.notepad.domain.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
 
@@ -20,15 +20,15 @@ class InteractorModule {
 
     @Provides
     fun provideNotesInteractor(
-            notesRepository: NotesRepository,
-            markersRepository: MarkersRepository,
+            noteRepository: NoteRepository,
+            markerRepository: MarkerRepository,
             noteMapper: NoteMapper
-    ): NotesInteractor = NotesInteractor(notesRepository, markersRepository, noteMapper)
+    ): NotesInteractor = NotesInteractor(noteRepository, markerRepository, noteMapper)
 
     @Provides
     fun provideNotepadInteractor(
-            notesRepository: NotesRepository,
-            markersRepository: MarkersRepository,
+            noteRepository: NoteRepository,
+            markerRepository: MarkerRepository,
             noteMapper: NoteMapper
-    ): NotepadInteractor = NotepadInteractor(notesRepository, markersRepository, noteMapper)
+    ): NotepadInteractor = NotepadInteractor(noteRepository, markerRepository, noteMapper)
 }

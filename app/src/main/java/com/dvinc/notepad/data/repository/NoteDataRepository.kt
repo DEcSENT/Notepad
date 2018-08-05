@@ -7,16 +7,16 @@ package com.dvinc.notepad.data.repository
 
 import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.database.entity.NoteEntity
-import com.dvinc.notepad.domain.repositories.NotesRepository
+import com.dvinc.notepad.domain.repository.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class NotesDataRepository
+class NoteDataRepository
 @Inject constructor(
         private val database: NotepadDatabase
-): NotesRepository {
+): NoteRepository {
 
     override fun getNotes(): Flowable<List<NoteEntity>> {
         return database.notesDao().getNotes()

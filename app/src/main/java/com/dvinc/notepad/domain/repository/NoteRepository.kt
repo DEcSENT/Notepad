@@ -5,14 +5,14 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.repositories
+package com.dvinc.notepad.domain.repository
 
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-interface NotesRepository {
+interface NoteRepository {
 
     fun getNotes(): Flowable<List<NoteEntity>>
 

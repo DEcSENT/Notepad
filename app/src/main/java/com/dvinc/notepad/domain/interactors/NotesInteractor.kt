@@ -12,8 +12,8 @@ import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.mappers.NoteMapper
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
-import com.dvinc.notepad.domain.repositories.MarkersRepository
-import com.dvinc.notepad.domain.repositories.NotesRepository
+import com.dvinc.notepad.domain.repository.MarkerRepository
+import com.dvinc.notepad.domain.repository.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -25,14 +25,14 @@ import javax.inject.Inject
  */
 class NotesInteractor
 @Inject constructor(
-        private val notesRepository: NotesRepository,
-        private val markersRepository: MarkersRepository,
+        private val noteRepository: NoteRepository,
+        private val markerRepository: MarkerRepository,
         private val noteMapper: NoteMapper
 ){
 
     fun getNoteById(id: Long): Single<Note> {
-        return notesRepository.getNoteById(id)
-                .zipWith(markersRepository.getMarkers(), BiFunction<NoteEntity, List<NoteMarker>, Note>
+        return noteRepository.getNoteById(id)
+                .zipWith(markerRepository.getMarkers(), BiFunction<NoteEntity, List<NoteMarker>, Note>
                 { entity, markers ->
                     noteMapper.mapEntityToNote(entity, markers)
                 })
@@ -40,7 +40,7 @@ class NotesInteractor
     }
 
     fun getNoteMarkers(): Single<List<NoteMarker>> {
-        return markersRepository.getMarkers()
+        return markerRepository.getMarkers()
     }
 
     fun addNoteInfo(
@@ -51,11 +51,11 @@ class NotesInteractor
             markerId: Int
     ): Completable {
         return if (noteId != null && noteId != 0L) {
-            notesRepository.updateNote(
+            noteRepository.updateNote(
                     noteMapper.createEntity(name, content, time, markerId, noteId))
                     .applyIoToMainSchedulers()
         } else {
-            notesRepository.addNote(
+            noteRepository.addNote(
                     noteMapper.createEntity(name, content, time, markerId))
                     .applyIoToMainSchedulers()
         }

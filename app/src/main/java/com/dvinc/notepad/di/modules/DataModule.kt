@@ -8,10 +8,10 @@
 package com.dvinc.notepad.di.modules
 
 import com.dvinc.notepad.data.database.NotepadDatabase
-import com.dvinc.notepad.data.repository.MarkersDataRepository
-import com.dvinc.notepad.data.repository.NotesDataRepository
-import com.dvinc.notepad.domain.repositories.MarkersRepository
-import com.dvinc.notepad.domain.repositories.NotesRepository
+import com.dvinc.notepad.data.repository.MarkerDataRepository
+import com.dvinc.notepad.data.repository.NoteDataRepository
+import com.dvinc.notepad.domain.repository.MarkerRepository
+import com.dvinc.notepad.domain.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
 
@@ -21,8 +21,8 @@ class DataModule {
     @Provides
     fun provideNotesRepository(
             database: NotepadDatabase
-    ): NotesRepository = NotesDataRepository(database)
+    ): NoteRepository = NoteDataRepository(database)
 
     @Provides
-    fun providesMarkersRepository(): MarkersRepository = MarkersDataRepository()
+    fun providesMarkersRepository(): MarkerRepository = MarkerDataRepository()
 }

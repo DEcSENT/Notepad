@@ -20,13 +20,13 @@ import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 @RunWith(JUnit4::class)
-class NotesRepositoryTest {
+class NoteRepositoryTest {
 
     @Mock
     private lateinit var dataBase: NotepadDatabase
 
     @Mock
-    private lateinit var repository: NotesDataRepository
+    private lateinit var repository: NoteDataRepository
 
     @Mock
     private lateinit var notesDao: NoteDao
@@ -37,7 +37,7 @@ class NotesRepositoryTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        repository = NotesDataRepository(dataBase)
+        repository = NoteDataRepository(dataBase)
 
 
         `when`(dataBase.notesDao()).thenReturn(notesDao)

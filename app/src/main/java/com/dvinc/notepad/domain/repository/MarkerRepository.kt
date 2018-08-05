@@ -5,12 +5,12 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.repositories
+package com.dvinc.notepad.domain.repository
 
 import com.dvinc.notepad.domain.model.NoteMarker
 import io.reactivex.Single
 
-interface MarkersRepository {
+interface MarkerRepository {
 
     fun getMarkers(): Single<List<NoteMarker>>
 }
