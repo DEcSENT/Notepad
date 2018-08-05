@@ -37,6 +37,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
         setupToolbar()
         setupNoteButton()
+        setupEditNoteButton()
     }
 
     override fun onResume() {
@@ -87,9 +88,11 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun setEditMode(isEditMode: Boolean) {
         groupNote.visible(true)
         if (isEditMode) {
-            btAddNote.setText(R.string.note_edit)
+            btAddNote.visibility = View.INVISIBLE
+            btEditNote.visibility = View.VISIBLE
         } else {
-            btAddNote.setText(R.string.note_add)
+            btAddNote.visibility = View.VISIBLE
+            btEditNote.visibility = View.INVISIBLE
         }
     }
 
@@ -127,7 +130,18 @@ class NoteFragment : BaseFragment(), NoteView {
             val currentTime = System.currentTimeMillis()
             val markerType = spNoteType.selectedItem as MarkerTypeUi
 
-            presenter.onClickNoteButton(noteId, name, content, currentTime, markerType)
+            presenter.onClickNoteButton(name, content, currentTime, markerType)
+        }
+    }
+
+    private fun setupEditNoteButton() {
+        btEditNote.setOnClickListener {
+            val name = etNoteName.text.toString()
+            val content = etNoteContent.text.toString()
+            val currentTime = System.currentTimeMillis()
+            val markerType = spNoteType.selectedItem as MarkerTypeUi
+
+            presenter.onClickEditNoteButton(noteId, name, content, currentTime, markerType)
         }
     }
 

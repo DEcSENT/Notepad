@@ -31,7 +31,7 @@ class NoteUseCase
         return markerRepository.getMarkers()
     }
 
-    fun addNoteInfo(note: Note): Completable {
+    fun addNote(note: Note): Completable {
         return noteRepository.addNote(note)
                 .applyIoToMainSchedulers()
     }

@@ -44,19 +44,35 @@ class NotePresenter
     }
 
     fun onClickNoteButton(
-            noteId: Long?,
             name: String,
             content: String,
             time: Long,
-            markerTypeUi: MarkerTypeUi) {
+            markerTypeUi: MarkerTypeUi,
+            noteId: Long = 0) {
         if (isNoteNameNotEmpty(name)) {
-            //TODO: update and adding logic
-            val newNote = noteMapper.createNote(noteId ?: 0, name, content, time, markerTypeUi)
-            addSubscription(noteUseCase.addNoteInfo(newNote)
+            val newNote = noteMapper.createNote(noteId, name, content, time, markerTypeUi)
+            addSubscription(noteUseCase.addNote(newNote)
                     .subscribe(
                             { view?.closeScreen() },
                             { view?.showError(it.localizedMessage) }
                     ))
+        }
+    }
+
+    fun onClickEditNoteButton(noteId: Long?,
+                              name: String,
+                              content: String,
+                              time: Long,
+                              markerTypeUi: MarkerTypeUi) {
+        if (isNoteNameNotEmpty(name)) {
+            noteId?.let {
+                val newNote = noteMapper.createNote(noteId, name, content, time, markerTypeUi)
+                addSubscription(noteUseCase.updateNote(newNote)
+                        .subscribe(
+                                { view?.closeScreen() },
+                                { view?.showError(it.localizedMessage) }
+                        ))
+            }
         }
     }
 
