@@ -12,8 +12,9 @@ import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.model.NoteMarker
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class NoteMapper {
+class NoteMapper @Inject constructor() {
 
     private val sdfToday = SimpleDateFormat("HH:mm", Locale.getDefault())
     private val sdfWeek = SimpleDateFormat("d MMM", Locale.getDefault())

@@ -3,19 +3,19 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.di.components
+package com.dvinc.notepad.di.component
 
-import com.dvinc.notepad.di.modules.AppModule
-import com.dvinc.notepad.di.modules.DataModule
-import com.dvinc.notepad.di.modules.InteractorModule
-import com.dvinc.notepad.di.modules.MapperModule
+import com.dvinc.notepad.di.module.AppModule
+import com.dvinc.notepad.di.module.DataModule
 import com.dvinc.notepad.ui.note.NoteFragment
 import com.dvinc.notepad.ui.notepad.NotepadFragment
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class, InteractorModule::class, DataModule::class, MapperModule::class))
+@Component(modules = [
+    AppModule::class,
+    DataModule::class])
 interface AppComponent {
     fun inject(notepadFragment: NotepadFragment)
     fun inject(noteFragment: NoteFragment)

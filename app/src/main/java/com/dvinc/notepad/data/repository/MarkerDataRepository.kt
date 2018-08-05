@@ -10,8 +10,9 @@ package com.dvinc.notepad.data.repository
 import com.dvinc.notepad.domain.model.NoteMarker
 import com.dvinc.notepad.domain.repository.MarkerRepository
 import io.reactivex.Single
+import javax.inject.Inject
 
-class MarkerDataRepository : MarkerRepository {
+class MarkerDataRepository @Inject constructor() : MarkerRepository {
 
     override fun getMarkers(): Single<List<NoteMarker>> {
         return Single.just(obtainMarkers())

@@ -5,24 +5,22 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.di.modules
+package com.dvinc.notepad.di.module
 
-import com.dvinc.notepad.data.database.NotepadDatabase
 import com.dvinc.notepad.data.repository.MarkerDataRepository
 import com.dvinc.notepad.data.repository.NoteDataRepository
 import com.dvinc.notepad.domain.repository.MarkerRepository
 import com.dvinc.notepad.domain.repository.NoteRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
-class DataModule {
+interface DataModule {
 
-    @Provides
-    fun provideNotesRepository(
-            database: NotepadDatabase
-    ): NoteRepository = NoteDataRepository(database)
+    @Binds
+    fun provideNoteRepository(repository: NoteDataRepository): NoteRepository
 
-    @Provides
-    fun providesMarkersRepository(): MarkerRepository = MarkerDataRepository()
+
+    @Binds
+    fun provideMarkerRepository(repository: MarkerDataRepository): MarkerRepository
 }
