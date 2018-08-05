@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.data.repository
 
-import com.dvinc.notepad.data.database.NotepadDatabase
+import com.dvinc.notepad.data.database.dao.NoteDao
 import com.dvinc.notepad.data.database.entity.NoteEntity
 import com.dvinc.notepad.domain.repository.NoteRepository
 import io.reactivex.Completable
@@ -15,26 +15,26 @@ import javax.inject.Inject
 
 class NoteDataRepository
 @Inject constructor(
-        private val database: NotepadDatabase
+        private val noteDao: NoteDao
 ): NoteRepository {
 
     override fun getNotes(): Flowable<List<NoteEntity>> {
-        return database.notesDao().getNotes()
+        return noteDao.getNotes()
     }
 
     override fun addNote(note: NoteEntity): Completable {
-        return Completable.fromAction { database.notesDao().addNote(note) }
+        return Completable.fromAction { noteDao.addNote(note) }
     }
 
     override fun deleteNoteById(id: Int): Completable {
-        return Completable.fromAction { database.notesDao().deleteNoteById(id) }
+        return Completable.fromAction { noteDao.deleteNoteById(id) }
     }
 
     override fun updateNote(note: NoteEntity): Completable {
-        return Completable.fromAction { database.notesDao().updateNote(note) }
+        return Completable.fromAction { noteDao.updateNote(note) }
     }
 
     override fun getNoteById(id: Long): Single<NoteEntity> {
-        return Single.fromCallable { database.notesDao().getNoteById(id) }
+        return Single.fromCallable { noteDao.getNoteById(id) }
     }
 }
