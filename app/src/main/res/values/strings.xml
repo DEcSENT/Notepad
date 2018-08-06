@@ -15,4 +15,9 @@
 
     <string name="notepad_toolbar_header">Notepad</string>
     <string name="message_empty_note_name">This field can not be blank</string>
+
+    <string name="marker_note_type">Note</string>
+    <string name="marker_critical_type">Critical</string>
+    <string name="marker_todo_type">ToDo</string>
+    <string name="marker_idea_type">Idea</string>
 </resources>

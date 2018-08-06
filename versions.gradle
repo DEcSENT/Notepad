@@ -1,0 +1,14 @@
+ext.versions = [
+
+        appId : 'com.dvinc.notepad',
+
+        compileSdk : 27,
+
+        minSdk   : 19,
+
+        targetSdk: 27,
+
+        code     : 1,
+
+        name     : '0.0.1'
+]

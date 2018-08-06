@@ -6,9 +6,9 @@
 package com.dvinc.notepad
 
 import android.app.Application
-import com.dvinc.notepad.di.components.AppComponent
-import com.dvinc.notepad.di.components.DaggerAppComponent
-import com.dvinc.notepad.di.modules.AppModule
+import com.dvinc.notepad.di.component.AppComponent
+import com.dvinc.notepad.di.component.DaggerAppComponent
+import com.dvinc.notepad.di.module.AppModule
 import com.facebook.stetho.Stetho
 
 class NotepadApplication : Application() {
@@ -25,5 +25,5 @@ class NotepadApplication : Application() {
     private fun buildDi() = DaggerAppComponent
             .builder()
             .appModule(AppModule(this))
-            .build();
+            .build()
 }
