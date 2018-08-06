@@ -12,7 +12,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
-@RunWith(JUnit4::class)
 class MarkerDataRepositoryTest {
 
     @Mock

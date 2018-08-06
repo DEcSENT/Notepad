@@ -11,11 +11,9 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
-@RunWith(JUnit4::class)
 class NoteDataRepositoryTest {
 
     @Mock
@@ -57,9 +55,9 @@ class NoteDataRepositoryTest {
         repository.getNotes()
                 .test()
                 .assertNoErrors()
-                .assertValue(listOf(note))
+                .assertValue(noteList)
 
-        verify(noteMapper).fromEntityToDomain(entityList)
+        verify(noteMapper, times(1)).fromEntityToDomain(entityList)
     }
 
     @Test
@@ -69,7 +67,7 @@ class NoteDataRepositoryTest {
                 .assertNoErrors()
                 .assertComplete()
 
-        verify(noteMapper).fromDomainToEntity(note)
+        verify(noteMapper, times(1)).fromDomainToEntity(note)
     }
 
     @Test
@@ -87,7 +85,7 @@ class NoteDataRepositoryTest {
                 .assertNoErrors()
                 .assertComplete()
 
-        verify(noteMapper).fromDomainToEntity(note)
+        verify(noteMapper, times(1)).fromDomainToEntity(note)
     }
 
     @Test
@@ -97,6 +95,6 @@ class NoteDataRepositoryTest {
                 .assertNoErrors()
                 .assertValue(note)
 
-        verify(noteMapper).fromEntityToDomain(noteEntity)
+        verify(noteMapper, times(1)).fromEntityToDomain(noteEntity)
     }
 }
