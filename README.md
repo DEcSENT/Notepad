@@ -1,6 +1,8 @@
 # **Notepad**
 
-[![Build Status](https://travis-ci.org/DEcSENT/Notepad.svg?branch=master)](https://travis-ci.org/DEcSENT/Notepad)
+[![Build Status](https://travis-ci.org/DEcSENT/Notepad.svg?branch=master)](https://travis-ci.org/DEcSENT/Notepad) 
+[![codecov](https://codecov.io/gh/DEcSENT/Notepad/branch/master/graph/badge.svg)](https://codecov.io/gh/DEcSENT/Notepad)
+
 
 Notepad application for fast and simple writing and interaction with user notes.
 Work in progress.
