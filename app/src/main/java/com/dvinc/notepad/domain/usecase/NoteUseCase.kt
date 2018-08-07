@@ -7,7 +7,8 @@
 
 package com.dvinc.notepad.domain.usecase
 
-import com.dvinc.notepad.common.extension.applyIoToMainSchedulers
+import com.dvinc.notepad.domain.common.execution.ThreadScheduler
+import com.dvinc.notepad.domain.common.execution.scheduleIoToUi
 import com.dvinc.notepad.domain.model.MarkerType
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repository.MarkerRepository
@@ -16,15 +17,15 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class NoteUseCase
-@Inject constructor(
+class NoteUseCase @Inject constructor(
         private val noteRepository: NoteRepository,
-        private val markerRepository: MarkerRepository
+        private val markerRepository: MarkerRepository,
+        private val scheduler: ThreadScheduler
 ){
 
     fun getNoteById(id: Long): Single<Note> {
         return noteRepository.getNoteById(id)
-                .applyIoToMainSchedulers()
+                .scheduleIoToUi(scheduler)
     }
 
     fun getNoteMarkers(): Single<List<MarkerType>> {
@@ -33,11 +34,11 @@ class NoteUseCase
 
     fun addNote(note: Note): Completable {
         return noteRepository.addNote(note)
-                .applyIoToMainSchedulers()
+                .scheduleIoToUi(scheduler)
     }
 
     fun updateNote(note: Note): Completable {
         return noteRepository.updateNote(note)
-                .applyIoToMainSchedulers()
+                .scheduleIoToUi(scheduler)
     }
 }
