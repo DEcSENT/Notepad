@@ -51,12 +51,25 @@ class NotepadPresenterTest {
     }
 
     @Test
+    fun `check view is attached`() {
+        assert(presenter.view != null)
+    }
+
+    @Test
+    fun `check view is detached`() {
+        presenter.detachView()
+
+        assert(presenter.view == null)
+    }
+
+    @Test
     fun initNotes() {
         presenter.initNotes()
 
         verify(notepadUseCase, times(1)).getNotes()
         verify(noteMapper, times(1)).fromDomainToUi(noteList)
         verify(view, times(1)).showNotes(noteUiList)
+        verify(view, times(0)).showError(anyString())
     }
 
     @Test
@@ -66,6 +79,8 @@ class NotepadPresenterTest {
         presenter.initNotes()
 
         verify(view, times(1)).setEmptyView(emptyList<NoteUi>().isEmpty())
+        verify(view, times(1)).showNotes(emptyList())
+        verify(view, times(0)).showError(anyString())
     }
 
     @Test
@@ -74,8 +89,10 @@ class NotepadPresenterTest {
 
         presenter.initNotes()
 
+        verify(view, times(0)).showNotes(noteUiList)
+        verify(view, times(0)).showMessage(anyString())
         //Replace this hardcode then message provider will be ready
-        verify(view).showError("What?!")
+        verify(view, times(1)).showError("What?!")
     }
 
     @Test
@@ -86,6 +103,7 @@ class NotepadPresenterTest {
 
         //Replace this hardcode then message provider will be ready
         verify(view, times(1)).showMessage("Note successfully deleted")
+        verify(view, times(0)).showError(anyString())
     }
 
     @Test
@@ -94,6 +112,7 @@ class NotepadPresenterTest {
 
         presenter.deleteNote(anyInt())
 
+        verify(view, times(0)).showMessage(anyString())
         //Replace this hardcode then message provider will be ready
         verify(view, times(1)).showError("What?!")
     }
