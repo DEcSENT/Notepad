@@ -66,6 +66,7 @@ class NotepadPresenterTest {
     fun initNotes() {
         presenter.initNotes()
 
+        assert(presenter.view != null)
         verify(notepadUseCase, times(1)).getNotes()
         verify(noteMapper, times(1)).fromDomainToUi(noteList)
         verify(view, times(1)).showNotes(noteUiList)
@@ -78,6 +79,7 @@ class NotepadPresenterTest {
 
         presenter.initNotes()
 
+        assert(presenter.view != null)
         verify(view, times(1)).setEmptyView(emptyList<NoteUi>().isEmpty())
         verify(view, times(1)).showNotes(emptyList())
         verify(view, times(0)).showError(anyString())
@@ -89,6 +91,7 @@ class NotepadPresenterTest {
 
         presenter.initNotes()
 
+        assert(presenter.view != null)
         verify(view, times(0)).showNotes(noteUiList)
         verify(view, times(0)).showMessage(anyString())
         //Replace this hardcode then message provider will be ready
@@ -101,6 +104,7 @@ class NotepadPresenterTest {
 
         presenter.deleteNote(anyInt())
 
+        assert(presenter.view != null)
         //Replace this hardcode then message provider will be ready
         verify(view, times(1)).showMessage("Note successfully deleted")
         verify(view, times(0)).showError(anyString())
@@ -112,6 +116,7 @@ class NotepadPresenterTest {
 
         presenter.deleteNote(anyInt())
 
+        assert(presenter.view != null)
         verify(view, times(0)).showMessage(anyString())
         //Replace this hardcode then message provider will be ready
         verify(view, times(1)).showError("What?!")
@@ -121,6 +126,7 @@ class NotepadPresenterTest {
     fun onNoteSwiped() {
         presenter.onNoteSwiped(0, 1)
 
+        assert(presenter.view != null)
         verify(view, times(1)).showDeleteNoteDialog(0, 1)
     }
 }
