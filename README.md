@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/DEcSENT/Notepad.svg?branch=master)](https://travis-ci.org/DEcSENT/Notepad) 
 [![codecov](https://codecov.io/gh/DEcSENT/Notepad/branch/master/graph/badge.svg)](https://codecov.io/gh/DEcSENT/Notepad)
-
+[![codebeat badge](https://codebeat.co/badges/62f7e4cf-c3e2-41c1-be0f-4c1864082b94)](https://codebeat.co/projects/github-com-decsent-notepad-master)
 
 Notepad application for fast and simple writing and interaction with user notes.
 Work in progress.
@@ -30,13 +30,16 @@ Work in progress.
 ### Other
 
 - Travis CI
-- Few tests
+- Unit tests
+- Codecoverage
+- Codebeat static analysis
 
 ### What next
 
 - Bug fix and optimization
 - UI and unit tests
 - User profile and synchronization with cloud
+- Security
 
 ### Screens
 
