@@ -9,9 +9,7 @@ import com.dvinc.notepad.domain.usecase.NotepadUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class NotepadPresenter
 @Inject constructor(
         private val notepadUseCase: NotepadUseCase,
@@ -31,10 +29,11 @@ class NotepadPresenter
 
     //TODO: Add message provider
     fun deleteNote(noteId: Int) {
-        addSubscription(notepadUseCase.deleteNote(noteId).subscribe(
-                { view?.showMessage("Note successfully deleted") },
-                { error -> view?.showError(error.localizedMessage) }
-        ))
+        addSubscription(notepadUseCase.deleteNote(noteId)
+                .subscribe(
+                        { view?.showMessage("Note successfully deleted") },
+                        { error -> view?.showError(error.localizedMessage) }
+                ))
     }
 
     fun onNoteSwiped(swipedNoteId: Int, swipedItemPosition: Int) {
