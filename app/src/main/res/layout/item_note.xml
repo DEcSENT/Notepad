@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp"
-    android:layout_marginEnd="4dp"
     android:layout_marginStart="4dp"
     android:layout_marginTop="2dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="2dp"
     android:background="@drawable/bg_item_note">
 
     <android.support.constraint.ConstraintLayout
@@ -19,12 +19,12 @@
             style="@style/item_note_header_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/tvNoteTypeText"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNoteUpdatedTime"
             tools:text="Note 1" />
 
         <ImageView
@@ -32,8 +32,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_note_type"
             android:contentDescription="@string/note_item_icon_description"
+            android:src="@drawable/ic_note_type"
             app:layout_constraintBottom_toBottomOf="@+id/tvNoteTypeText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvNoteTypeText" />
@@ -43,32 +43,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNoteName"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNoteUpdatedTime"
             app:layout_constraintEnd_toStartOf="@+id/ivNoteTypeIcon"
-            app:layout_constraintTop_toTopOf="@+id/tvNoteName"
+            app:layout_constraintTop_toTopOf="@+id/tvNoteUpdatedTime"
             tools:text="ToDo" />
 
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@color/colorDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNoteUpdatedTime">
-        </View>
+            app:layout_constraintTop_toBottomOf="@+id/tvNoteName" />
 
         <TextView
             android:id="@+id/tvNoteContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +84,7 @@
             android:layout_marginTop="8dp"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNoteName"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="21.12.12 12:10" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
