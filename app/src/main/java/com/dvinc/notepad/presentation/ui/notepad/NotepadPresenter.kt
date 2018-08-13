@@ -5,15 +5,17 @@
 
 package com.dvinc.notepad.presentation.ui.notepad
 
+import com.dvinc.notepad.R
+import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.NotepadUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import javax.inject.Inject
 
-class NotepadPresenter
-@Inject constructor(
+class NotepadPresenter @Inject constructor(
         private val notepadUseCase: NotepadUseCase,
-        private val noteMapper: NotePresentationMapper
+        private val noteMapper: NotePresentationMapper,
+        private val resourceProvider: ResourceProvider
 ) : BasePresenter<NotepadView>() {
 
     fun initNotes() {
@@ -27,11 +29,10 @@ class NotepadPresenter
                         { error -> view?.showError(error.localizedMessage) }))
     }
 
-    //TODO: Add message provider
     fun deleteNote(noteId: Int) {
         addSubscription(notepadUseCase.deleteNote(noteId)
                 .subscribe(
-                        { view?.showMessage("Note successfully deleted") },
+                        { view?.showMessage(resourceProvider.getString(R.string.note_successfully_deleted)) },
                         { error -> view?.showError(error.localizedMessage) }
                 ))
     }

@@ -1,5 +1,6 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
+import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.usecase.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
@@ -30,17 +31,22 @@ class NotepadPresenterTest {
     @Mock
     private lateinit var view: NotepadView
 
+    @Mock
+    private lateinit var resProvider: ResourceProvider
+
     private lateinit var presenter: NotepadPresenter
 
     private lateinit var noteList: List<Note>
 
     private lateinit var noteUiList: List<NoteUi>
 
+    private val testText = "Test"
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        presenter = NotepadPresenter(notepadUseCase, noteMapper)
+        presenter = NotepadPresenter(notepadUseCase, noteMapper, resProvider)
         presenter.attachView(view)
 
         noteList = listOf(note, note)
@@ -48,6 +54,7 @@ class NotepadPresenterTest {
 
         `when`(notepadUseCase.getNotes()).thenReturn(Flowable.just(noteList))
         `when`(noteMapper.fromDomainToUi(noteList)).thenReturn(noteUiList)
+        `when`(resProvider.getString(anyInt())).thenReturn(testText)
     }
 
     @Test
@@ -105,8 +112,8 @@ class NotepadPresenterTest {
         presenter.deleteNote(anyInt())
 
         assert(presenter.view != null)
-        //Replace this hardcode then message provider will be ready
-        verify(view, times(1)).showMessage("Note successfully deleted")
+        verify(view, times(1)).showMessage(testText)
+        verify(resProvider).getString(anyInt())
         verify(view, times(0)).showError(anyString())
     }
 

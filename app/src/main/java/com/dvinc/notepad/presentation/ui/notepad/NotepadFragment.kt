@@ -66,7 +66,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showDeleteNoteDialog(notePosition: Int, swipedItemPosition: Int) {

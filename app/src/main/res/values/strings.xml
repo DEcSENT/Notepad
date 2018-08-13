@@ -4,7 +4,6 @@
     <string name="new_note_content">Enter content…</string>
     <string name="note_add">Add</string>
     <string name="note_edit">Edit</string>
-    <string name="note_deleted">Note deleted</string>
     <string name="empty_view">Start with adding new note</string>
     <string name="empty_view_ic_description">Empty view icon</string>
     <string name="dialog_delete_note_header">Delete note?</string>
@@ -20,4 +19,6 @@
     <string name="marker_critical_type">Critical</string>
     <string name="marker_todo_type">ToDo</string>
     <string name="marker_idea_type">Idea</string>
+
+    <string name="note_successfully_deleted">Note deleted</string>
 </resources>
