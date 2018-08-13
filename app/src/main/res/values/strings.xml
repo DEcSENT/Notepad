@@ -21,4 +21,11 @@
     <string name="marker_idea_type">Idea</string>
 
     <string name="note_successfully_deleted">Note deleted</string>
+
+    <string name="error_while_load_data_from_db">An error has occurred while loading from database</string>
+    <string name="error_while_deleting_note">An error has occurred while deleting note</string>
+    <string name="error_while_loading_note">Cannot load note from database</string>
+    <string name="error_while_loading_markers">Cannot load markers from database</string>
+    <string name="error_while_adding_note">Cannot add note</string>
+    <string name="error_while_updating_note">Cannot update note</string>
 </resources>

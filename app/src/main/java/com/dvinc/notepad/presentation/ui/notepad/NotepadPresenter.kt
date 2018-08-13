@@ -15,7 +15,7 @@ import javax.inject.Inject
 class NotepadPresenter @Inject constructor(
         private val notepadUseCase: NotepadUseCase,
         private val noteMapper: NotePresentationMapper,
-        private val resourceProvider: ResourceProvider
+        private val resProvider: ResourceProvider
 ) : BasePresenter<NotepadView>() {
 
     fun initNotes() {
@@ -26,14 +26,14 @@ class NotepadPresenter @Inject constructor(
                             view?.setEmptyView(notes.isEmpty())
                             view?.showNotes(notes)
                         },
-                        { error -> view?.showError(error.localizedMessage) }))
+                        { view?.showError(resProvider.getString(R.string.error_while_load_data_from_db)) }))
     }
 
     fun deleteNote(noteId: Int) {
         addSubscription(notepadUseCase.deleteNote(noteId)
                 .subscribe(
-                        { view?.showMessage(resourceProvider.getString(R.string.note_successfully_deleted)) },
-                        { error -> view?.showError(error.localizedMessage) }
+                        { view?.showMessage(resProvider.getString(R.string.note_successfully_deleted)) },
+                        { view?.showError(resProvider.getString(R.string.error_while_deleting_note)) }
                 ))
     }
 

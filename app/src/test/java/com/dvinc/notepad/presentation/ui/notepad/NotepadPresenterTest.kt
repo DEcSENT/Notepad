@@ -101,8 +101,8 @@ class NotepadPresenterTest {
         assert(presenter.view != null)
         verify(view, times(0)).showNotes(noteUiList)
         verify(view, times(0)).showMessage(anyString())
-        //Replace this hardcode then message provider will be ready
-        verify(view, times(1)).showError("What?!")
+        verify(view, times(1)).showError(testText)
+        verify(resProvider).getString(anyInt())
     }
 
     @Test
@@ -125,8 +125,8 @@ class NotepadPresenterTest {
 
         assert(presenter.view != null)
         verify(view, times(0)).showMessage(anyString())
-        //Replace this hardcode then message provider will be ready
-        verify(view, times(1)).showError("What?!")
+        verify(view, times(1)).showError(testText)
+        verify(resProvider).getString(anyInt())
     }
 
     @Test

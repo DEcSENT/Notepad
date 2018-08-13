@@ -5,6 +5,8 @@
 
 package com.dvinc.notepad.presentation.ui.note
 
+import com.dvinc.notepad.R
+import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.NoteUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 class NotePresenter @Inject constructor(
         private val noteUseCase: NoteUseCase,
-        private val noteMapper: NotePresentationMapper
+        private val noteMapper: NotePresentationMapper,
+        private val resProvider: ResourceProvider
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
@@ -27,7 +30,7 @@ class NotePresenter @Inject constructor(
                                 view?.showNote(it)
                                 view?.setEditMode(true)
                             },
-                            { view?.showError(it.localizedMessage) }
+                            { view?.showError(resProvider.getString(R.string.error_while_loading_note)) }
                     ))
         } else {
             addSubscription(noteUseCase.getNoteMarkers()
@@ -37,7 +40,7 @@ class NotePresenter @Inject constructor(
                                 view?.showMarkers(it)
                                 view?.setEditMode(false)
                             },
-                            { view?.showError(it.localizedMessage) }
+                            { view?.showError(resProvider.getString(R.string.error_while_loading_markers)) }
                     ))
         }
     }
@@ -53,7 +56,7 @@ class NotePresenter @Inject constructor(
             addSubscription(noteUseCase.addNote(newNote)
                     .subscribe(
                             { view?.closeScreen() },
-                            { view?.showError(it.localizedMessage) }
+                            { view?.showError(resProvider.getString(R.string.error_while_adding_note)) }
                     ))
         }
     }
@@ -69,7 +72,7 @@ class NotePresenter @Inject constructor(
                 addSubscription(noteUseCase.updateNote(newNote)
                         .subscribe(
                                 { view?.closeScreen() },
-                                { view?.showError(it.localizedMessage) }
+                                { view?.showError(resProvider.getString(R.string.error_while_updating_note)) }
                         ))
             }
         }
