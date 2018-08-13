@@ -8,8 +8,9 @@ package com.dvinc.notepad.presentation.ui.notepad
 import com.dvinc.notepad.presentation.ui.base.MessageView
 import com.dvinc.notepad.presentation.ui.base.MvpView
 import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.presentation.ui.base.ErrorView
 
-interface NotepadView : MvpView, MessageView {
+interface NotepadView : MvpView, MessageView, ErrorView {
 
     fun showNotes(notes: List<NoteUi>)
 

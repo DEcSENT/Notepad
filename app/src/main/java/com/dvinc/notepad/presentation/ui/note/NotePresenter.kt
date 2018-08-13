@@ -11,8 +11,7 @@ import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import javax.inject.Inject
 
-class NotePresenter
-@Inject constructor(
+class NotePresenter @Inject constructor(
         private val noteUseCase: NoteUseCase,
         private val noteMapper: NotePresentationMapper
 ) : BasePresenter<NoteView>() {

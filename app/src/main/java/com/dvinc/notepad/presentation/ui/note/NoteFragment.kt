@@ -81,10 +81,6 @@ class NoteFragment : BaseFragment(), NoteView {
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun showMessage(message: String) {
-        //Temporarily empty
-    }
-
     override fun setEditMode(isEditMode: Boolean) {
         groupNote.visible(true)
         if (isEditMode) {
