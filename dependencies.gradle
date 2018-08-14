@@ -7,23 +7,54 @@ def rxAndroid_version = '2.0.1'
 def android_room_version = '1.0.0'
 def stetho_version = '1.5.0'
 
+def test_runner_version = '1.0.2'
+def espresso_core_version = '3.0.2'
+def junit_version = '4.12'
+def mockito_core_version = '2.18.0'
+
 ext{
-    support_library = "com.android.support:appcompat-v7:$android_support_version"
-    support_design = "com.android.support:design:$android_support_version"
-    support_card_view = "com.android.support:cardview-v7:$android_support_version"
-    constraint_layout = "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-    arch_component_navigation_fragment = "android.arch.navigation:navigation-fragment:$android_arch_component_version"
-    arch_component_navigation_ui = "android.arch.navigation:navigation-ui:$android_arch_component_version"
 
-    dagger = "com.google.dagger:dagger:$dagger_version"
-    dagger_processor = "com.google.dagger:dagger-compiler:$dagger_version"
+    librariesAnnotaionProcessors = [
+            dagger_processor = "com.google.dagger:dagger-compiler:$dagger_version",
 
-    rxjava = "io.reactivex.rxjava2:rxjava:$rxJava_version"
-    rxandroid = "io.reactivex.rxjava2:rxandroid:$rxAndroid_version"
+            android_room_processor = "android.arch.persistence.room:compiler:$android_room_version"
+    ]
 
-    android_room =  "android.arch.persistence.room:runtime:$android_room_version"
-    android_room_processor =  "android.arch.persistence.room:compiler:$android_room_version"
-    android_room_rx = "android.arch.persistence.room:rxjava2:$android_room_version"
+    appDependencies = [
+            support_library = "com.android.support:appcompat-v7:$android_support_version",
 
-    stetho = "com.facebook.stetho:stetho:$stetho_version"
+            support_design = "com.android.support:design:$android_support_version",
+
+            constraint_layout = "com.android.support.constraint:constraint-layout:$constraint_layout_version",
+
+            card_view = "com.android.support:cardview-v7:$android_support_version",
+
+            arch_component_navigation_fragment = "android.arch.navigation:navigation-fragment:$android_arch_component_version",
+
+            arch_component_navigation_ui = "android.arch.navigation:navigation-ui:$android_arch_component_version",
+
+            dagger = "com.google.dagger:dagger:$dagger_version",
+
+            rxjava = "io.reactivex.rxjava2:rxjava:$rxJava_version",
+
+            rxandroid = "io.reactivex.rxjava2:rxandroid:$rxAndroid_version",
+
+            android_room = "android.arch.persistence.room:runtime:$android_room_version",
+
+            android_room_rx = "android.arch.persistence.room:rxjava2:$android_room_version",
+
+            stetho = "com.facebook.stetho:stetho:$stetho_version"
+    ]
+
+    testDependencies = [
+            junit =  "junit:junit:$junit_version",
+
+            mockito_core = "org.mockito:mockito-core:$mockito_core_version"
+    ]
+
+    androidTestDependencies = [
+            test_runner =  "com.android.support.test:runner:$test_runner_version",
+
+            espresso_core =  "com.android.support.test.espresso:espresso-core:$espresso_core_version"
+    ]
 }
