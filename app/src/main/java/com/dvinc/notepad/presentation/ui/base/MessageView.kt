@@ -11,4 +11,3 @@ interface MessageView {
 
     fun showMessage(message: String)
 }
- 

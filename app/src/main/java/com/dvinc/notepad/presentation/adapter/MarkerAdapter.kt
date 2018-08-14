@@ -5,10 +5,11 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.adapters
+package com.dvinc.notepad.presentation.adapter
 
 import android.content.Context
 import android.graphics.PorterDuff
+import android.support.v4.content.ContextCompat
 import android.widget.ArrayAdapter
 import android.view.LayoutInflater
 import android.view.View
@@ -41,9 +42,10 @@ class MarkerAdapter(
         val markerIcon = view.findViewById<ImageView>(R.id.ivMarkerIcon)
         val markerText = view.findViewById<TextView>(R.id.tvMarkerText)
 
-        //TODO: refactor this
         cntxt?.let {
-            markerIcon.drawable.mutate().setColorFilter(it.resources.getColor(marker.markerColor), PorterDuff.Mode.MULTIPLY)
+            markerIcon.drawable.mutate().setColorFilter(
+                    ContextCompat.getColor(it, marker.markerColor),
+                    PorterDuff.Mode.MULTIPLY)
             markerText.text = it.getString(marker.markerName)
         }
 

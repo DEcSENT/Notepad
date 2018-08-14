@@ -12,7 +12,7 @@ import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.presentation.adapters.MarkerAdapter
+import com.dvinc.notepad.presentation.adapter.MarkerAdapter
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
