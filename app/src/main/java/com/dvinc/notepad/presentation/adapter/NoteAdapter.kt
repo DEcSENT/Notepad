@@ -3,9 +3,10 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.adapters
+package com.dvinc.notepad.presentation.adapter
 
 import android.graphics.PorterDuff
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -23,14 +24,13 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             val note = notes?.get(position)
-            name?.text = note?.name
-            content?.text = note?.content
-            updateTime?.text = note?.updateTime
-            //TODO: Refactor this
-            markerIcon?.drawable?.mutate()?.setColorFilter(itemView.context.resources.getColor(
-                    note?.markerType?.markerColor ?: 0),
+            name.text = note?.name
+            content.text = note?.content
+            updateTime.text = note?.updateTime
+            markerIcon.drawable?.mutate()?.setColorFilter(
+                    ContextCompat.getColor(itemView.context, note?.markerType?.markerColor ?: 0),
                     PorterDuff.Mode.MULTIPLY)
-            markerText?.text = itemView.context.getText(note?.markerType?.markerName ?: 0)
+            markerText.text = itemView.context.getText(note?.markerType?.markerName ?: 0)
             itemView.setOnClickListener { noteClickListener.invoke(note?.id ?: 0) }
         }
     }
@@ -45,11 +45,11 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById<TextView>(R.id.tvNoteName)
-        val content = itemView.findViewById<TextView>(R.id.tvNoteContent)
-        val updateTime = itemView.findViewById<TextView>(R.id.tvNoteUpdatedTime)
-        val markerIcon = itemView.findViewById<ImageView>(R.id.ivNoteTypeIcon)
-        val markerText = itemView.findViewById<TextView>(R.id.tvNoteTypeText)
+        val name: TextView = itemView.findViewById<TextView>(R.id.tvNoteName)
+        val content: TextView = itemView.findViewById<TextView>(R.id.tvNoteContent)
+        val updateTime: TextView = itemView.findViewById<TextView>(R.id.tvNoteUpdatedTime)
+        val markerIcon: ImageView = itemView.findViewById<ImageView>(R.id.ivNoteTypeIcon)
+        val markerText: TextView = itemView.findViewById<TextView>(R.id.tvNoteTypeText)
     }
 
     fun setNotes(notes: List<NoteUi>) {

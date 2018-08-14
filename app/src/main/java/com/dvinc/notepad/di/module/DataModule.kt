@@ -20,7 +20,6 @@ interface DataModule {
     @Binds
     fun provideNoteRepository(repository: NoteDataRepository): NoteRepository
 
-
     @Binds
     fun provideMarkerRepository(repository: MarkerDataRepository): MarkerRepository
 }

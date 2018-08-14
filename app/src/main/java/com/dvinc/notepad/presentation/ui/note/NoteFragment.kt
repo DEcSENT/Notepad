@@ -12,7 +12,7 @@ import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.presentation.adapters.MarkerAdapter
+import com.dvinc.notepad.presentation.adapter.MarkerAdapter
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
@@ -79,10 +79,6 @@ class NoteFragment : BaseFragment(), NoteView {
 
     override fun showError(errorMessage: String) {
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-    }
-
-    override fun showMessage(message: String) {
-        //Temporarily empty
     }
 
     override fun setEditMode(isEditMode: Boolean) {

@@ -41,40 +41,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.18.0'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    kapt(
-            dagger_processor,
+    testImplementation(testDependencies)
 
-            android_room_processor
-    )
+    androidTestImplementation(androidTestDependencies)
 
-    implementation (
-            support_library,
+    kapt(librariesAnnotaionProcessors)
 
-            support_design,
-
-            support_card_view,
-
-            constraint_layout,
-
-            arch_component_navigation_fragment,
-
-            arch_component_navigation_ui,
-
-            dagger,
-
-            rxjava,
-
-            rxandroid,
-
-            android_room,
-
-            android_room_rx,
-
-            stetho
-    )
+    implementation(appDependencies)
 }

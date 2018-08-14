@@ -19,7 +19,7 @@ import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.presentation.adapters.NoteAdapter
+import com.dvinc.notepad.presentation.adapter.NoteAdapter
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
@@ -66,7 +66,7 @@ class NotepadFragment : BaseFragment(), NotepadView {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(context, R.string.note_deleted, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showDeleteNoteDialog(notePosition: Int, swipedItemPosition: Int) {

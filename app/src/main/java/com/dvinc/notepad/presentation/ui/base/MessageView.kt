@@ -9,8 +9,5 @@ package com.dvinc.notepad.presentation.ui.base
 
 interface MessageView {
 
-    fun showError(errorMessage: String)
-
     fun showMessage(message: String)
 }
- 
