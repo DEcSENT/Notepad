@@ -11,7 +11,8 @@ import com.dvinc.notepad.R
 
 enum class MarkerTypeUi(
         @ColorRes val markerColor: Int,
-        @StringRes val markerName: Int) {
+        @StringRes val markerName: Int
+) {
 
     NOTE(R.color.markerNoteType, R.string.marker_note_type),
 

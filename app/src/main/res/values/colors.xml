@@ -12,4 +12,5 @@
     <color name="markerIdeaType">#FF00FF00</color>
 
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>
