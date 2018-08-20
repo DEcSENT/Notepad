@@ -1,7 +1,7 @@
 package com.dvinc.notepad.domain.usecase
 
-import com.dvinc.notepad.domain.model.MarkerType
-import com.dvinc.notepad.domain.repository.MarkerRepository
+import com.dvinc.notepad.domain.model.marker.MarkerType
+import com.dvinc.notepad.domain.repository.marker.MarkerRepository
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import io.reactivex.Single
 import org.junit.Before

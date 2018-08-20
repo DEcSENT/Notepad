@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.mapper
+package com.dvinc.notepad.data.mapper.note
 
-import com.dvinc.notepad.data.database.entity.MarkerTypeEntity
-import com.dvinc.notepad.data.database.entity.NoteEntity
-import com.dvinc.notepad.domain.model.MarkerType
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.data.database.entity.marker.MarkerTypeEntity
+import com.dvinc.notepad.data.database.entity.note.NoteEntity
+import com.dvinc.notepad.domain.model.marker.MarkerType
+import com.dvinc.notepad.domain.model.note.Note
 import javax.inject.Inject
 
 class NoteDataMapper @Inject constructor() {

@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.database.entity
+package com.dvinc.notepad.data.database.entity.marker
 
 enum class MarkerTypeEntity {
 

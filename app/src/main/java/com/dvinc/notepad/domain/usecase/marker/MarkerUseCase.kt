@@ -5,8 +5,8 @@
 
 package com.dvinc.notepad.domain.usecase.marker
 
-import com.dvinc.notepad.domain.model.MarkerType
-import com.dvinc.notepad.domain.repository.MarkerRepository
+import com.dvinc.notepad.domain.model.marker.MarkerType
+import com.dvinc.notepad.domain.repository.marker.MarkerRepository
 import io.reactivex.Single
 import javax.inject.Inject
 

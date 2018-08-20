@@ -1,7 +1,7 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
 import com.dvinc.notepad.common.resource.ResourceProvider
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi

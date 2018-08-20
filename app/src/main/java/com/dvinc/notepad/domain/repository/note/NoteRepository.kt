@@ -5,9 +5,9 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.repository
+package com.dvinc.notepad.domain.repository.note
 
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.note.Note
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single

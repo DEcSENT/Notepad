@@ -9,8 +9,8 @@ package com.dvinc.notepad.domain.usecase.notepad
 
 import com.dvinc.notepad.domain.common.execution.ThreadScheduler
 import com.dvinc.notepad.domain.common.execution.scheduleIoToUi
-import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.domain.repository.NoteRepository
+import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.notepad.domain.repository.note.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import javax.inject.Inject

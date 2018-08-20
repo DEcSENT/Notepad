@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.presentation.ui.note
 
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.presentation.ui.base.MvpView
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.ErrorView

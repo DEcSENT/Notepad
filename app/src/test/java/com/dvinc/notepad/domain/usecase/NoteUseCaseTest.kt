@@ -1,8 +1,8 @@
 package com.dvinc.notepad.domain.usecase
 
 import com.dvinc.notepad.domain.TestThreadScheduler
-import com.dvinc.notepad.domain.model.Note
-import com.dvinc.notepad.domain.repository.NoteRepository
+import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import io.reactivex.Completable
 import io.reactivex.Single

@@ -9,8 +9,8 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import com.dvinc.notepad.data.database.converter.MarkerTypeConverter
-import com.dvinc.notepad.data.database.entity.NoteEntity
-import com.dvinc.notepad.data.database.dao.NoteDao
+import com.dvinc.notepad.data.database.entity.note.NoteEntity
+import com.dvinc.notepad.data.database.dao.note.NoteDao
 
 @Database(entities = arrayOf(NoteEntity::class), version = 1)
 @TypeConverters(MarkerTypeConverter::class)

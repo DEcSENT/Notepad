@@ -7,10 +7,10 @@
 
 package com.dvinc.notepad.di.module
 
-import com.dvinc.notepad.data.repository.MarkerDataRepository
-import com.dvinc.notepad.data.repository.NoteDataRepository
-import com.dvinc.notepad.domain.repository.MarkerRepository
-import com.dvinc.notepad.domain.repository.NoteRepository
+import com.dvinc.notepad.data.repository.marker.MarkerDataRepository
+import com.dvinc.notepad.data.repository.note.NoteDataRepository
+import com.dvinc.notepad.domain.repository.marker.MarkerRepository
+import com.dvinc.notepad.domain.repository.note.NoteRepository
 import dagger.Binds
 import dagger.Module
 

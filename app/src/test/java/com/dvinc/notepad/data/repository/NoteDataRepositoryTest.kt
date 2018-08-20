@@ -1,15 +1,14 @@
 package com.dvinc.notepad.data.repository
 
-import com.dvinc.notepad.data.database.dao.NoteDao
-import com.dvinc.notepad.data.database.entity.NoteEntity
-import com.dvinc.notepad.data.mapper.NoteDataMapper
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.data.database.dao.note.NoteDao
+import com.dvinc.notepad.data.database.entity.note.NoteEntity
+import com.dvinc.notepad.data.mapper.note.NoteDataMapper
+import com.dvinc.notepad.data.repository.note.NoteDataRepository
+import com.dvinc.notepad.domain.model.note.Note
 import io.reactivex.Flowable
 import org.junit.Test
 
 import org.junit.Before
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
