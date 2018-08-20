@@ -7,7 +7,8 @@ package com.dvinc.notepad.presentation.ui.note
 
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.resource.ResourceProvider
-import com.dvinc.notepad.domain.usecase.NoteUseCase
+import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
+import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
@@ -15,13 +16,14 @@ import javax.inject.Inject
 
 class NotePresenter @Inject constructor(
         private val noteUseCase: NoteUseCase,
+        private val markerUseCase: MarkerUseCase,
         private val noteMapper: NotePresentationMapper,
         private val resProvider: ResourceProvider
 ) : BasePresenter<NoteView>() {
 
     fun initView(noteId: Long?) {
         if (noteId != null && noteId != 0L) {
-            addSubscription(noteUseCase.getNoteMarkers()
+            addSubscription(markerUseCase.getNoteMarkers()
                     .map { noteMapper.mapMarker(it) }
                     .doOnSuccess { view?.showMarkers(it) }
                     .flatMap { noteUseCase.getNoteById(noteId) }
@@ -33,7 +35,7 @@ class NotePresenter @Inject constructor(
                             { view?.showError(resProvider.getString(R.string.error_while_loading_note)) }
                     ))
         } else {
-            addSubscription(noteUseCase.getNoteMarkers()
+            addSubscription(markerUseCase.getNoteMarkers()
                     .map { noteMapper.mapMarker(it) }
                     .subscribe(
                             {

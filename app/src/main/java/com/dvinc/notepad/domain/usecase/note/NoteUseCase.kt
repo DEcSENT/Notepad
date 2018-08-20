@@ -1,32 +1,37 @@
 /*
  * Copyright (c) 2018 by Denis Verentsov
- * Date: 6/8/2018
+ * Date: 5/2/2018
  * Email: decsent@yandex.ru
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.usecase
+package com.dvinc.notepad.domain.usecase.note
 
 import com.dvinc.notepad.domain.common.execution.ThreadScheduler
 import com.dvinc.notepad.domain.common.execution.scheduleIoToUi
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repository.NoteRepository
 import io.reactivex.Completable
-import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
-class NotepadUseCase @Inject constructor(
+class NoteUseCase @Inject constructor(
         private val noteRepository: NoteRepository,
         private val scheduler: ThreadScheduler
 ) {
 
-    fun getNotes(): Flowable<List<Note>> {
-        return noteRepository.getNotes()
+    fun getNoteById(id: Long): Single<Note> {
+        return noteRepository.getNoteById(id)
                 .scheduleIoToUi(scheduler)
     }
 
-    fun deleteNote(noteId: Int): Completable {
-        return noteRepository.deleteNoteById(noteId)
+    fun addNote(note: Note): Completable {
+        return noteRepository.addNote(note)
+                .scheduleIoToUi(scheduler)
+    }
+
+    fun updateNote(note: Note): Completable {
+        return noteRepository.updateNote(note)
                 .scheduleIoToUi(scheduler)
     }
 }

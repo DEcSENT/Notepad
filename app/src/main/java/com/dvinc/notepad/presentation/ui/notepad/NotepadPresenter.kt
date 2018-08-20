@@ -7,7 +7,7 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.resource.ResourceProvider
-import com.dvinc.notepad.domain.usecase.NotepadUseCase
+import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import javax.inject.Inject
