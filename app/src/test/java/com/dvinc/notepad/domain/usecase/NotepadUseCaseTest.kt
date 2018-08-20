@@ -3,6 +3,7 @@ package com.dvinc.notepad.domain.usecase
 import com.dvinc.notepad.domain.TestThreadScheduler
 import com.dvinc.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repository.NoteRepository
+import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import org.junit.Test
