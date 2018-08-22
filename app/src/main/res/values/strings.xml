@@ -29,4 +29,5 @@
     <string name="error_while_adding_note">Cannot add note</string>
     <string name="error_while_updating_note">Cannot update note</string>
     <string name="dialog_filter_title">Note filter</string>
+    <string name="dialog_filter_cancel_button">Cancel</string>
 </resources>

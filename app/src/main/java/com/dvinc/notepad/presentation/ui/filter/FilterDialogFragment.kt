@@ -15,6 +15,8 @@ import android.view.View
 import com.dvinc.notepad.R
 import android.graphics.drawable.ColorDrawable
 import com.dvinc.notepad.NotepadApplication
+import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_cancel_button as cancelButton
+import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_background as dialogShadow
 import javax.inject.Inject
 
 class FilterDialogFragment : DialogFragment(), FilterView {
@@ -32,7 +34,7 @@ class FilterDialogFragment : DialogFragment(), FilterView {
     override fun onStart() {
         super.onStart()
         with(dialog) {
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
@@ -52,6 +54,8 @@ class FilterDialogFragment : DialogFragment(), FilterView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         injectPresenter()
+        setupShadow()
+        setupCancelButton()
     }
 
     override fun onResume() {
@@ -71,5 +75,21 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     private fun injectPresenter() {
         (context?.applicationContext as NotepadApplication).appComponent.inject(this)
+    }
+
+    /*
+    * Simple, but strange, way to realise shadow and dismiss dialog by clicking outside visible dialog area.
+    * Google use similar way in their Google IO 2018 app.
+    */
+    private fun setupShadow() {
+        dialogShadow.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    private fun setupCancelButton() {
+        cancelButton.setOnClickListener {
+            dismiss()
+        }
     }
 }
