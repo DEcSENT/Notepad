@@ -21,6 +21,7 @@ import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
 import com.dvinc.notepad.presentation.adapter.NoteAdapter
 import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
@@ -34,14 +35,13 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        rvNotepad.adapter = noteAdapter
 
-        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
-
+        injectPresenter()
+        setupNoteRecycler()
         setupFabButton()
         setupSwipeToDelete()
         setupNotesAdapterClickListener()
+        setupFilterButton()
     }
 
     override fun onResume() {
@@ -82,6 +82,15 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
         val dialog = dialogBuilder.create()
         dialog.show()
+    }
+
+    private fun injectPresenter() {
+        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
+    }
+
+    private fun setupNoteRecycler() {
+        rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        rvNotepad.adapter = noteAdapter
     }
 
     private fun setupFabButton() {
@@ -129,6 +138,12 @@ class NotepadFragment : BaseFragment(), NotepadView {
                 findNavController(it, R.id.nav_host_fragment)
                         .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
             }
+        }
+    }
+
+    private fun setupFilterButton() {
+        ivFilter.setOnClickListener {
+            FilterDialogFragment.newInstance().show(fragmentManager, FilterDialogFragment.TAG)
         }
     }
 }
