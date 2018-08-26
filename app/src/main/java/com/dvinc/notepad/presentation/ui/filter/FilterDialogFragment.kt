@@ -14,7 +14,13 @@ import android.view.LayoutInflater
 import android.view.View
 import com.dvinc.notepad.R
 import android.graphics.drawable.ColorDrawable
+import android.widget.Toast
 import com.dvinc.notepad.NotepadApplication
+import com.dvinc.notepad.presentation.adapter.item.MarkerItem
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_recycler as filterRecycler
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_cancel_button as cancelButton
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_background as dialogShadow
 import javax.inject.Inject
@@ -30,6 +36,8 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     @Inject
     lateinit var presenter: FilterPresenter
+
+    private val markersAdapter = GroupAdapter<ViewHolder>()
 
     override fun onStart() {
         super.onStart()
@@ -56,6 +64,7 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         injectPresenter()
         setupShadow()
         setupCancelButton()
+        setupMarkersList()
     }
 
     override fun onResume() {
@@ -69,8 +78,15 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         presenter.detachView()
     }
 
-    override fun showMarkers() {
-        //TODO: show markers
+    override fun showMarkers(markers: List<MarkerTypeUi>) {
+        markersAdapter.clear()
+        markersAdapter.addAll(markers.map {
+            MarkerItem(it)
+        })
+    }
+
+    override fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun injectPresenter() {
@@ -91,5 +107,9 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         cancelButton.setOnClickListener {
             dismiss()
         }
+    }
+
+    private fun setupMarkersList() {
+        filterRecycler.adapter = markersAdapter
     }
 }
