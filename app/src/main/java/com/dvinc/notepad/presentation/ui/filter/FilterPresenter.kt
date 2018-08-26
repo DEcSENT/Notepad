@@ -9,6 +9,7 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import javax.inject.Inject
 
@@ -25,5 +26,10 @@ class FilterPresenter @Inject constructor(
                         { view?.showMarkers(it) },
                         { view?.showError(resProvider.getString(R.string.error_while_loading_markers)) }
                 ))
+    }
+
+    fun onMarkerItemClick(type: MarkerTypeUi) {
+        view?.sendTypeToFilter(type)
+        view?.closeDialog()
     }
 }

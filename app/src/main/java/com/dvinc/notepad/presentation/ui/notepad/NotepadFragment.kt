@@ -20,12 +20,14 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
 import com.dvinc.notepad.presentation.adapter.NoteAdapter
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.presentation.ui.filter.FilterClickListener
 import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
-class NotepadFragment : BaseFragment(), NotepadView {
+class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
     @Inject lateinit var notePadPresenter: NotepadPresenter
 
@@ -82,6 +84,14 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
         val dialog = dialogBuilder.create()
         dialog.show()
+    }
+
+    override fun loadAllNotes() {
+        //TODO
+    }
+
+    override fun loadNotesBySpecificMarkerType(type: MarkerTypeUi) {
+        //TODO
     }
 
     private fun injectPresenter() {
@@ -143,7 +153,9 @@ class NotepadFragment : BaseFragment(), NotepadView {
 
     private fun setupFilterButton() {
         ivFilter.setOnClickListener {
-            FilterDialogFragment.newInstance().show(fragmentManager, FilterDialogFragment.TAG)
+            val dialog = FilterDialogFragment.newInstance()
+            dialog.setTargetFragment(this, 0)
+            dialog.show(fragmentManager, FilterDialogFragment.TAG)
         }
     }
 }

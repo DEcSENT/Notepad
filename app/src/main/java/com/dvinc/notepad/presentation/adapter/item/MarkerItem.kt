@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_note_marker.ivMarkerIcon as markerIco
 import kotlinx.android.synthetic.main.item_note_marker.tvMarkerText as markerText
 
 class MarkerItem(
-        private val marker: MarkerTypeUi
+        val marker: MarkerTypeUi
 ) : Item() {
 
     override fun getLayout() = R.layout.item_note_marker

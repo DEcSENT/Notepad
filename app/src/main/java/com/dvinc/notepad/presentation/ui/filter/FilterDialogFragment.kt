@@ -89,6 +89,14 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
     }
 
+    override fun sendTypeToFilter(type: MarkerTypeUi) {
+        (targetFragment as? FilterClickListener)?.loadNotesBySpecificMarkerType(type)
+    }
+
+    override fun closeDialog() {
+        dismiss()
+    }
+
     private fun injectPresenter() {
         (context?.applicationContext as NotepadApplication).appComponent.inject(this)
     }
@@ -111,5 +119,10 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     private fun setupMarkersList() {
         filterRecycler.adapter = markersAdapter
+        markersAdapter.setOnItemClickListener { item, _ ->
+            if (item is MarkerItem) {
+                presenter.onMarkerItemClick(item.marker)
+            }
+        }
     }
 }

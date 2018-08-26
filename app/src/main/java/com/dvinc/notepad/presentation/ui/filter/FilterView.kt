@@ -12,4 +12,8 @@ import com.dvinc.notepad.presentation.ui.base.MvpView
 interface FilterView : MvpView, ErrorView {
 
     fun showMarkers(markers: List<MarkerTypeUi>)
+
+    fun sendTypeToFilter(type: MarkerTypeUi)
+
+    fun closeDialog()
 }
