@@ -91,7 +91,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     override fun loadNotesBySpecificMarkerType(type: MarkerTypeUi) {
-        //TODO
+        notePadPresenter.filterNotes(type)
     }
 
     private fun injectPresenter() {
