@@ -13,7 +13,9 @@ interface FilterView : MvpView, ErrorView {
 
     fun showMarkers(markers: List<MarkerTypeUi>)
 
-    fun sendTypeToFilter(type: MarkerTypeUi)
+    fun filterNotesByMarkerType(type: MarkerTypeUi)
 
-    fun closeDialog()
+    fun clearFilter()
+
+    fun closeScreen()
 }

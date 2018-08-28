@@ -29,7 +29,12 @@ class FilterPresenter @Inject constructor(
     }
 
     fun onMarkerItemClick(type: MarkerTypeUi) {
-        view?.sendTypeToFilter(type)
-        view?.closeDialog()
+        view?.filterNotesByMarkerType(type)
+        view?.closeScreen()
+    }
+
+    fun onClearFilterClick() {
+        view?.clearFilter()
+        view?.closeScreen()
     }
 }

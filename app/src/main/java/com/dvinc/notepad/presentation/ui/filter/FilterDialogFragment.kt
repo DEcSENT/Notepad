@@ -22,6 +22,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_recycler as filterRecycler
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_cancel_button as cancelButton
+import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_clear_button as clearButton
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_background as dialogShadow
 import javax.inject.Inject
 
@@ -64,6 +65,7 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         injectPresenter()
         setupShadow()
         setupCancelButton()
+        setupClearFilterButton()
         setupMarkersList()
     }
 
@@ -89,11 +91,15 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun sendTypeToFilter(type: MarkerTypeUi) {
+    override fun filterNotesByMarkerType(type: MarkerTypeUi) {
         (targetFragment as? FilterClickListener)?.loadNotesBySpecificMarkerType(type)
     }
 
-    override fun closeDialog() {
+    override fun clearFilter() {
+        (targetFragment as? FilterClickListener)?.loadAllNotes()
+    }
+
+    override fun closeScreen() {
         dismiss()
     }
 
@@ -114,6 +120,12 @@ class FilterDialogFragment : DialogFragment(), FilterView {
     private fun setupCancelButton() {
         cancelButton.setOnClickListener {
             dismiss()
+        }
+    }
+
+    private fun setupClearFilterButton() {
+        clearButton.setOnClickListener {
+            presenter.onClearFilterClick()
         }
     }
 

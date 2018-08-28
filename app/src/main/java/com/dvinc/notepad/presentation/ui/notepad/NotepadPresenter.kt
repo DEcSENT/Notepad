@@ -22,6 +22,7 @@ class NotepadPresenter @Inject constructor(
 
     private var cachedNotes: List<NoteUi>? = null
 
+    //TODO: Update flow with current filter
     private var currentFilter: MarkerTypeUi? = null
 
     fun initNotes() {
@@ -40,6 +41,12 @@ class NotepadPresenter @Inject constructor(
         cachedNotes
                 ?.filter { it.markerType == currentFilter }
                 ?.let { updateNotepadScreen(it) }
+    }
+
+    fun loadAllNotes() {
+        cachedNotes?.let {
+            updateNotepadScreen(it)
+        }
     }
 
     fun deleteNote(noteId: Int) {
