@@ -29,7 +29,13 @@ import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
-    @Inject lateinit var notePadPresenter: NotepadPresenter
+    companion object {
+
+        private const val KEY_CURRENT_MARKER_FILTER = "keyCurrentMarkerFilter"
+    }
+
+    @Inject
+    lateinit var notePadPresenter: NotepadPresenter
 
     private val noteAdapter: NoteAdapter = NoteAdapter()
 
@@ -49,7 +55,8 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     override fun onResume() {
         super.onResume()
         notePadPresenter.attachView(this)
-        notePadPresenter.initNotes()
+        val selectedMarkerType = arguments?.getSerializable(KEY_CURRENT_MARKER_FILTER) as? MarkerTypeUi
+        notePadPresenter.initNotes(selectedMarkerType)
     }
 
     override fun onDestroyView() {
@@ -86,12 +93,21 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         dialog.show()
     }
 
+    override fun storeCurrentSelectedMarkerType(type: MarkerTypeUi?) {
+        arguments?.putSerializable(KEY_CURRENT_MARKER_FILTER, type)
+    }
+
+    override fun clearStoredCurrentSelectedMarkerType() {
+        arguments?.putSerializable(KEY_CURRENT_MARKER_FILTER, null)
+    }
+
     override fun loadAllNotes() {
         notePadPresenter.loadAllNotes()
     }
 
     override fun loadNotesBySpecificMarkerType(type: MarkerTypeUi) {
         notePadPresenter.filterNotes(type)
+        notePadPresenter.updateCurrentFilterCache(type)
     }
 
     private fun injectPresenter() {

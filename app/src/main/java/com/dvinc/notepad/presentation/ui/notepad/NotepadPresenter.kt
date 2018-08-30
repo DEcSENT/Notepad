@@ -25,25 +25,32 @@ class NotepadPresenter @Inject constructor(
     //TODO: Update flow with current filter
     private var currentFilter: MarkerTypeUi? = null
 
-    fun initNotes() {
+    fun initNotes(markerType: MarkerTypeUi? = null) {
         addSubscription(notepadUseCase.getNotes()
                 .map { noteMapper.fromDomainToUi(it) }
+                .map { notes ->
+                    updateCachedNotes(notes)
+                    /* If marker type exist, then filter notes and update current filter */
+                    markerType?.let { markerType ->
+                        //updateCurrentFilterCache(markerType)
+                        notes.filter { it.markerType == markerType }
+                    } ?: notes
+                }
                 .subscribe(
                         { notes ->
-                            updateCachedNotes(notes)
                             updateNotepadScreen(notes)
                         },
                         { view?.showError(resProvider.getString(R.string.error_while_load_data_from_db)) }))
     }
 
     fun filterNotes(markerType: MarkerTypeUi) {
-        currentFilter = markerType
         cachedNotes
-                ?.filter { it.markerType == currentFilter }
+                ?.filter { it.markerType == markerType }
                 ?.let { updateNotepadScreen(it) }
     }
 
     fun loadAllNotes() {
+        clearCurrentSelectedMarkerType()
         cachedNotes?.let {
             updateNotepadScreen(it)
         }
@@ -60,6 +67,17 @@ class NotepadPresenter @Inject constructor(
     fun onNoteSwiped(swipedNoteId: Int, swipedItemPosition: Int) {
         view?.showDeleteNoteDialog(swipedNoteId, swipedItemPosition)
     }
+
+    fun updateCurrentFilterCache(markerType: MarkerTypeUi) {
+        currentFilter = markerType
+        view?.storeCurrentSelectedMarkerType(markerType)
+    }
+
+    private fun clearCurrentSelectedMarkerType() {
+        currentFilter = null
+        view?.clearStoredCurrentSelectedMarkerType()
+    }
+
 
     private fun updateNotepadScreen(notes: List<NoteUi>) {
         view?.setEmptyView(notes.isEmpty())
