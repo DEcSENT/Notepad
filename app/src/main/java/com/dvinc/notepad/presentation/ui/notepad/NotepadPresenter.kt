@@ -11,7 +11,6 @@ import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
-import com.dvinc.notepad.presentation.model.NoteUi
 import javax.inject.Inject
 
 class NotepadPresenter @Inject constructor(
@@ -23,6 +22,7 @@ class NotepadPresenter @Inject constructor(
     private var currentFilter: MarkerTypeUi? = null
 
     fun initNotes(markerType: MarkerTypeUi? = null) {
+        setCurrentFilterIcon(markerType)
         addSubscription(notepadUseCase.getNotes()
                 .map { noteMapper.fromDomainToUi(it) }
                 .map { notes ->
@@ -47,14 +47,12 @@ class NotepadPresenter @Inject constructor(
         initNotes(markerType)
         currentFilter = markerType
         view?.storeCurrentSelectedMarkerType(markerType)
-        view?.showCurrentFilterIcon(markerType)
     }
 
     fun loadAllNotes() {
         initNotes()
         currentFilter = null
         view?.clearStoredCurrentSelectedMarkerType()
-        view?.hideCurrentFilterIcon()
     }
 
     fun deleteNote(noteId: Int) {
@@ -67,5 +65,11 @@ class NotepadPresenter @Inject constructor(
 
     fun onNoteSwiped(swipedNoteId: Int, swipedItemPosition: Int) {
         view?.showDeleteNoteDialog(swipedNoteId, swipedItemPosition)
+    }
+
+    private fun setCurrentFilterIcon(markerType: MarkerTypeUi?) {
+        markerType?.let {
+            view?.showCurrentFilterIcon(it)
+        } ?: view?.hideCurrentFilterIcon()
     }
 }
