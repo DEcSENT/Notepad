@@ -6,7 +6,9 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
 import android.app.AlertDialog
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -107,6 +109,20 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
     override fun loadNotesBySpecificMarkerType(type: MarkerTypeUi) {
         notePadPresenter.filterNotes(type)
+    }
+
+    override fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi) {
+        //TODO: extension for visibility
+        ivSmallFilterIcon.visibility = View.VISIBLE
+        context?.let {
+            ivSmallFilterIcon.drawable.mutate().setColorFilter(
+                    ContextCompat.getColor(it, markerTypeUi.markerColor),
+                    PorterDuff.Mode.MULTIPLY)
+        }
+    }
+
+    override fun hideCurrentFilterIcon() {
+        ivSmallFilterIcon.visibility = View.GONE
     }
 
     private fun injectPresenter() {

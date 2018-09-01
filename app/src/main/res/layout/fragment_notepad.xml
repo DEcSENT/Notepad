@@ -37,6 +37,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_filter" />
 
+    <ImageView
+        android:id="@+id/ivSmallFilterIcon"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:contentDescription="@string/small_filter_icon_description"
+        android:src="@drawable/ic_note_type"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/ivFilter"
+        app:layout_constraintTop_toTopOf="@id/ivFilter"
+        tools:background="#ff0000" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvNotepad"
         android:layout_width="match_parent"

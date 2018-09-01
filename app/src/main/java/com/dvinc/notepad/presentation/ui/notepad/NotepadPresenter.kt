@@ -37,19 +37,24 @@ class NotepadPresenter @Inject constructor(
                 }
                 .subscribe(
                         { notes ->
-                            updateNotepadScreen(notes)
+                            view?.setEmptyView(notes.isEmpty())
+                            view?.showNotes(notes)
                         },
                         { view?.showError(resProvider.getString(R.string.error_while_load_data_from_db)) }))
     }
 
     fun filterNotes(markerType: MarkerTypeUi) {
         initNotes(markerType)
-        updateCurrentFilterCache(markerType)
+        currentFilter = markerType
+        view?.storeCurrentSelectedMarkerType(markerType)
+        view?.showCurrentFilterIcon(markerType)
     }
 
     fun loadAllNotes() {
         initNotes()
-        clearCurrentSelectedMarkerType()
+        currentFilter = null
+        view?.clearStoredCurrentSelectedMarkerType()
+        view?.hideCurrentFilterIcon()
     }
 
     fun deleteNote(noteId: Int) {
@@ -62,20 +67,5 @@ class NotepadPresenter @Inject constructor(
 
     fun onNoteSwiped(swipedNoteId: Int, swipedItemPosition: Int) {
         view?.showDeleteNoteDialog(swipedNoteId, swipedItemPosition)
-    }
-
-    private fun updateCurrentFilterCache(markerType: MarkerTypeUi) {
-        currentFilter = markerType
-        view?.storeCurrentSelectedMarkerType(markerType)
-    }
-
-    private fun clearCurrentSelectedMarkerType() {
-        currentFilter = null
-        view?.clearStoredCurrentSelectedMarkerType()
-    }
-
-    private fun updateNotepadScreen(notes: List<NoteUi>) {
-        view?.setEmptyView(notes.isEmpty())
-        view?.showNotes(notes)
     }
 }

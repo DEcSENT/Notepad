@@ -22,4 +22,8 @@ interface NotepadView : MvpView, MessageView, ErrorView {
     fun storeCurrentSelectedMarkerType(type: MarkerTypeUi?)
 
     fun clearStoredCurrentSelectedMarkerType()
+
+    fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi)
+
+    fun hideCurrentFilterIcon()
 }
