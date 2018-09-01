@@ -20,19 +20,18 @@ class NotepadPresenter @Inject constructor(
         private val resProvider: ResourceProvider
 ) : BasePresenter<NotepadView>() {
 
-    private var cachedNotes: List<NoteUi>? = null
-
-    //TODO: Update flow with current filter
     private var currentFilter: MarkerTypeUi? = null
 
     fun initNotes(markerType: MarkerTypeUi? = null) {
         addSubscription(notepadUseCase.getNotes()
                 .map { noteMapper.fromDomainToUi(it) }
                 .map { notes ->
-                    updateCachedNotes(notes)
-                    /* If marker type exist, then filter notes and update current filter */
+                    /* If current cached filter exist, then filter notes.
+                    Else filter by method parameter or return all notes. */
+                    currentFilter?.let { markerType ->
+                        return@map notes.filter { it.markerType == markerType }
+                    }
                     markerType?.let { markerType ->
-                        //updateCurrentFilterCache(markerType)
                         notes.filter { it.markerType == markerType }
                     } ?: notes
                 }
@@ -44,16 +43,13 @@ class NotepadPresenter @Inject constructor(
     }
 
     fun filterNotes(markerType: MarkerTypeUi) {
-        cachedNotes
-                ?.filter { it.markerType == markerType }
-                ?.let { updateNotepadScreen(it) }
+        initNotes(markerType)
+        updateCurrentFilterCache(markerType)
     }
 
     fun loadAllNotes() {
+        initNotes()
         clearCurrentSelectedMarkerType()
-        cachedNotes?.let {
-            updateNotepadScreen(it)
-        }
     }
 
     fun deleteNote(noteId: Int) {
@@ -68,7 +64,7 @@ class NotepadPresenter @Inject constructor(
         view?.showDeleteNoteDialog(swipedNoteId, swipedItemPosition)
     }
 
-    fun updateCurrentFilterCache(markerType: MarkerTypeUi) {
+    private fun updateCurrentFilterCache(markerType: MarkerTypeUi) {
         currentFilter = markerType
         view?.storeCurrentSelectedMarkerType(markerType)
     }
@@ -78,13 +74,8 @@ class NotepadPresenter @Inject constructor(
         view?.clearStoredCurrentSelectedMarkerType()
     }
 
-
     private fun updateNotepadScreen(notes: List<NoteUi>) {
         view?.setEmptyView(notes.isEmpty())
         view?.showNotes(notes)
-    }
-
-    private fun updateCachedNotes(notes: List<NoteUi>) {
-        cachedNotes = notes
     }
 }
