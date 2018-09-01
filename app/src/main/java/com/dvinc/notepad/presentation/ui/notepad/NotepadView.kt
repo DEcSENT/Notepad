@@ -5,6 +5,7 @@
 
 package com.dvinc.notepad.presentation.ui.notepad
 
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.MessageView
 import com.dvinc.notepad.presentation.ui.base.MvpView
 import com.dvinc.notepad.presentation.model.NoteUi
@@ -17,4 +18,12 @@ interface NotepadView : MvpView, MessageView, ErrorView {
     fun setEmptyView(isVisible: Boolean)
 
     fun showDeleteNoteDialog(notePosition: Int, swipedItemPosition: Int)
+
+    fun storeCurrentSelectedMarkerType(type: MarkerTypeUi?)
+
+    fun clearStoredCurrentSelectedMarkerType()
+
+    fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi)
+
+    fun hideCurrentFilterIcon()
 }

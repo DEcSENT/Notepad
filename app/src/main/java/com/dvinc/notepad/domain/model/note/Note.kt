@@ -5,7 +5,9 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.model
+package com.dvinc.notepad.domain.model.note
+
+import com.dvinc.notepad.domain.model.marker.MarkerType
 
 data class Note(var id: Long,
                 val name: String,

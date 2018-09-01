@@ -10,7 +10,7 @@ import android.content.Context
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.common.resource.ResourceProviderImpl
 import com.dvinc.notepad.data.database.NotepadDatabase
-import com.dvinc.notepad.data.database.dao.NoteDao
+import com.dvinc.notepad.data.database.dao.note.NoteDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

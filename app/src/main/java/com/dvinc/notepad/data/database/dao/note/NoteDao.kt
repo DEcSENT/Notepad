@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.database.dao
+package com.dvinc.notepad.data.database.dao.note
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
-import com.dvinc.notepad.data.database.entity.NoteEntity
+import com.dvinc.notepad.data.database.entity.note.NoteEntity
 import io.reactivex.Flowable
 
 @Dao

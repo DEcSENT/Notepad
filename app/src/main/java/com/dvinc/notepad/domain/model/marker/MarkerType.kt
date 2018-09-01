@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.model
+package com.dvinc.notepad.domain.model.marker
 
 enum class MarkerType {
 

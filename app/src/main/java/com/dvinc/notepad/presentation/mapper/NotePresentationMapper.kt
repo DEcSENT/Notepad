@@ -5,8 +5,8 @@
 
 package com.dvinc.notepad.presentation.mapper
 
-import com.dvinc.notepad.domain.model.MarkerType
-import com.dvinc.notepad.domain.model.Note
+import com.dvinc.notepad.domain.model.marker.MarkerType
+import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import java.text.SimpleDateFormat

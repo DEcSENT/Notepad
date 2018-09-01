@@ -6,10 +6,11 @@
 
     <color name="colorDivider">#8aaeaeae</color>
 
-    <color name="markerNoteType">#000000</color>
+    <color name="markerNoteType">#ee00ff</color>
     <color name="markerCriticalType">#FFFF0000</color>
     <color name="markerTodoType">#FF0000FF</color>
     <color name="markerIdeaType">#FF00FF00</color>
 
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

@@ -5,9 +5,9 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.repository
+package com.dvinc.notepad.domain.repository.marker
 
-import com.dvinc.notepad.domain.model.MarkerType
+import com.dvinc.notepad.domain.model.marker.MarkerType
 import io.reactivex.Single
 
 interface MarkerRepository {

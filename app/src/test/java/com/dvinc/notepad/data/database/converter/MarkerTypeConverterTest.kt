@@ -1,6 +1,6 @@
 package com.dvinc.notepad.data.database.converter
 
-import com.dvinc.notepad.data.database.entity.MarkerTypeEntity
+import com.dvinc.notepad.data.database.entity.marker.MarkerTypeEntity
 import org.junit.Test
 
 class MarkerTypeConverterTest {

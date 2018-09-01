@@ -1,13 +1,12 @@
 package com.dvinc.notepad.data.repository
 
-import com.dvinc.notepad.data.database.entity.MarkerTypeEntity
-import com.dvinc.notepad.data.mapper.NoteDataMapper
-import com.dvinc.notepad.domain.model.MarkerType
+import com.dvinc.notepad.data.database.entity.marker.MarkerTypeEntity
+import com.dvinc.notepad.data.mapper.note.NoteDataMapper
+import com.dvinc.notepad.data.repository.marker.MarkerDataRepository
+import com.dvinc.notepad.domain.model.marker.MarkerType
 import org.junit.Test
 
 import org.junit.Before
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations

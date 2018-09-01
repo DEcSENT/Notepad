@@ -43,7 +43,11 @@ ext{
 
             android_room_rx = "android.arch.persistence.room:rxjava2:$android_room_version",
 
-            stetho = "com.facebook.stetho:stetho:$stetho_version"
+            stetho = "com.facebook.stetho:stetho:$stetho_version",
+
+            groupie = "com.xwray:groupie:2.1.0",
+
+            groupieExt = "com.xwray:groupie-kotlin-android-extensions:2.1.0"
     ]
 
     testDependencies = [
