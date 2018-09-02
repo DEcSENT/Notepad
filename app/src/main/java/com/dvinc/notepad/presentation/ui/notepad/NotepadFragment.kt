@@ -21,12 +21,14 @@ import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.presentation.adapter.NoteAdapter
+import com.dvinc.notepad.presentation.adapter.item.NoteItem
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.filter.FilterClickListener
 import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.fragment_notepad.*
 
 class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
@@ -39,7 +41,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     @Inject
     lateinit var notePadPresenter: NotepadPresenter
 
-    private val noteAdapter: NoteAdapter = NoteAdapter()
+    private val noteAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
@@ -67,7 +69,10 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     override fun showNotes(notes: List<NoteUi>) {
-        noteAdapter.setNotes(notes)
+        noteAdapter.clear()
+        noteAdapter.addAll(notes.map {
+            NoteItem(it)
+        })
     }
 
     override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
@@ -162,8 +167,8 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                val swipedNoteId = noteAdapter.getNote(position)?.id?.toInt()
-                if (swipedNoteId != null) notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
+                val swipedNoteId = noteAdapter.getItem(position).id.toInt()
+                notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
             }
         }
 
@@ -172,12 +177,14 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     private fun setupNotesAdapterClickListener() {
-        noteAdapter.setOnNoteClickListener {
-            val noteId = it
-            activity?.let {
-                val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
-                findNavController(it, R.id.nav_host_fragment)
-                        .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
+        //TODO: To presenter
+        noteAdapter.setOnItemClickListener { item, _ ->
+            if (item is NoteItem) {
+                val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, item.note.id) }
+                activity?.let {
+                    findNavController(it, R.id.nav_host_fragment)
+                            .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
+                }
             }
         }
     }
