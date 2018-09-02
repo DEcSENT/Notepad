@@ -11,6 +11,7 @@ import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.model.NoteUi
 import javax.inject.Inject
 
 class NotepadPresenter @Inject constructor(
@@ -65,6 +66,10 @@ class NotepadPresenter @Inject constructor(
 
     fun onNoteSwiped(swipedNoteId: Int, swipedItemPosition: Int) {
         view?.showDeleteNoteDialog(swipedNoteId, swipedItemPosition)
+    }
+
+    fun onNoteItemClick(note: NoteUi) {
+        view?.goToNoteScreen(note.id)
     }
 
     private fun setCurrentFilterIcon(markerType: MarkerTypeUi?) {

@@ -130,6 +130,14 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         ivSmallFilterIcon.visibility = View.GONE
     }
 
+    override fun goToNoteScreen(noteId: Long) {
+        val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
+        activity?.let {
+            findNavController(it, R.id.nav_host_fragment)
+                    .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
+        }
+    }
+
     private fun injectPresenter() {
         (context?.applicationContext as NotepadApplication).appComponent.inject(this)
     }
@@ -177,14 +185,9 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     private fun setupNotesAdapterClickListener() {
-        //TODO: To presenter
         noteAdapter.setOnItemClickListener { item, _ ->
             if (item is NoteItem) {
-                val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, item.note.id) }
-                activity?.let {
-                    findNavController(it, R.id.nav_host_fragment)
-                            .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
-                }
+                notePadPresenter.onNoteItemClick(item.note)
             }
         }
     }

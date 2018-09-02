@@ -26,4 +26,6 @@ interface NotepadView : MvpView, MessageView, ErrorView {
     fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi)
 
     fun hideCurrentFilterIcon()
+
+    fun goToNoteScreen(noteId: Long)
 }
