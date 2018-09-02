@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarNotepad"
+        android:id="@+id/fragment_notepad_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorAccent"
@@ -25,42 +25,42 @@
     </android.support.v7.widget.Toolbar>
 
     <ImageView
-        android:id="@+id/ivFilter"
+        android:id="@+id/fragment_notepad_filter_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:contentDescription="@string/fragment_notepad_filter_icon"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/rvNotepad"
-        app:layout_constraintEnd_toEndOf="@+id/toolbarNotepad"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_notepad_recycler"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_notepad_toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_filter" />
 
     <ImageView
-        android:id="@+id/ivSmallFilterIcon"
+        android:id="@+id/fragment_notepad_small_filter_icon"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:contentDescription="@string/small_filter_icon_description"
         android:src="@drawable/ic_note_type"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/ivFilter"
-        app:layout_constraintTop_toTopOf="@id/ivFilter"
+        app:layout_constraintEnd_toEndOf="@id/fragment_notepad_filter_icon"
+        app:layout_constraintTop_toTopOf="@id/fragment_notepad_filter_icon"
         tools:background="#ff0000" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvNotepad"
+        android:id="@+id/fragment_notepad_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarNotepad"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_notepad_toolbar"
         tools:itemCount="4"
         tools:listitem="@layout/item_note" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabNewNote"
+        android:id="@+id/fragment_notepad_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -70,7 +70,7 @@
         app:srcCompat="@drawable/ic_add_white_24px" />
 
     <include
-        android:id="@+id/emptyView"
+        android:id="@+id/fragment_notepad_empty_view"
         layout="@layout/layout_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,6 +78,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarNotepad" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_notepad_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

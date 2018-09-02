@@ -14,18 +14,31 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.presentation.adapter.MarkerAdapter
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_note.*
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as noteContent
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_add_button as addNoteButton
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_edit_button as editNoteButton
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
 import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import com.dvinc.notepad.common.extension.makeInvisible
 import com.dvinc.notepad.common.extension.makeVisible
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 
 class NoteFragment : BaseFragment(), NoteView {
 
-    @Inject lateinit var presenter: NotePresenter
+    companion object {
+        const val NOTE_ID = "noteId"
+        const val NOTE_MARKER_ID = "noteMarkerId"
+    }
+
+    @Inject
+    lateinit var presenter: NotePresenter
 
     private val noteId: Long? get() = arguments?.getLong(NOTE_ID, 0)
+
     private var noteInfoBundle: Bundle? = null
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
@@ -33,8 +46,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
-
+        injectPresenter()
         setupToolbar()
         setupNoteButton()
         setupEditNoteButton()
@@ -60,7 +72,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
-            val markerId = spNoteType.selectedItemId.toInt()
+            val markerId = noteTypeSpinner.selectedItemId.toInt()
             putInt(NOTE_MARKER_ID, markerId)
         }
     }
@@ -73,7 +85,7 @@ class NoteFragment : BaseFragment(), NoteView {
 
     override fun showMarkers(markers: List<MarkerTypeUi>) {
         val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
-        spNoteType.adapter = adapter
+        noteTypeSpinner.adapter = adapter
         restoreSelectedMarker()
     }
 
@@ -82,13 +94,12 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun setEditMode(isEditMode: Boolean) {
-        groupNote.makeVisible()
         if (isEditMode) {
-            btAddNote.visibility = View.INVISIBLE
-            btEditNote.visibility = View.VISIBLE
+            addNoteButton.makeInvisible()
+            editNoteButton.makeVisible()
         } else {
-            btAddNote.visibility = View.VISIBLE
-            btEditNote.visibility = View.INVISIBLE
+            addNoteButton.makeVisible()
+            editNoteButton.makeInvisible()
         }
     }
 
@@ -96,23 +107,27 @@ class NoteFragment : BaseFragment(), NoteView {
         if (noteInfoBundle != null) {
             restoreSelectedMarker()
         } else {
-            etNoteName.setText(note.name)
-            etNoteContent.setText(note.content)
+            noteName.setText(note.name)
+            noteContent.setText(note.content)
             //TODO: Think about this - using ordinal isn't good idea
-            spNoteType.setSelection(note.markerType.ordinal)
+            noteTypeSpinner.setSelection(note.markerType.ordinal)
         }
     }
 
     override fun setNoteNameEmptyError(isVisible: Boolean) {
         if (isVisible) {
-            etNoteName.error = context?.getString(R.string.message_empty_note_name)
+            noteName.error = context?.getString(R.string.message_empty_note_name)
         } else {
-            etNoteName.error = null
+            noteName.error = null
         }
     }
 
+    private fun injectPresenter() {
+        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
+    }
+
     private fun setupToolbar() {
-        toolbarNote.setNavigationOnClickListener {
+        toolbar.setNavigationOnClickListener {
             activity?.let {
                 findNavController(it, R.id.nav_host_fragment).navigateUp()
             }
@@ -120,22 +135,22 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     private fun setupNoteButton() {
-        btAddNote.setOnClickListener {
-            val name = etNoteName.text.toString()
-            val content = etNoteContent.text.toString()
+        addNoteButton.setOnClickListener {
+            val name = noteName.text.toString()
+            val content = noteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerType = spNoteType.selectedItem as MarkerTypeUi
+            val markerType = noteTypeSpinner.selectedItem as MarkerTypeUi
 
             presenter.onClickNoteButton(name, content, currentTime, markerType)
         }
     }
 
     private fun setupEditNoteButton() {
-        btEditNote.setOnClickListener {
-            val name = etNoteName.text.toString()
-            val content = etNoteContent.text.toString()
+        editNoteButton.setOnClickListener {
+            val name = noteName.text.toString()
+            val content = noteContent.text.toString()
             val currentTime = System.currentTimeMillis()
-            val markerType = spNoteType.selectedItem as MarkerTypeUi
+            val markerType = noteTypeSpinner.selectedItem as MarkerTypeUi
 
             presenter.onClickEditNoteButton(noteId, name, content, currentTime, markerType)
         }
@@ -150,12 +165,7 @@ class NoteFragment : BaseFragment(), NoteView {
         val noteBundle = noteInfoBundle
         if (noteBundle != null && noteBundle.containsKey(NOTE_MARKER_ID)) {
             val markerSelection = noteBundle.getInt(NOTE_MARKER_ID)
-            spNoteType.setSelection(markerSelection)
+            noteTypeSpinner.setSelection(markerSelection)
         }
-    }
-
-    companion object {
-        const val NOTE_ID = "noteId"
-        const val NOTE_MARKER_ID = "noteMarkerId"
     }
 }

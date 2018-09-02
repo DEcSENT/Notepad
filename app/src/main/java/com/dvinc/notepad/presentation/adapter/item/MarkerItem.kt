@@ -11,8 +11,8 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-import kotlinx.android.synthetic.main.item_note_marker.ivMarkerIcon as markerIcon
-import kotlinx.android.synthetic.main.item_note_marker.tvMarkerText as markerText
+import kotlinx.android.synthetic.main.item_note_marker.item_marker_icon as markerIcon
+import kotlinx.android.synthetic.main.item_note_marker.item_marker_text as markerText
 
 class MarkerItem(
         val marker: MarkerTypeUi
