@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import com.dvinc.notepad.common.extension.visible
+import com.dvinc.notepad.common.extension.makeVisible
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 
 class NoteFragment : BaseFragment(), NoteView {
@@ -82,7 +82,7 @@ class NoteFragment : BaseFragment(), NoteView {
     }
 
     override fun setEditMode(isEditMode: Boolean) {
-        groupNote.visible(true)
+        groupNote.makeVisible()
         if (isEditMode) {
             btAddNote.visibility = View.INVISIBLE
             btEditNote.visibility = View.VISIBLE

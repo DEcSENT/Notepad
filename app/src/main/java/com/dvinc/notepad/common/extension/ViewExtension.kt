@@ -9,8 +9,18 @@ package com.dvinc.notepad.common.extension
 
 import android.view.View
 
-fun View.visible(isVisible: Boolean) =
-        when (isVisible) {
-            true -> this.visibility = View.VISIBLE
-            false -> this.visibility = View.GONE
-        }
+fun View.makeVisible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.makeInvisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.makeGone() {
+    this.visibility = View.GONE
+}
+
+fun View.toggleGone(visible: Boolean) {
+    this.visibility = if (visible) View.VISIBLE else View.GONE
+}

@@ -20,7 +20,9 @@ import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
-import com.dvinc.notepad.common.extension.visible
+import com.dvinc.notepad.common.extension.makeGone
+import com.dvinc.notepad.common.extension.makeVisible
+import com.dvinc.notepad.common.extension.toggleGone
 import com.dvinc.notepad.presentation.adapter.item.NoteItem
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
@@ -75,7 +77,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         })
     }
 
-    override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
+    override fun setEmptyView(isVisible: Boolean) = emptyView.toggleGone(isVisible)
 
     override fun showError(errorMessage: String) {
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
@@ -117,8 +119,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     override fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi) {
-        //TODO: extension for visibility
-        ivSmallFilterIcon.visibility = View.VISIBLE
+        ivSmallFilterIcon.makeVisible()
         context?.let {
             ivSmallFilterIcon.drawable.mutate().setColorFilter(
                     ContextCompat.getColor(it, markerTypeUi.markerColor),
@@ -127,7 +128,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     override fun hideCurrentFilterIcon() {
-        ivSmallFilterIcon.visibility = View.GONE
+        ivSmallFilterIcon.makeGone()
     }
 
     override fun goToNoteScreen(noteId: Long) {
