@@ -21,7 +21,7 @@ class FilterPresenter @Inject constructor(
 
     fun initMarkers() {
         addSubscription(markerUseCase.getNoteMarkers()
-                .map { noteMapper.mapMarker(it) }
+                .map { noteMapper.mapMarkers(it) }
                 .subscribe(
                         { view?.showMarkers(it) },
                         { view?.showError(resProvider.getString(R.string.error_while_loading_markers)) }

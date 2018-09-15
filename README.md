@@ -36,8 +36,8 @@ Work in progress.
 
 ### What next
 
-- Bug fix and optimization
 - UI and unit tests
+- Notes export
 - User profile and synchronization with cloud
 - Security
 

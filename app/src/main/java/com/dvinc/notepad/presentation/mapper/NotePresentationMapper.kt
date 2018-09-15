@@ -25,7 +25,7 @@ class NotePresentationMapper @Inject constructor() {
         return notes.map { fromDomainToUi(it) }
     }
 
-    fun mapMarker(markers: List<MarkerType>): List<MarkerTypeUi> {
+    fun mapMarkers(markers: List<MarkerType>): List<MarkerTypeUi> {
         return markers.map { mapMarker(it) }
     }
 

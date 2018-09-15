@@ -18,8 +18,6 @@ open class ThreadScheduler @Inject constructor() {
 
     fun <T> ioToUiSingle() = { upstream: Single<T> -> upstream.subscribeOn(io()).observeOn(ui()) }
 
-    fun <T> ioToUiObservable() = { upstream: Observable<T> -> upstream.subscribeOn(io()).observeOn(ui()) }
-
     fun <T> ioToUiFlowable() = { upstream: Flowable<T> -> upstream.subscribeOn(io()).observeOn(ui()) }
 
     fun ioToUiCompletable() = { upstream: Completable -> upstream.subscribeOn(io()).observeOn(ui()) }
@@ -27,10 +25,6 @@ open class ThreadScheduler @Inject constructor() {
 
 fun <T> Single<T>.scheduleIoToUi(scheduler: ThreadScheduler): Single<T> {
     return compose(scheduler.ioToUiSingle())
-}
-
-fun <T> Observable<T>.scheduleIoToUi(scheduler: ThreadScheduler): Observable<T> {
-    return compose(scheduler.ioToUiObservable())
 }
 
 fun <T> Flowable<T>.scheduleIoToUi(scheduler: ThreadScheduler): Flowable<T> {

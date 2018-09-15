@@ -24,7 +24,7 @@ class NotePresenter @Inject constructor(
     fun initView(noteId: Long?) {
         if (noteId != null && noteId != 0L) {
             addSubscription(markerUseCase.getNoteMarkers()
-                    .map { noteMapper.mapMarker(it) }
+                    .map { noteMapper.mapMarkers(it) }
                     .doOnSuccess { view?.showMarkers(it) }
                     .flatMap { noteUseCase.getNoteById(noteId) }
                     .subscribe(
@@ -36,7 +36,7 @@ class NotePresenter @Inject constructor(
                     ))
         } else {
             addSubscription(markerUseCase.getNoteMarkers()
-                    .map { noteMapper.mapMarker(it) }
+                    .map { noteMapper.mapMarkers(it) }
                     .subscribe(
                             {
                                 view?.showMarkers(it)
@@ -69,8 +69,8 @@ class NotePresenter @Inject constructor(
                               time: Long,
                               markerTypeUi: MarkerTypeUi) {
         if (isNoteNameNotEmpty(name)) {
-            noteId?.let {
-                val newNote = noteMapper.createNote(noteId, name, content, time, markerTypeUi)
+            noteId?.let { id ->
+                val newNote = noteMapper.createNote(id, name, content, time, markerTypeUi)
                 addSubscription(noteUseCase.updateNote(newNote)
                         .subscribe(
                                 { view?.closeScreen() },

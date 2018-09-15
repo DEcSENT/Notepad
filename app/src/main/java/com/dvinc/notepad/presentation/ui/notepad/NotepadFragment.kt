@@ -20,26 +20,33 @@ import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import javax.inject.Inject
 import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
-import com.dvinc.notepad.common.extension.visible
-import com.dvinc.notepad.presentation.adapter.NoteAdapter
+import com.dvinc.notepad.common.extension.makeGone
+import com.dvinc.notepad.common.extension.makeVisible
+import com.dvinc.notepad.common.extension.toggleGone
+import com.dvinc.notepad.presentation.adapter.item.NoteItem
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.filter.FilterClickListener
 import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
-import kotlinx.android.synthetic.main.fragment_notepad.*
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_filter_icon as filterIcon
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_small_filter_icon as filterSmallIcon
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as fab
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_empty_view as emptyView
 
 class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
     companion object {
-
         private const val KEY_CURRENT_MARKER_FILTER = "keyCurrentMarkerFilter"
     }
 
     @Inject
     lateinit var notePadPresenter: NotepadPresenter
 
-    private val noteAdapter: NoteAdapter = NoteAdapter()
+    private val noteAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
@@ -67,10 +74,13 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     override fun showNotes(notes: List<NoteUi>) {
-        noteAdapter.setNotes(notes)
+        noteAdapter.clear()
+        noteAdapter.addAll(notes.map {
+            NoteItem(it)
+        })
     }
 
-    override fun setEmptyView(isVisible: Boolean) = emptyView.visible(isVisible)
+    override fun setEmptyView(isVisible: Boolean) = emptyView.toggleGone(isVisible)
 
     override fun showError(errorMessage: String) {
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
@@ -112,17 +122,24 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     override fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi) {
-        //TODO: extension for visibility
-        ivSmallFilterIcon.visibility = View.VISIBLE
+        filterSmallIcon.makeVisible()
         context?.let {
-            ivSmallFilterIcon.drawable.mutate().setColorFilter(
+            filterSmallIcon.drawable.mutate().setColorFilter(
                     ContextCompat.getColor(it, markerTypeUi.markerColor),
                     PorterDuff.Mode.MULTIPLY)
         }
     }
 
     override fun hideCurrentFilterIcon() {
-        ivSmallFilterIcon.visibility = View.GONE
+        filterSmallIcon.makeGone()
+    }
+
+    override fun goToNoteScreen(noteId: Long) {
+        val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
+        activity?.let {
+            findNavController(it, R.id.nav_host_fragment)
+                    .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
+        }
     }
 
     private fun injectPresenter() {
@@ -130,12 +147,12 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     private fun setupNoteRecycler() {
-        rvNotepad.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        rvNotepad.adapter = noteAdapter
+        notesRecycler.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        notesRecycler.adapter = noteAdapter
     }
 
     private fun setupFabButton() {
-        fabNewNote.setOnClickListener {
+        fab.setOnClickListener {
             activity?.let {
                 findNavController(it, R.id.nav_host_fragment)
                         .navigate(R.id.action_notepadFragment_to_noteFragment)
@@ -143,12 +160,12 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         }
 
         //Hiding fab by scroll
-        rvNotepad.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        notesRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 if (dy > 0)
-                    fabNewNote.hide()
+                    fab.hide()
                 else if (dy < 0)
-                    fabNewNote.show()
+                    fab.show()
             }
         })
     }
@@ -162,28 +179,28 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                val swipedNoteId = noteAdapter.getNote(position)?.id?.toInt()
-                if (swipedNoteId != null) notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
+                val item = noteAdapter.getItem(position)
+                if (item is NoteItem) {
+                    val swipedNoteId = item.note.id.toInt()
+                    notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
+                }
             }
         }
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(rvNotepad)
+        itemTouchHelper.attachToRecyclerView(notesRecycler)
     }
 
     private fun setupNotesAdapterClickListener() {
-        noteAdapter.setOnNoteClickListener {
-            val noteId = it
-            activity?.let {
-                val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
-                findNavController(it, R.id.nav_host_fragment)
-                        .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
+        noteAdapter.setOnItemClickListener { item, _ ->
+            if (item is NoteItem) {
+                notePadPresenter.onNoteItemClick(item.note)
             }
         }
     }
 
     private fun setupFilterButton() {
-        ivFilter.setOnClickListener {
+        filterIcon.setOnClickListener {
             val dialog = FilterDialogFragment.newInstance()
             dialog.setTargetFragment(this, 0)
             dialog.show(fragmentManager, FilterDialogFragment.TAG)

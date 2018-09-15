@@ -39,8 +39,8 @@ class MarkerAdapter(
         val marker = markers[position]
 
         //Kotlin extension doesn't work here, don't know why.
-        val markerIcon = view.findViewById<ImageView>(R.id.ivMarkerIcon)
-        val markerText = view.findViewById<TextView>(R.id.tvMarkerText)
+        val markerIcon = view.findViewById<ImageView>(R.id.item_marker_icon)
+        val markerText = view.findViewById<TextView>(R.id.item_marker_text)
 
         cntxt?.let {
             markerIcon.drawable.mutate().setColorFilter(
