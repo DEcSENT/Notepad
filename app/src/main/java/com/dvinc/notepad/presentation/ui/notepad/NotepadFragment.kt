@@ -179,8 +179,11 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                val swipedNoteId = noteAdapter.getItem(position).id.toInt()
-                notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
+                val item = noteAdapter.getItem(position)
+                if (item is NoteItem) {
+                    val swipedNoteId = item.note.id.toInt()
+                    notePadPresenter.onNoteSwiped(swipedNoteId, viewHolder.adapterPosition)
+                }
             }
         }
 
