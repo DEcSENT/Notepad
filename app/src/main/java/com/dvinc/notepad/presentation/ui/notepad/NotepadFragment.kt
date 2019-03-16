@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.extension.makeGone
-import com.dvinc.notepad.common.extension.makeVisible
-import com.dvinc.notepad.common.extension.toggleGone
+import com.dvinc.notepad.common.extension.*
+import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.item.NoteItem
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
@@ -43,7 +42,9 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     @Inject
-    lateinit var notePadPresenter: NotepadPresenter
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: NotepadViewModel
 
     private val noteAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
 
@@ -53,23 +54,8 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         injectDependencies()
-        setupNoteRecycler()
-        setupFabButton()
-        setupSwipeToDelete()
-        setupNotesAdapterClickListener()
-        setupFilterButton()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        notePadPresenter.attachView(this)
-        val selectedMarkerType = arguments?.getSerializable(KEY_CURRENT_MARKER_FILTER) as? MarkerTypeUi
-        notePadPresenter.initNotes(selectedMarkerType)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        notePadPresenter.detachView()
+        initViewModel()
+        initViews()
     }
 
     override fun showNotes(notes: List<NoteUi>) {
@@ -112,14 +98,6 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         arguments?.putSerializable(KEY_CURRENT_MARKER_FILTER, null)
     }
 
-    override fun loadAllNotes() {
-        notePadPresenter.loadAllNotes()
-    }
-
-    override fun loadNotesBySpecificMarkerType(type: MarkerTypeUi) {
-        notePadPresenter.filterNotes(type)
-    }
-
     override fun showCurrentFilterIcon(markerTypeUi: MarkerTypeUi) {
         filterSmallIcon.makeVisible()
         context?.let {
@@ -143,6 +121,19 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
     private fun injectDependencies() {
         DiProvider.appComponent.inject(this)
+    }
+
+    private fun initViewModel() {
+        viewModel = obtainViewModel(viewModelFactory)
+        observe(viewModel.state, ::handleViewState)
+    }
+
+    private fun initViews() {
+        setupNoteRecycler()
+        setupFabButton()
+        setupSwipeToDelete()
+        setupNotesAdapterClickListener()
+        setupFilterButton()
     }
 
     private fun setupNoteRecycler() {
@@ -204,5 +195,9 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
             dialog.setTargetFragment(this, 0)
             dialog.show(fragmentManager, FilterDialogFragment.TAG)
         }
+    }
+
+    private fun handleViewState(viewState: NotepadViewState) {
+        //todo handle state and show it
     }
 }
