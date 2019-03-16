@@ -2,11 +2,11 @@ ext.versions = [
 
         appId : 'com.dvinc.notepad',
 
-        compileSdk : 27,
+        compileSdk : 28,
 
         minSdk   : 19,
 
-        targetSdk: 27,
+        targetSdk: 28,
 
         code     : 1,
 
