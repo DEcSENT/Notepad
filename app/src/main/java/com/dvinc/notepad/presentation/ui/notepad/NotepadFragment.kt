@@ -7,6 +7,7 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,11 +23,9 @@ import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_empty_view as emptyView
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as fab
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_filter_icon as filterIcon
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_small_filter_icon as filterSmallIcon
 
 class NotepadFragment : BaseFragment() {
 
@@ -60,6 +59,7 @@ class NotepadFragment : BaseFragment() {
         setupNoteRecycler()
         setupFabButton()
         setupNotesAdapterClickListener()
+        setupBottomBar()
     }
 
     private fun setupNoteRecycler() {
@@ -93,6 +93,19 @@ class NotepadFragment : BaseFragment() {
             if (item is NoteItem) {
                 viewModel.onNoteItemClick(item.note)
             }
+        }
+    }
+
+    private fun setupBottomBar() {
+        bottomBar.replaceMenu(R.menu.notepad_bottom_bar_menu)
+        bottomBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.fragment_notepad_filter_menu_item -> {
+                    Toast.makeText(requireContext(), "Filter will be here", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+            true
         }
     }
 

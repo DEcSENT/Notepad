@@ -22,9 +22,9 @@ ext{
     ]
 
     appDependencies = [
-            support_library = "androidx.appcompat:appcompat:$android_appcompat_version",
+            appcompat = "androidx.appcompat:appcompat:$android_appcompat_version",
 
-            support_design = "com.google.android.material:material:$android_appcompat_version",
+            material = "com.google.android.material:material:$android_appcompat_version",
 
             lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:$android_lifecycle_version",
 

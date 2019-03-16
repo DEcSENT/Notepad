@@ -33,4 +33,9 @@
     <string name="fragment_notepad_filter_icon">Filter icon</string>
     <string name="dialog_filter_clear_button">Clear filter</string>
     <string name="small_filter_icon_description">Filter color icon</string>
+
+    <!--notepad region -->
+    <string name="fragment_notepad_menu_filter">Filter icon</string>
+    <!--end notepad region -->
+
 </resources>
