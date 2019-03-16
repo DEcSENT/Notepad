@@ -5,8 +5,8 @@
 
 package com.dvinc.notepad.presentation.model
 
-import android.support.annotation.ColorRes
-import android.support.annotation.StringRes
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import com.dvinc.notepad.R
 
 enum class MarkerTypeUi(

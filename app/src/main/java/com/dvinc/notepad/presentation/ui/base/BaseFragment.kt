@@ -5,9 +5,9 @@
 
 package com.dvinc.notepad.presentation.ui.base
 
-import android.support.annotation.LayoutRes
+import androidx.annotation.LayoutRes
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View

@@ -1,8 +1,8 @@
-def android_support_version = '27.1.1'
-def constraint_layout_version = '1.1.0'
-def android_arch_component_version = '1.0.0-alpha01'
-def dagger_version = '2.11'
-def rxJava_version = '2.1.3'
+def android_appcompat_version = '1.0.0'
+def constraint_layout_version = '2.0.0-alpha3'
+def android_navigation_version = '2.0.0'
+def dagger_version = '2.15'
+def rxJava_version = '2.2.7'
 def rxAndroid_version = '2.0.1'
 def android_room_version = '1.0.0'
 def stetho_version = '1.5.0'
@@ -21,17 +21,17 @@ ext{
     ]
 
     appDependencies = [
-            support_library = "com.android.support:appcompat-v7:$android_support_version",
+            support_library = "androidx.appcompat:appcompat:$android_appcompat_version",
 
-            support_design = "com.android.support:design:$android_support_version",
+            support_design = "com.google.android.material:material:$android_appcompat_version",
 
-            constraint_layout = "com.android.support.constraint:constraint-layout:$constraint_layout_version",
+            constraint_layout = "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
 
-            card_view = "com.android.support:cardview-v7:$android_support_version",
+            card_view = "androidx.cardview:cardview:$android_appcompat_version",
 
-            arch_component_navigation_fragment = "android.arch.navigation:navigation-fragment:$android_arch_component_version",
+            android_navigation_fragment = "androidx.navigation:navigation-fragment:$android_navigation_version",
 
-            arch_component_navigation_ui = "android.arch.navigation:navigation-ui:$android_arch_component_version",
+            android_navigation_ui = "androidx.navigation:navigation-ui:$android_navigation_version",
 
             dagger = "com.google.dagger:dagger:$dagger_version",
 

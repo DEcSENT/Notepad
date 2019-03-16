@@ -9,7 +9,7 @@ package com.dvinc.notepad.presentation.adapter
 
 import android.content.Context
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.widget.ArrayAdapter
 import android.view.LayoutInflater
 import android.view.View

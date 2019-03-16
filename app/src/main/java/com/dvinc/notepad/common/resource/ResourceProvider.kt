@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.common.resource
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 interface ResourceProvider {
 

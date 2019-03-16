@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.data.database.converter
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.dvinc.notepad.data.database.entity.marker.MarkerTypeEntity
 
 object MarkerTypeConverter {

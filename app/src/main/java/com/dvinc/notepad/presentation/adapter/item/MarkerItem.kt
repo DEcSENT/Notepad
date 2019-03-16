@@ -6,7 +6,7 @@
 package com.dvinc.notepad.presentation.adapter.item
 
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.xwray.groupie.kotlinandroidextensions.Item

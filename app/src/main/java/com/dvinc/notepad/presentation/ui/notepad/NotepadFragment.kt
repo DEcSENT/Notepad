@@ -8,9 +8,9 @@ package com.dvinc.notepad.presentation.ui.notepad
 import android.app.AlertDialog
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -18,7 +18,7 @@ import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import javax.inject.Inject
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.makeGone
 import com.dvinc.notepad.common.extension.makeVisible
@@ -147,7 +147,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     }
 
     private fun setupNoteRecycler() {
-        notesRecycler.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        notesRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         notesRecycler.adapter = noteAdapter
     }
 
@@ -161,7 +161,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
         //Hiding fab by scroll
         notesRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0)
                     fab.hide()
                 else if (dy < 0)
