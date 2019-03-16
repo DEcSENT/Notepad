@@ -1,5 +1,5 @@
 def android_appcompat_version = '1.0.0'
-def constraint_layout_version = '1.1.2'
+def constraint_layout_version = '2.0.0-alpha3'
 def android_navigation_version = '2.0.0'
 def dagger_version = '2.15'
 def rxJava_version = '2.2.7'
