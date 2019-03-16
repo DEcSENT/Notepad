@@ -7,7 +7,7 @@ package com.dvinc.notepad.presentation.ui.filter
 
 import android.app.Dialog
 import android.graphics.Color
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.LayoutInflater

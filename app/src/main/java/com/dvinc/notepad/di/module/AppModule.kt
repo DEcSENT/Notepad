@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.di.module
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.common.resource.ResourceProviderImpl

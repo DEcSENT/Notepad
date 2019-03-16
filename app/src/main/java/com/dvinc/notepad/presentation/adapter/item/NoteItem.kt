@@ -27,7 +27,7 @@ class NoteItem(
             content.text = note.content
             updateTime.text = note.updateTime
             markerIcon.drawable.mutate().setColorFilter(
-                    android.support.v4.content.ContextCompat.getColor(
+                    androidx.core.content.ContextCompat.getColor(
                             itemView.context,
                             note.markerType.markerColor ?: 0),
                     android.graphics.PorterDuff.Mode.MULTIPLY)
