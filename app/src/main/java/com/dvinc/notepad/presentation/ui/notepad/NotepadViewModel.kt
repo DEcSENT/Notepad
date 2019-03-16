@@ -5,6 +5,7 @@ import com.dvinc.notepad.common.extension.onNext
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
@@ -21,6 +22,10 @@ class NotepadViewModel @Inject constructor(
 
     init {
         loadNotes()
+    }
+
+    fun onNoteItemClick(note: NoteUi) {
+        //todo handle clicked item
     }
 
     private fun loadNotes() {
