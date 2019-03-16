@@ -5,4 +5,5 @@
 
 package com.dvinc.notepad.presentation.ui.base
 
+@Deprecated("replace by viewModel")
 interface MvpView

@@ -8,12 +8,13 @@ package com.dvinc.notepad.presentation.ui.notepad
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
-import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import javax.inject.Inject
 
+@Deprecated("replace by viewModel")
 class NotepadPresenter @Inject constructor(
         private val notepadUseCase: NotepadUseCase,
         private val noteMapper: NotePresentationMapper,
