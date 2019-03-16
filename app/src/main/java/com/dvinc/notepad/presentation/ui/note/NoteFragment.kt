@@ -5,27 +5,27 @@
 
 package com.dvinc.notepad.presentation.ui.note
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
-import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.note.Note
-import com.dvinc.notepad.presentation.adapter.MarkerAdapter
-import com.dvinc.notepad.presentation.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as noteContent
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_add_button as addNoteButton
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_edit_button as editNoteButton
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
-import javax.inject.Inject
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import com.dvinc.notepad.common.extension.makeInvisible
 import com.dvinc.notepad.common.extension.makeVisible
+import com.dvinc.notepad.di.DiProvider
+import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.notepad.presentation.adapter.MarkerAdapter
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.ui.base.BaseFragment
+import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_add_button as addNoteButton
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as noteContent
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_edit_button as editNoteButton
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
 
 class NoteFragment : BaseFragment(), NoteView {
 
@@ -46,7 +46,7 @@ class NoteFragment : BaseFragment(), NoteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        injectPresenter()
+        injectDependencies()
         setupToolbar()
         setupNoteButton()
         setupEditNoteButton()
@@ -122,8 +122,8 @@ class NoteFragment : BaseFragment(), NoteView {
         }
     }
 
-    private fun injectPresenter() {
-        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
+    private fun injectDependencies() {
+        DiProvider.appComponent.inject(this)
     }
 
     private fun setupToolbar() {

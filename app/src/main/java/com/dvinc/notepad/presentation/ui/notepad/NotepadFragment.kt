@@ -8,34 +8,33 @@ package com.dvinc.notepad.presentation.ui.notepad
 import android.app.AlertDialog
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
-import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
-import com.dvinc.notepad.presentation.ui.base.BaseFragment
-import javax.inject.Inject
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.common.extension.makeGone
 import com.dvinc.notepad.common.extension.makeVisible
 import com.dvinc.notepad.common.extension.toggleGone
+import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.item.NoteItem
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.filter.FilterClickListener
 import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_filter_icon as filterIcon
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_small_filter_icon as filterSmallIcon
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as fab
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_empty_view as emptyView
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as fab
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_filter_icon as filterIcon
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_small_filter_icon as filterSmallIcon
 
 class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
 
@@ -53,7 +52,7 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        injectPresenter()
+        injectDependencies()
         setupNoteRecycler()
         setupFabButton()
         setupSwipeToDelete()
@@ -142,8 +141,8 @@ class NotepadFragment : BaseFragment(), NotepadView, FilterClickListener {
         }
     }
 
-    private fun injectPresenter() {
-        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
+    private fun injectDependencies() {
+        DiProvider.appComponent.inject(this)
     }
 
     private fun setupNoteRecycler() {
