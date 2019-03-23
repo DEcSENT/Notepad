@@ -8,7 +8,8 @@
     android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
-    android:background="@drawable/bg_item_note">
+    android:background="@drawable/bg_item_note"
+    android:foreground="?attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

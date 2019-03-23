@@ -19,6 +19,8 @@ import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.item.NoteItem
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
+import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -53,6 +55,7 @@ class NotepadFragment : BaseFragment() {
     private fun initViewModel() {
         viewModel = obtainViewModel(viewModelFactory)
         observe(viewModel.state, ::handleViewState)
+        observe(viewModel.commands, ::handleViewCommand)
     }
 
     private fun initViews() {
@@ -115,6 +118,12 @@ class NotepadFragment : BaseFragment() {
         }
     }
 
+    private fun handleViewCommand(viewCommand: ViewCommand) {
+        when(viewCommand) {
+            is OpenNoteScreen -> goToNoteScreen(viewCommand.noteId)
+        }
+    }
+
     private fun showNotes(notes: List<NoteUi>) {
         noteAdapter.update(
             notes.map {
@@ -123,12 +132,9 @@ class NotepadFragment : BaseFragment() {
         )
     }
 
-    //todo handle this navigation later
     private fun goToNoteScreen(noteId: Long) {
         val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
-        activity?.let {
-            findNavController(it, R.id.nav_host_fragment)
-                .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
-        }
+        findNavController(requireNotNull(view))
+            .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
     }
 }

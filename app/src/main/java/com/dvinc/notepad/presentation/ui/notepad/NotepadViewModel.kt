@@ -7,6 +7,7 @@ import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
 import javax.inject.Inject
@@ -25,7 +26,8 @@ class NotepadViewModel @Inject constructor(
     }
 
     fun onNoteItemClick(note: NoteUi) {
-        //todo handle clicked item
+        val openNoteScreenCommand = OpenNoteScreen(noteId = note.id)
+        commands.onNext(openNoteScreenCommand)
     }
 
     private fun loadNotes() {
