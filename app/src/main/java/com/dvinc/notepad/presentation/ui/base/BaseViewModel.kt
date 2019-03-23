@@ -6,7 +6,7 @@ import io.reactivex.disposables.Disposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    //TODO Add base events liveData
+    val commands = CommandsLiveData<ViewCommand>()
 
     private val compositeDisposable by lazy { CompositeDisposable() }
 
