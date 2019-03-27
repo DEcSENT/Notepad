@@ -1,4 +1,5 @@
 def android_appcompat_version = '1.0.0'
+def android_material_version = '1.1.0-alpha03'
 def android_lifecycle_version = '2.0.0'
 def constraint_layout_version = '2.0.0-alpha3'
 def android_navigation_version = '2.0.0'
@@ -24,7 +25,7 @@ ext{
     appDependencies = [
             appcompat = "androidx.appcompat:appcompat:$android_appcompat_version",
 
-            material = "com.google.android.material:material:$android_appcompat_version",
+            material = "com.google.android.material:material:$android_material_version",
 
             lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:$android_lifecycle_version",
 
