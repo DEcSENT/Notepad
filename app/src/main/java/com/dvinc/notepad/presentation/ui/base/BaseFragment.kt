@@ -9,8 +9,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.dvinc.notepad.R
 import com.dvinc.notepad.common.snackbar.SnackbarFactory
 
 abstract class BaseFragment : Fragment(), BaseView {
@@ -31,21 +33,33 @@ abstract class BaseFragment : Fragment(), BaseView {
 
 
     override fun showMessage(messageResId: Int, containerResId: Int, anchorView: View?, duration: Int) {
-        showSnackBar(messageResId, containerResId, anchorView?.id, duration)
+        val backgroundColorId = R.color.black
+        val textColorId = R.color.white
+        showSnackBar(messageResId, containerResId, anchorView?.id, duration, backgroundColorId, textColorId)
     }
 
-    override fun showErrorMessage(messageResId: Int, containerResId: Int, anchorViewId: Int?, duration: Int) {
-        //todo add red background color
-        showSnackBar(messageResId, containerResId, anchorViewId, duration)
+    override fun showErrorMessage(messageResId: Int, containerResId: Int, anchorView: View?, duration: Int) {
+        val backgroundColorId = R.color.red
+        val textColorId = R.color.white
+        showSnackBar(messageResId, containerResId, anchorView?.id, duration, backgroundColorId, textColorId)
     }
 
-    private fun showSnackBar(messageResId: Int, containerResId: Int, anchorViewId: Int?, duration: Int) {
+    private fun showSnackBar(
+        messageResId: Int,
+        containerResId: Int,
+        anchorViewId: Int?,
+        duration: Int,
+        @ColorRes backgroundColor: Int,
+        @ColorRes textColor: Int
+    ) {
         val message = getString(messageResId)
         val snackbar = SnackbarFactory.create(
             mainView = decorView,
             messageText = message,
             containerResId = containerResId,
-            duration = duration
+            duration = duration,
+            backgroundColor = backgroundColor,
+            textColor = textColor
         )
         anchorViewId?.let { snackbar?.setAnchorView(it) }
         snackbar?.show()

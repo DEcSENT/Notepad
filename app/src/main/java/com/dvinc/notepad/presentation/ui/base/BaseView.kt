@@ -21,7 +21,7 @@ interface BaseView {
     fun showErrorMessage(
         @StringRes messageResId: Int,
         containerResId: Int = android.R.id.content,
-        anchorViewId: Int? = null,
+        anchorView: View? = null,
         duration: Int = Snackbar.LENGTH_LONG
     )
 }
