@@ -32,7 +32,7 @@ class NoteDataRepository
                 }
     }
 
-    override fun deleteNoteById(id: Int): Completable {
+    override fun deleteNoteById(id: Long): Completable {
         return Completable.fromAction { noteDao.deleteNoteById(id) }
     }
 

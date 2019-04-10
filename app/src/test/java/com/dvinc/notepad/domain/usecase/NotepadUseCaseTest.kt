@@ -6,10 +6,9 @@ import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import org.junit.Test
-
 import org.junit.Before
-import org.mockito.ArgumentMatchers.anyInt
+import org.junit.Test
+import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
@@ -37,7 +36,7 @@ class NotepadUseCaseTest {
         noteList = listOf(note, note)
 
         `when`(noteRepository.getNotes()).thenReturn(Flowable.just(noteList))
-        `when`(noteRepository.deleteNoteById(anyInt())).thenReturn(Completable.complete())
+        `when`(noteRepository.deleteNoteById(anyLong())).thenReturn(Completable.complete())
     }
 
     @Test
@@ -56,13 +55,13 @@ class NotepadUseCaseTest {
 
     @Test
     fun deleteNote() {
-        notepadUseCase.deleteNote(anyInt())
-        verify(noteRepository).deleteNoteById(anyInt())
+        notepadUseCase.deleteNote(anyLong())
+        verify(noteRepository).deleteNoteById(anyLong())
     }
 
     @Test
     fun `check correct result from deleteNote()`() {
-        notepadUseCase.deleteNote(anyInt())
+        notepadUseCase.deleteNote(anyLong())
                 .test()
                 .assertNoErrors()
                 .assertComplete()

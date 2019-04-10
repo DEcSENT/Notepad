@@ -25,7 +25,7 @@ class NotepadUseCase @Inject constructor(
                 .scheduleIoToUi(scheduler)
     }
 
-    fun deleteNote(noteId: Int): Completable {
+    fun deleteNote(noteId: Long): Completable {
         return noteRepository.deleteNoteById(noteId)
                 .scheduleIoToUi(scheduler)
     }
