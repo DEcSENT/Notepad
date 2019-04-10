@@ -21,6 +21,7 @@ import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowMessage
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -121,6 +122,12 @@ class NotepadFragment : BaseFragment() {
     private fun handleViewCommand(viewCommand: ViewCommand) {
         when(viewCommand) {
             is OpenNoteScreen -> goToNoteScreen(viewCommand.noteId)
+            is ShowMessage -> {
+                showMessage(
+                    messageResId = viewCommand.messageResId,
+                    anchorView = bottomBar
+                )
+            }
         }
     }
 

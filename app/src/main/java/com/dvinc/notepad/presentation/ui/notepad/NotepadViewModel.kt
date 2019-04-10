@@ -12,7 +12,6 @@ import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
 import javax.inject.Inject
 
-//todo finish this then DI will be ready
 class NotepadViewModel @Inject constructor(
     private val notepadUseCase: NotepadUseCase,
     private val noteMapper: NotePresentationMapper,

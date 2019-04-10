@@ -42,15 +42,15 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     override fun onStart() {
         super.onStart()
-        with(dialog) {
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.let {
+            it.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = View.inflate(activity, R.layout.dialog_filter, null)
-        val dialog = Dialog(activity, R.style.DialogFragmentNoTitleStyle)
+        val dialog = Dialog(requireContext(), R.style.DialogFragmentNoTitleStyle)
         dialog.setContentView(view)
         return dialog
     }

@@ -20,6 +20,8 @@ class NoteItem(
         val note: NoteUi
 ) : Item() {
 
+    override fun getId(): Long = note.id
+
     override fun getLayout() = R.layout.item_note
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
