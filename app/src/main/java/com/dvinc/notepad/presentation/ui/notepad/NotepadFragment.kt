@@ -84,7 +84,7 @@ class NotepadFragment : BaseFragment() {
     private fun setupNotesAdapterClickListener() {
         noteAdapter.setOnItemClickListener { item, _ ->
             if (item is NoteItem) {
-                viewModel.onNoteDelete(item.note)
+                viewModel.onNoteItemClick(item.note)
             }
         }
     }

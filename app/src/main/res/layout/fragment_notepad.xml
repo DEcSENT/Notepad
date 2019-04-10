@@ -20,10 +20,12 @@
         android:id="@+id/fragment_notepad_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_white_24px"
+        app:backgroundTint="@color/black"
         app:layout_anchor="@id/fragment_notepad_bottom_app_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_white_24px" />
+        app:tint="@color/white" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/fragment_notepad_bottom_app_bar"
