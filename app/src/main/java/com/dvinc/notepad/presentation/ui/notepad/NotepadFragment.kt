@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
@@ -27,7 +26,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as fab
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
 
 class NotepadFragment : BaseFragment() {
@@ -74,28 +73,18 @@ class NotepadFragment : BaseFragment() {
     }
 
     private fun setupFabButton() {
-        fab.setOnClickListener {
+        bottomBarFab.setOnClickListener {
             activity?.let {
                 findNavController(it, R.id.nav_host_fragment)
                     .navigate(R.id.action_notepadFragment_to_noteFragment)
             }
         }
-
-        //Hiding fab by scroll
-        notesRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0)
-                    fab.hide()
-                else if (dy < 0)
-                    fab.show()
-            }
-        })
     }
 
     private fun setupNotesAdapterClickListener() {
         noteAdapter.setOnItemClickListener { item, _ ->
             if (item is NoteItem) {
-                viewModel.onNoteItemClick(item.note)
+                viewModel.onNoteDelete(item.note)
             }
         }
     }
@@ -125,7 +114,7 @@ class NotepadFragment : BaseFragment() {
             is ShowMessage -> {
                 showMessage(
                     messageResId = viewCommand.messageResId,
-                    anchorView = bottomBar
+                    anchorView = bottomBarFab
                 )
             }
         }
