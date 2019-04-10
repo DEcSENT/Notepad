@@ -10,6 +10,7 @@ import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
+import timber.log.Timber
 import javax.inject.Inject
 
 class NotepadViewModel @Inject constructor(
@@ -17,6 +18,10 @@ class NotepadViewModel @Inject constructor(
     private val noteMapper: NotePresentationMapper,
     private val resProvider: ResourceProvider
 ) : BaseViewModel() {
+
+    companion object {
+        private const val TAG = "NotepadViewModel"
+    }
 
     val state = MutableLiveData<NotepadViewState>()
 
@@ -41,7 +46,7 @@ class NotepadViewModel @Inject constructor(
                         state.onNext(content)
                     }
                 }, {
-                    //todo show and log error
+                    Timber.tag(TAG).e(it)
                 }
             )
             .disposeOnViewModelDestroy()

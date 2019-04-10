@@ -14,6 +14,8 @@ def espresso_core_version = '3.0.2'
 def junit_version = '4.12'
 def mockito_core_version = '2.18.0'
 
+def timber_version = '4.7.1'
+
 ext{
 
     librariesAnnotaionProcessors = [
@@ -51,7 +53,9 @@ ext{
 
             groupie = "com.xwray:groupie:2.1.0",
 
-            groupieExt = "com.xwray:groupie-kotlin-android-extensions:2.1.0"
+            groupieExt = "com.xwray:groupie-kotlin-android-extensions:2.1.0",
+
+            timber = "com.jakewharton.timber:timber:$timber_version"
     ]
 
     testDependencies = [
