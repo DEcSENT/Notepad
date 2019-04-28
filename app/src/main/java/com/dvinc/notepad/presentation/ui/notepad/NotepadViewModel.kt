@@ -9,7 +9,6 @@ import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
-import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,12 +51,8 @@ class NotepadViewModel @Inject constructor(
             .map { noteMapper.fromDomainToUi(it) }
             .subscribe(
                 { notes ->
-                    if (notes.isEmpty()) {
-                        state.onNext(EmptyContent)
-                    } else {
-                        val content = Content(notes)
-                        state.onNext(content)
-                    }
+                    val content = Content(notes)
+                    state.onNext(content)
                 }, {
                     Timber.tag(TAG).e(it)
                 }
