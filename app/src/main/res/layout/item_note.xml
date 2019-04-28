@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvNoteName"
+            android:id="@+id/item_note_name"
             style="@style/item_note_header_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -25,32 +25,32 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNoteUpdatedTime"
+            app:layout_constraintTop_toBottomOf="@+id/item_note_updating_time"
             tools:text="Note 1" />
 
         <ImageView
-            android:id="@+id/ivNoteTypeIcon"
+            android:id="@+id/item_note_type_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:contentDescription="@string/note_item_icon_description"
             android:src="@drawable/ic_note_type"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNoteTypeText"
+            app:layout_constraintBottom_toBottomOf="@+id/item_note_type_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvNoteTypeText" />
+            app:layout_constraintTop_toTopOf="@+id/item_note_type_name" />
 
         <TextView
-            android:id="@+id/tvNoteTypeText"
+            android:id="@+id/item_note_type_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNoteUpdatedTime"
-            app:layout_constraintEnd_toStartOf="@+id/ivNoteTypeIcon"
-            app:layout_constraintTop_toTopOf="@+id/tvNoteUpdatedTime"
+            app:layout_constraintBottom_toBottomOf="@+id/item_note_updating_time"
+            app:layout_constraintEnd_toStartOf="@+id/item_note_type_icon"
+            app:layout_constraintTop_toTopOf="@+id/item_note_updating_time"
             tools:text="ToDo" />
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/item_note_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="8dp"
@@ -59,10 +59,10 @@
             android:background="@color/colorDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNoteName" />
+            app:layout_constraintTop_toBottomOf="@+id/item_note_name" />
 
         <TextView
-            android:id="@+id/tvNoteContent"
+            android:id="@+id/item_note_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -74,11 +74,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/item_note_divider"
             tools:text="Finally i try Kotlin..." />
 
         <TextView
-            android:id="@+id/tvNoteUpdatedTime"
+            android:id="@+id/item_note_updating_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
