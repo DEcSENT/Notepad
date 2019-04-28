@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
@@ -16,6 +17,7 @@ import com.dvinc.notepad.common.extension.obtainViewModel
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
+import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
@@ -40,6 +42,10 @@ class NotepadFragment : BaseFragment() {
         override fun onItemClick(note: NoteUi) {
             viewModel.onNoteItemClick(note)
         }
+    }
+
+    private val noteItemSwipeListener: (note: NoteUi) -> Unit = {
+        viewModel.onNoteDelete(it)
     }
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
@@ -74,6 +80,9 @@ class NotepadFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = notesAdapter
         }
+        val notepadTouchCallback = NotepadSwipeToDeleteCallback(notesAdapter, noteItemSwipeListener)
+        val swipeToDeleteTouchHelper = ItemTouchHelper(notepadTouchCallback)
+        swipeToDeleteTouchHelper.attachToRecyclerView(notesRecycler)
     }
 
     private fun setupFabButton() {

@@ -44,6 +44,10 @@ class NotepadAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         notes = newNotes
     }
 
+    fun getItem(position: Int): NoteUi {
+        return notes[position]
+    }
+
     interface ItemClickListener {
 
         fun onItemClick(note: NoteUi)
