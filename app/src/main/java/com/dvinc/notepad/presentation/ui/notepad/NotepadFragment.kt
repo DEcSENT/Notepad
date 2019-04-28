@@ -15,15 +15,13 @@ import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
-import com.dvinc.notepad.presentation.adapter.item.NoteItem
+import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowMessage
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
@@ -36,7 +34,13 @@ class NotepadFragment : BaseFragment() {
 
     private lateinit var viewModel: NotepadViewModel
 
-    private val noteAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
+    private val notesAdapter: NotepadAdapter = NotepadAdapter()
+
+    private val noteItemClickListener = object : NotepadAdapter.ItemClickListener {
+        override fun onItemClick(note: NoteUi) {
+            viewModel.onNoteItemClick(note)
+        }
+    }
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
@@ -68,7 +72,7 @@ class NotepadFragment : BaseFragment() {
     private fun setupNoteRecycler() {
         with(notesRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = noteAdapter
+            adapter = notesAdapter
         }
     }
 
@@ -82,11 +86,7 @@ class NotepadFragment : BaseFragment() {
     }
 
     private fun setupNotesAdapterClickListener() {
-        noteAdapter.setOnItemClickListener { item, _ ->
-            if (item is NoteItem) {
-                viewModel.onNoteItemClick(item.note)
-            }
-        }
+        notesAdapter.setOnItemClickListener(noteItemClickListener)
     }
 
     private fun setupBottomBar() {
@@ -121,11 +121,7 @@ class NotepadFragment : BaseFragment() {
     }
 
     private fun showNotes(notes: List<NoteUi>) {
-        noteAdapter.update(
-            notes.map {
-                NoteItem(it)
-            }
-        )
+        notesAdapter.updateNotes(notes)
     }
 
     private fun goToNoteScreen(noteId: Long) {

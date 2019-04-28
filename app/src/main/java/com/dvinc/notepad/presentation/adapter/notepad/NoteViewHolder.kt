@@ -15,7 +15,10 @@ import kotlinx.android.synthetic.main.item_note.item_note_type_icon as markerIco
 import kotlinx.android.synthetic.main.item_note.item_note_type_name as markerText
 import kotlinx.android.synthetic.main.item_note.item_note_updating_time as updateTime
 
-class NoteViewHolder(itemView: View) : BaseViewHolder(itemView) {
+class NoteViewHolder(
+    itemView: View,
+    private val itemClickListener: NotepadAdapter.ItemClickListener?
+) : BaseViewHolder(itemView) {
 
     fun bind(note: NoteUi) {
         name.text = note.name
@@ -26,5 +29,9 @@ class NoteViewHolder(itemView: View) : BaseViewHolder(itemView) {
             android.graphics.PorterDuff.Mode.MULTIPLY
         )
         markerText.text = itemView.context.getText(note.markerType.markerName)
+
+        itemView.setOnClickListener {
+            itemClickListener?.onItemClick(note)
+        }
     }
 }

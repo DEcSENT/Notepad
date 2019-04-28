@@ -15,11 +15,13 @@ class NotepadAdapter : RecyclerView.Adapter<NoteViewHolder>() {
 
     private var notes: List<NoteUi> = emptyList()
 
+    private var itemClickListener: ItemClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val context = parent.context
         val noteItemLayoutId = R.layout.item_note
         val view = LayoutInflater.from(context).inflate(noteItemLayoutId, parent, false)
-        return NoteViewHolder(view)
+        return NoteViewHolder(view, itemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -30,9 +32,18 @@ class NotepadAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         holder.bind(notes[position])
     }
 
+    fun setOnItemClickListener(listener: ItemClickListener) {
+        itemClickListener = listener
+    }
+
     //todo diffUtil
     fun updateNotes(newNotes: List<NoteUi>) {
         notes = newNotes
         notifyDataSetChanged()
+    }
+
+    interface ItemClickListener {
+
+        fun onItemClick(note: NoteUi)
     }
 }
