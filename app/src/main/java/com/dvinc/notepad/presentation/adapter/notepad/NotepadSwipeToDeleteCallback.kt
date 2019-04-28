@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.NoteUi
 
 class NotepadSwipeToDeleteCallback(
@@ -46,21 +47,42 @@ class NotepadSwipeToDeleteCallback(
     ) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         val itemView = viewHolder.itemView
+
+        //todo think about unsafe casting here
+        val deleteIcon = recyclerView.context.getDrawable(R.drawable.ic_delete)!!
+        val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
+        val iconTop = itemView.top + iconMargin
+        val iconBottom = iconTop + deleteIcon.intrinsicHeight
+
         when {
-            dX > 0 -> deletedItemBackground.setBounds(
-                itemView.left,
-                itemView.top,
-                itemView.left + (dX.toInt() + backgroundCornerOffset),
-                itemView.bottom
-            )
-            dX < 0 -> deletedItemBackground.setBounds(
-                itemView.right + (dX.toInt() - backgroundCornerOffset),
-                itemView.top,
-                itemView.right,
-                itemView.bottom
-            )
-            else -> deletedItemBackground.setBounds(0, 0, 0, 0)
+            dX > 0 -> {
+                deletedItemBackground.setBounds(
+                    itemView.left,
+                    itemView.top,
+                    itemView.left + (dX.toInt() + backgroundCornerOffset),
+                    itemView.bottom
+                )
+
+                val iconLeft = itemView.left + iconMargin
+                val iconRight = itemView.left + iconMargin + deleteIcon.intrinsicWidth
+                deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+            }
+            dX < 0 -> {
+                deletedItemBackground.setBounds(
+                    itemView.right + (dX.toInt() - backgroundCornerOffset),
+                    itemView.top,
+                    itemView.right,
+                    itemView.bottom
+                )
+                val iconLeft = itemView.right - iconMargin - deleteIcon.intrinsicWidth
+                val iconRight = itemView.right - iconMargin
+                deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+            }
+            else -> {
+                deletedItemBackground.setBounds(0, 0, 0, 0)
+            }
         }
         deletedItemBackground.draw(c)
+        deleteIcon.draw(c)
     }
 }
