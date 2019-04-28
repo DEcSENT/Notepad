@@ -7,6 +7,7 @@ package com.dvinc.notepad.presentation.adapter.notepad
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.NoteUi
@@ -36,10 +37,11 @@ class NotepadAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         itemClickListener = listener
     }
 
-    //todo diffUtil
     fun updateNotes(newNotes: List<NoteUi>) {
+        val diffUtilCallback = NotepadDiffUtilsCallback(notes, newNotes)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallback, true)
+        diffUtilResult.dispatchUpdatesTo(this)
         notes = newNotes
-        notifyDataSetChanged()
     }
 
     interface ItemClickListener {
