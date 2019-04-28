@@ -3,12 +3,10 @@ package com.dvinc.notepad.presentation.ui.notepad
 import androidx.lifecycle.MutableLiveData
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.onNext
-import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
@@ -17,8 +15,7 @@ import javax.inject.Inject
 
 class NotepadViewModel @Inject constructor(
     private val notepadUseCase: NotepadUseCase,
-    private val noteMapper: NotePresentationMapper,
-    private val resProvider: ResourceProvider
+    private val noteMapper: NotePresentationMapper
 ) : BaseViewModel() {
 
     companion object {
@@ -40,13 +37,11 @@ class NotepadViewModel @Inject constructor(
         notepadUseCase.deleteNote(note.id)
             .subscribe(
                 {
-                    val showMessageCommand = ViewCommand.ShowMessage(R.string.note_successfully_deleted)
-                    commands.onNext(showMessageCommand)
+                    showMessage(R.string.note_successfully_deleted)
                 },
                 {
                     Timber.tag(TAG).e(it)
-                    val showErrorMessageCommand = ViewCommand.ShowMessage(R.string.error_while_deleting_note)
-                    commands.onNext(showErrorMessageCommand)
+                    showMessage(R.string.error_while_deleting_note)
                 }
             )
             .disposeOnViewModelDestroy()
