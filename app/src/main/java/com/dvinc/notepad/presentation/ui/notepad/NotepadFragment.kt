@@ -16,6 +16,7 @@ import com.dvinc.notepad.common.extension.makeGone
 import com.dvinc.notepad.common.extension.makeVisible
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
+import com.dvinc.notepad.common.recycler.SpaceItemDecorator
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
@@ -82,6 +83,7 @@ class NotepadFragment : BaseFragment() {
         with(notesRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = notesAdapter
+            addItemDecoration(SpaceItemDecorator())
         }
         val notepadTouchCallback = NotepadSwipeToDeleteCallback(notesAdapter, noteItemSwipeListener)
         val swipeToDeleteTouchHelper = ItemTouchHelper(notepadTouchCallback)
