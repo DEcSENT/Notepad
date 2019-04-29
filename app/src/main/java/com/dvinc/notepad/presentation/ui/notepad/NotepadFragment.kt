@@ -12,6 +12,8 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.extension.makeGone
+import com.dvinc.notepad.common.extension.makeVisible
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
@@ -28,6 +30,7 @@ import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_stub_container as stubContainer
 
 class NotepadFragment : BaseFragment() {
 
@@ -113,7 +116,14 @@ class NotepadFragment : BaseFragment() {
 
     private fun handleViewState(viewState: NotepadViewState) {
         when (viewState) {
-            is NotepadViewState.Content -> showNotes(viewState.notes)
+            is NotepadViewState.Content -> {
+                showNotes(viewState.notes)
+                stubContainer.makeGone()
+            }
+            is NotepadViewState.EmptyContent -> {
+                showNotes(emptyList())
+                stubContainer.makeVisible()
+            }
         }
     }
 

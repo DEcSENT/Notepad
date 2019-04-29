@@ -36,6 +36,7 @@
 
     <!--notepad region -->
     <string name="fragment_notepad_menu_filter">Filter icon</string>
+    <string name="fragment_notepad_stub_text">Your notepad is empty</string>
     <!--end notepad region -->
 
 </resources>

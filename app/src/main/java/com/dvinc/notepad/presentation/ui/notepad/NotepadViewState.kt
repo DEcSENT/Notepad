@@ -9,5 +9,7 @@ import com.dvinc.notepad.presentation.model.NoteUi
 
 sealed class NotepadViewState {
 
+    object EmptyContent : NotepadViewState()
+
     data class Content(val notes: List<NoteUi>) : NotepadViewState()
 }
