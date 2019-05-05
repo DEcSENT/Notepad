@@ -11,9 +11,9 @@ import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewModelTest
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -53,6 +53,40 @@ class NotepadViewModelTest : ViewModelTest() {
         val expectedListWithSingleCommand = LinkedList<ViewCommand>(
             listOf(ViewCommand.OpenNoteScreen(noteUi.id))
         )
-        assertThat(notepadViewModel.commands.value!!, `is`(equalTo(expectedListWithSingleCommand)))
+        assertThat(notepadViewModel.commands.value!!, `is`(expectedListWithSingleCommand))
+    }
+
+    @Test
+    fun `show successful message after note deleting`() {
+        // Given
+        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+
+        // When
+        `when`(notepadUseCase.deleteNote(noteUi.id)).thenReturn(Completable.complete())
+        notepadViewModel.onNoteDelete(noteUi)
+
+        // Then
+        val expectedListWithSingleCommand = LinkedList<ViewCommand>(
+            listOf(ViewCommand.ShowMessage(0))
+        )
+        // Checking viewCommand class
+        assertThat(notepadViewModel.commands.value!!.first::class, `is`(expectedListWithSingleCommand.first::class))
+    }
+
+    @Test
+    fun `show error message after note deleting`() {
+        // Given
+        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+
+        // When
+        `when`(notepadUseCase.deleteNote(noteUi.id)).thenReturn(Completable.error(IllegalStateException()))
+        notepadViewModel.onNoteDelete(noteUi)
+
+        // Then
+        val expectedListWithSingleCommand = LinkedList<ViewCommand>(
+            listOf(ViewCommand.ShowErrorMessage(0))
+        )
+        // Checking viewCommand class
+        assertThat(notepadViewModel.commands.value!!.first::class, `is`(expectedListWithSingleCommand.first::class))
     }
 }

@@ -21,6 +21,11 @@ abstract class BaseViewModel : ViewModel() {
         commands.onNext(showMessageCommand)
     }
 
+    protected fun showErrorMessage(@StringRes messageResId: Int) {
+        val showMessageCommand = ViewCommand.ShowErrorMessage(messageResId)
+        commands.onNext(showMessageCommand)
+    }
+
     protected fun Disposable.disposeOnViewModelDestroy(): Disposable {
         compositeDisposable.add(this)
         return this

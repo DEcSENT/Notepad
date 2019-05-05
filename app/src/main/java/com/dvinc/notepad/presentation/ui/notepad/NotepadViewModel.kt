@@ -41,7 +41,7 @@ class NotepadViewModel @Inject constructor(
                 },
                 {
                     Timber.tag(TAG).e(it)
-                    showMessage(R.string.error_while_deleting_note)
+                    showErrorMessage(R.string.error_while_deleting_note)
                 }
             )
             .disposeOnViewModelDestroy()
