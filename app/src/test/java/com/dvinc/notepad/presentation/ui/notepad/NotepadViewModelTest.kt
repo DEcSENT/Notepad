@@ -5,6 +5,9 @@
 
 package com.dvinc.notepad.presentation.ui.notepad
 
+import androidx.lifecycle.Observer
+import com.dvinc.notepad.domain.model.marker.MarkerType
+import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
@@ -18,7 +21,7 @@ import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import java.util.*
 
@@ -30,6 +33,9 @@ class NotepadViewModelTest : ViewModelTest() {
     @Mock
     private lateinit var noteMapper: NotePresentationMapper
 
+    @Mock
+    private lateinit var testNotepadViewStateObserver: Observer<NotepadViewState>
+
     private lateinit var notepadViewModel: NotepadViewModel
 
     @Before
@@ -39,6 +45,36 @@ class NotepadViewModelTest : ViewModelTest() {
         `when`(notepadUseCase.getNotes()).thenReturn(Flowable.just(emptyList()))
 
         notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
+    }
+
+    @Test
+    fun `verify that state have EmptyContent when empty notes list returned from repository`() {
+        // Given
+        notepadViewModel.state.observeForever(testNotepadViewStateObserver)
+
+        // When
+        // empty
+
+        // Then
+        verify(testNotepadViewStateObserver, times(1)).onChanged(NotepadViewState.EmptyContent)
+    }
+
+    @Test
+    fun `verify that state have Content when notes list returned from repository`() {
+        // Given
+        val note = Note(100L, "test", "content", 100L, MarkerType.CRITICAL)
+        val notesList = listOf(note)
+        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+        val noteUiList = listOf(noteUi)
+
+        // When
+        `when`(notepadUseCase.getNotes()).thenReturn(Flowable.just(notesList))
+        `when`(noteMapper.fromDomainToUi(notesList)).thenReturn(noteUiList)
+        notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
+        notepadViewModel.state.observeForever(testNotepadViewStateObserver)
+
+        // Then
+        verify(testNotepadViewStateObserver, times(1)).onChanged(NotepadViewState.Content(noteUiList))
     }
 
     @Test

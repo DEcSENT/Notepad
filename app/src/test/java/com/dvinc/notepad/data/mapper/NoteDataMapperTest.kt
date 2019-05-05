@@ -41,7 +41,7 @@ class NoteDataMapperTest {
 
     @Test
     fun `correct mapped entities list size`() {
-        assert(noteMapper.fromEntityToDomain(entityList).size == 2)
+        assert(noteMapper.fromEntityToDomain(entityList).size == entityList.size)
     }
 
     @Test

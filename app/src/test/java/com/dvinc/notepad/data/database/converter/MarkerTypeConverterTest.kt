@@ -8,16 +8,16 @@ class MarkerTypeConverterTest {
     private val markerTypeEntityList = MarkerTypeEntity.values().toList()
 
     @Test
-    fun fromType() {
+    fun `assert that markerTypes was convert from type right`() {
         (0 until markerTypeEntityList.size).forEach {
-            assert(MarkerTypeConverter.fromType(markerTypeEntityList[0]) == markerTypeEntityList[0].name)
+            assert(MarkerTypeConverter.fromType(markerTypeEntityList[it]) == markerTypeEntityList[it].name)
         }
     }
 
     @Test
-    fun toType() {
+    fun `assert that markerTypes was convert to type right`() {
         (0 until markerTypeEntityList.size).forEach {
-            assert(MarkerTypeConverter.toType(markerTypeEntityList[0].name) == markerTypeEntityList[0])
+            assert(MarkerTypeConverter.toType(markerTypeEntityList[it].name) == markerTypeEntityList[it])
         }
     }
 }
