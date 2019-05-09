@@ -8,7 +8,6 @@ package com.dvinc.notepad.presentation.ui.note
 import androidx.lifecycle.MutableLiveData
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.onNext
-import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
@@ -25,8 +24,7 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(
     private val noteUseCase: NoteUseCase,
     private val markerUseCase: MarkerUseCase,
-    private val noteMapper: NotePresentationMapper,
-    private val resProvider: ResourceProvider
+    private val noteMapper: NotePresentationMapper
 ) : BaseViewModel() {
 
     companion object {
@@ -60,17 +58,17 @@ class NoteViewModel @Inject constructor(
         noteContent: String,
         noteMarkerType: MarkerTypeUi
     ) {
-        //TODO(dv): logic for new and existing note
-        //TODO(dv): note id?
+        val noteId = getCurrentNoteId()
         val currentTime = System.currentTimeMillis()
-        val note = noteMapper.createNote(0, noteName, noteContent, currentTime, noteMarkerType)
-        noteUseCase.addNote(note)
+        val note = noteMapper.createNote(noteId, noteName, noteContent, currentTime, noteMarkerType)
+        noteUseCase.saveNote(note)
             .subscribe(
                 {
                     val closeScreenCommand = ViewCommand.CloseNoteScreen
                     commands.onNext(closeScreenCommand)
                 },
                 {
+                    showErrorMessage(R.string.error_while_adding_note)
                     Timber.tag(TAG).e(it)
                 }
             )
@@ -89,5 +87,9 @@ class NoteViewModel @Inject constructor(
             .zipWith(noteUseCase.getNoteById(noteId), BiFunction { markers, note ->
                 ExistingNoteViewState(note, markers)
             })
+    }
+
+    private fun getCurrentNoteId(): Long {
+        return (state.value as? ExistingNoteViewState)?.note?.id ?: 0
     }
 }

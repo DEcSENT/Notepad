@@ -29,28 +29,30 @@ class NotePresentationMapper @Inject constructor() {
         return markers.map { mapMarker(it) }
     }
 
-    fun createNote(noteId: Long,
-                   name: String,
-                   content: String,
-                   time: Long,
-                   markerTypeUi: MarkerTypeUi): Note {
+    fun createNote(
+        noteId: Long,
+        name: String,
+        content: String,
+        time: Long,
+        markerTypeUi: MarkerTypeUi
+    ): Note {
         return Note(
-                id = noteId,
-                name = name,
-                content = content,
-                updateTime = time,
-                markerType = mapMarker(markerTypeUi)
+            id = noteId,
+            name = name,
+            content = content,
+            updateTime = time,
+            markerType = mapMarker(markerTypeUi)
         )
     }
 
     private fun fromDomainToUi(note: Note): NoteUi {
         return with(note) {
             NoteUi(
-                    id = id,
-                    name = name,
-                    content = content,
-                    updateTime = mapNoteTimeToString(updateTime),
-                    markerType = mapMarker(markerType)
+                id = id,
+                name = name,
+                content = content,
+                updateTime = mapNoteTimeToString(updateTime),
+                markerType = mapMarker(markerType)
             )
         }
     }
@@ -61,10 +63,12 @@ class NotePresentationMapper @Inject constructor() {
         currentCalendar.time = Date(time)
 
         return if (calendar.get(Calendar.DAY_OF_YEAR) == currentCalendar.get(Calendar.DAY_OF_YEAR)
-                && calendar.get(Calendar.DAY_OF_WEEK) == currentCalendar.get(Calendar.DAY_OF_WEEK)) {
+            && calendar.get(Calendar.DAY_OF_WEEK) == currentCalendar.get(Calendar.DAY_OF_WEEK)
+        ) {
             sdfToday.format(time)
         } else if (calendar.get(Calendar.DAY_OF_YEAR) != currentCalendar.get(Calendar.DAY_OF_YEAR)
-                && calendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)) {
+            && calendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)
+        ) {
             sdfWeek.format(time)
         } else {
             sdfMonth.format(time)

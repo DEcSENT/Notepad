@@ -17,6 +17,8 @@ import com.dvinc.notepad.presentation.adapter.MarkerAdapter
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseNoteScreen
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
@@ -89,22 +91,34 @@ class NoteFragmentNew : BaseFragment() {
 
     private fun handleViewCommand(viewCommand: ViewCommand) {
         when (viewCommand) {
-            is ViewCommand.CloseNoteScreen -> {
+            is CloseNoteScreen -> {
                 Navigation.findNavController(requireNotNull(view)).navigateUp()
+            }
+            is ShowErrorMessage -> {
+                showErrorMessage(viewCommand.messageResId)
             }
         }
     }
 
     private fun showNewNote(viewState: NewNoteViewState) {
-        val adapter = MarkerAdapter(context, R.layout.item_note_marker, viewState.availableMarkers)
-        noteTypeSpinner.adapter = adapter
+        val addNoteText = getString(R.string.note_add)
+        saveNoteButton.text = addNoteText
+        fillMarkersView(viewState.availableMarkers)
     }
 
     private fun showExistingNote(viewState: ExistingNoteViewState) {
+        val editNoteText = getString(R.string.note_edit)
+        saveNoteButton.text = editNoteText
         val note = viewState.note
         noteName.setText(note.name)
         noteContent.setText(note.content)
+        fillMarkersView(viewState.availableMarkers)
         //TODO(dv): Think about this - using ordinal isn't good idea
         noteTypeSpinner.setSelection(note.markerType.ordinal)
+    }
+
+    private fun fillMarkersView(markers: List<MarkerTypeUi>) {
+        val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
+        noteTypeSpinner.adapter = adapter
     }
 }
