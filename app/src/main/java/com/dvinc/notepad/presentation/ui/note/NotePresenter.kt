@@ -9,11 +9,12 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
-import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.ui.base.BasePresenter
 import javax.inject.Inject
 
+@Deprecated("replace by View model")
 class NotePresenter @Inject constructor(
         private val noteUseCase: NoteUseCase,
         private val markerUseCase: MarkerUseCase,

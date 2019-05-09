@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.dvinc.notepad.presentation.ui.note.NoteFragment"
+        android:name="com.dvinc.notepad.presentation.ui.note.NoteFragmentNew"
         android:label="NoteFragment"
         tools:layout="@layout/fragment_note" />
 </navigation>

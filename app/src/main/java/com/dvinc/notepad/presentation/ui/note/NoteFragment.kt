@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteNa
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
 
+@Deprecated("replace by new Note fragment")
 class NoteFragment : BaseFragment(), NoteView {
 
     companion object {
