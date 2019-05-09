@@ -19,12 +19,12 @@ Work in progress.
 - RxJava 2
 - Room
 - Stetho
-- Android Google Support things
+- Android X
 - **Navigation Architecture Component**
 
 ### Architecture
 
-- MVP 
+- MVVM (View model with view states, it's experiment too)
 - Clean architecture (i experiment with this)
 
 ### Other
@@ -37,11 +37,16 @@ Work in progress.
 ### What next
 
 - UI and unit tests
+- Dark theme
+- Fingerprint
 - Notes export
-- User profile and synchronization with cloud
 - Security
+- User profile and synchronization with cloud
+- Coroutines (possible)
 
 ### Screens
+
+** For now this screens are outdated. Will be updated soon.**
 
 <img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad1.png" width="335" height="602"><img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad4.png" width="335" height="602">
 <img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad3.png" width="335" height="602"><img src="https://raw.githubusercontent.com/DEcSENT/cv/master/screens/notepad2.png" width="335" height="602">

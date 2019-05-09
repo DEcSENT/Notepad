@@ -1,7 +1,9 @@
 def android_appcompat_version = '1.0.0'
+def android_material_version = '1.1.0-alpha03'
+def android_lifecycle_version = '2.0.0'
 def constraint_layout_version = '2.0.0-alpha3'
 def android_navigation_version = '2.0.0'
-def dagger_version = '2.15'
+def dagger_version = '2.22'
 def rxJava_version = '2.2.7'
 def rxAndroid_version = '2.0.1'
 def android_room_version = '1.0.0'
@@ -11,6 +13,9 @@ def test_runner_version = '1.0.2'
 def espresso_core_version = '3.0.2'
 def junit_version = '4.12'
 def mockito_core_version = '2.18.0'
+def android_arch_core_testing_version = '2.0.1'
+
+def timber_version = '4.7.1'
 
 ext{
 
@@ -21,9 +26,11 @@ ext{
     ]
 
     appDependencies = [
-            support_library = "androidx.appcompat:appcompat:$android_appcompat_version",
+            appcompat = "androidx.appcompat:appcompat:$android_appcompat_version",
 
-            support_design = "com.google.android.material:material:$android_appcompat_version",
+            material = "com.google.android.material:material:$android_material_version",
+
+            lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:$android_lifecycle_version",
 
             constraint_layout = "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
 
@@ -47,13 +54,17 @@ ext{
 
             groupie = "com.xwray:groupie:2.1.0",
 
-            groupieExt = "com.xwray:groupie-kotlin-android-extensions:2.1.0"
+            groupieExt = "com.xwray:groupie-kotlin-android-extensions:2.1.0",
+
+            timber = "com.jakewharton.timber:timber:$timber_version"
     ]
 
     testDependencies = [
             junit =  "junit:junit:$junit_version",
 
-            mockito_core = "org.mockito:mockito-core:$mockito_core_version"
+            mockito_core = "org.mockito:mockito-core:$mockito_core_version",
+
+            android_arch_core_testing = "androidx.arch.core:core-testing:$android_arch_core_testing_version"
     ]
 
     androidTestDependencies = [

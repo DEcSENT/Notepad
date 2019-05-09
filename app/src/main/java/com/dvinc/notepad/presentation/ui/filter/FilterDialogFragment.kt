@@ -7,24 +7,24 @@ package com.dvinc.notepad.presentation.ui.filter
 
 import android.app.Dialog
 import android.graphics.Color
-import androidx.fragment.app.DialogFragment
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import com.dvinc.notepad.R
-import android.graphics.drawable.ColorDrawable
+import android.view.ViewGroup
 import android.widget.Toast
-import com.dvinc.notepad.NotepadApplication
+import androidx.fragment.app.DialogFragment
+import com.dvinc.notepad.R
+import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.item.MarkerItem
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_recycler as filterRecycler
+import javax.inject.Inject
+import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_background as dialogShadow
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_cancel_button as cancelButton
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_clear_button as clearButton
-import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_background as dialogShadow
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_recycler as filterRecycler
 
 class FilterDialogFragment : DialogFragment(), FilterView {
 
@@ -42,15 +42,15 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     override fun onStart() {
         super.onStart()
-        with(dialog) {
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.let {
+            it.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = View.inflate(activity, R.layout.dialog_filter, null)
-        val dialog = Dialog(activity, R.style.DialogFragmentNoTitleStyle)
+        val dialog = Dialog(requireContext(), R.style.DialogFragmentNoTitleStyle)
         dialog.setContentView(view)
         return dialog
     }
@@ -62,7 +62,7 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injectPresenter()
+        injectDependencies()
         setupShadow()
         setupCancelButton()
         setupClearFilterButton()
@@ -103,8 +103,8 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         dismiss()
     }
 
-    private fun injectPresenter() {
-        (context?.applicationContext as NotepadApplication).appComponent.inject(this)
+    private fun injectDependencies() {
+        DiProvider.appComponent.inject(this)
     }
 
     /*

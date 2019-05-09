@@ -6,24 +6,20 @@
 package com.dvinc.notepad
 
 import android.app.Application
-import com.dvinc.notepad.di.component.AppComponent
-import com.dvinc.notepad.di.component.DaggerAppComponent
-import com.dvinc.notepad.di.module.AppModule
+import com.dvinc.notepad.common.timber.ReleaseTree
+import com.dvinc.notepad.di.DiProvider
 import com.facebook.stetho.Stetho
+import timber.log.Timber
 
 class NotepadApplication : Application() {
 
-    lateinit var appComponent: AppComponent
-
     override fun onCreate() {
         super.onCreate()
-        appComponent = buildDi()
+
+        DiProvider.buildDi(this)
 
         Stetho.initializeWithDefaults(this)
-    }
 
-    private fun buildDi() = DaggerAppComponent
-            .builder()
-            .appModule(AppModule(this))
-            .build()
+        Timber.plant(if (BuildConfig.DEBUG) Timber.DebugTree() else ReleaseTree())
+    }
 }

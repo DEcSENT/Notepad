@@ -6,9 +6,9 @@ import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
-
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 class MarkerUseCaseTest {
@@ -23,7 +23,7 @@ class MarkerUseCaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        Mockito.`when`(markerRepository.getMarkers()).thenReturn(Single.just(markerTypeList))
+        `when`(markerRepository.getMarkers()).thenReturn(Single.just(markerTypeList))
 
         markerUseCase = MarkerUseCase(markerRepository)
     }
@@ -31,7 +31,7 @@ class MarkerUseCaseTest {
     @Test
     fun getNoteMarkers() {
         markerUseCase.getNoteMarkers()
-        Mockito.verify(markerRepository).getMarkers()
+        verify(markerRepository).getMarkers()
     }
 
     @Test

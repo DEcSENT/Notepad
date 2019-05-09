@@ -18,7 +18,7 @@ interface NoteRepository {
 
     fun addNote(note: Note): Completable
 
-    fun deleteNoteById(id: Int): Completable
+    fun deleteNoteById(id: Long): Completable
 
     fun updateNote(note: Note): Completable
 

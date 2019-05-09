@@ -14,6 +14,7 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_note_marker.item_marker_icon as markerIcon
 import kotlinx.android.synthetic.main.item_note_marker.item_marker_text as markerText
 
+@Deprecated("replace by native things. Without Groupie library")
 class MarkerItem(
         val marker: MarkerTypeUi
 ) : Item() {
