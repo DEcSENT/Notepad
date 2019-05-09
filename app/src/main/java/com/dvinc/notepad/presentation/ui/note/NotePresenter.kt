@@ -56,7 +56,7 @@ class NotePresenter @Inject constructor(
             noteId: Long = 0) {
         if (isNoteNameNotEmpty(name)) {
             val newNote = noteMapper.createNote(noteId, name, content, time, markerTypeUi)
-            addSubscription(noteUseCase.addNote(newNote)
+            addSubscription(noteUseCase.saveNote(newNote)
                     .subscribe(
                             { view?.closeScreen() },
                             { view?.showError(resProvider.getString(R.string.error_while_adding_note)) }

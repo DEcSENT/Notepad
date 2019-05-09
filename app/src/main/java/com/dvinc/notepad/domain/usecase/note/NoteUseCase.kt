@@ -25,23 +25,14 @@ class NoteUseCase @Inject constructor(
                 .scheduleIoToUi(scheduler)
     }
 
-    fun addNote(note: Note): Completable {
+    fun saveNote(note: Note): Completable {
         return noteRepository.addNote(note)
                 .scheduleIoToUi(scheduler)
     }
 
+    @Deprecated("remove then refactoring for Note screen will be done")
     fun updateNote(note: Note): Completable {
         return noteRepository.updateNote(note)
                 .scheduleIoToUi(scheduler)
-    }
-
-    //TODO(dv): maybe you can just insert note by one repo method?
-    fun saveNote(note: Note): Completable {
-        return if (note.id == 0L) {
-            addNote(note)
-        } else {
-            updateNote(note)
-        }
-            .scheduleIoToUi(scheduler)
     }
 }
