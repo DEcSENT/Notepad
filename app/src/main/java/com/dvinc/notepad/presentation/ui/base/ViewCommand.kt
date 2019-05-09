@@ -11,4 +11,8 @@ sealed class ViewCommand {
     /* Notepad screen commands region start */
     data class OpenNoteScreen(val noteId: Long) : ViewCommand()
     /* Notepad screen commands region end */
+
+    /* Note screen commands region start */
+    object CloseNoteScreen : ViewCommand()
+    /* Note screen commands region end */
 }

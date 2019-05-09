@@ -12,7 +12,9 @@ import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
+import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import io.reactivex.Single
@@ -48,6 +50,28 @@ class NoteViewModel @Inject constructor(
                 {
                     Timber.tag(TAG).e(it)
                     showErrorMessage(R.string.error_while_loading_note)
+                }
+            )
+            .disposeOnViewModelDestroy()
+    }
+
+    fun onSaveButtonClick(
+        noteName: String,
+        noteContent: String,
+        noteMarkerType: MarkerTypeUi
+    ) {
+        //TODO(dv): logic for new and existing note
+        //TODO(dv): note id?
+        val currentTime = System.currentTimeMillis()
+        val note = noteMapper.createNote(0, noteName, noteContent, currentTime, noteMarkerType)
+        noteUseCase.addNote(note)
+            .subscribe(
+                {
+                    val closeScreenCommand = ViewCommand.CloseNoteScreen
+                    commands.onNext(closeScreenCommand)
+                },
+                {
+                    Timber.tag(TAG).e(it)
                 }
             )
             .disposeOnViewModelDestroy()
