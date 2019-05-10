@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_type_spinn
 class NoteFragmentNew : BaseFragment() {
 
     companion object {
-        const val NOTE_ID = "noteId"
+        private const val NOTE_ID = "noteId"
     }
 
     @Inject
@@ -49,6 +49,11 @@ class NoteFragmentNew : BaseFragment() {
         injectDependencies()
         initViewModel()
         initViews()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        hideKeyboard()
     }
 
     private fun injectDependencies() {

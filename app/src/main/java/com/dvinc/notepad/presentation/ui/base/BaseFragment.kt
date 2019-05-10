@@ -5,12 +5,15 @@
 
 package com.dvinc.notepad.presentation.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.snackbar.SnackbarFactory
@@ -18,10 +21,6 @@ import com.dvinc.notepad.common.snackbar.SnackbarFactory
 abstract class BaseFragment : Fragment(), BaseView {
 
     private val decorView by lazy { requireActivity().window.decorView }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getFragmentLayoutId(), container, false)
-    }
 
     /**
      * Getting fragment layout resource id.
@@ -31,6 +30,16 @@ abstract class BaseFragment : Fragment(), BaseView {
     @LayoutRes
     abstract fun getFragmentLayoutId(): Int
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(getFragmentLayoutId(), container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Important fix for window insets
+        // See info at https://medium.com/androiddevelopers/windows-insets-fragment-transitions-9024b239a436
+        ViewCompat.requestApplyInsets(view)
+    }
 
     override fun showMessage(messageResId: Int, containerResId: Int, anchorView: View?, duration: Int) {
         val backgroundColorId = R.color.black
@@ -42,6 +51,11 @@ abstract class BaseFragment : Fragment(), BaseView {
         val backgroundColorId = R.color.red
         val textColorId = R.color.white
         showSnackBar(messageResId, containerResId, anchorView?.id, duration, backgroundColorId, textColorId)
+    }
+
+    fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     private fun showSnackBar(
