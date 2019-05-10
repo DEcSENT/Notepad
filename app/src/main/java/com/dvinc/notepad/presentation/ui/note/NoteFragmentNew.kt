@@ -32,6 +32,7 @@ class NoteFragmentNew : BaseFragment() {
 
     companion object {
         private const val NOTE_ID = "noteId"
+        private const val NOTE_MARKER_ID = "noteMarkerId"
     }
 
     @Inject
@@ -43,6 +44,8 @@ class NoteFragmentNew : BaseFragment() {
 
     private val noteId: Long? by lazy { arguments?.getLong(NOTE_ID, 0) }
 
+    private var noteMarkerBundle: Bundle? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,9 +54,22 @@ class NoteFragmentNew : BaseFragment() {
         initViews()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        noteMarkerBundle = savedInstanceState
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         hideKeyboard()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.apply {
+            val markerId = noteTypeSpinner.selectedItemId.toInt()
+            putInt(NOTE_MARKER_ID, markerId)
+        }
     }
 
     private fun injectDependencies() {
@@ -109,21 +125,35 @@ class NoteFragmentNew : BaseFragment() {
         val addNoteText = getString(R.string.note_add)
         saveNoteButton.text = addNoteText
         fillMarkersView(viewState.availableMarkers)
+        restoreSelectedMarkerIfNeeded()
     }
 
     private fun showExistingNote(viewState: ExistingNoteViewState) {
         val editNoteText = getString(R.string.note_edit)
         saveNoteButton.text = editNoteText
-        val note = viewState.note
-        noteName.setText(note.name)
-        noteContent.setText(note.content)
         fillMarkersView(viewState.availableMarkers)
-        //TODO(dv): Think about this - using ordinal isn't good idea
-        noteTypeSpinner.setSelection(note.markerType.ordinal)
+        if (noteMarkerBundle != null) {
+            // Strange code because of android rotation mechanism
+            restoreSelectedMarkerIfNeeded()
+            return
+        } else {
+            val note = viewState.note
+            noteName.setText(note.name)
+            noteContent.setText(note.content)
+            noteTypeSpinner.setSelection(note.markerType.ordinal)
+        }
     }
 
     private fun fillMarkersView(markers: List<MarkerTypeUi>) {
         val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
         noteTypeSpinner.adapter = adapter
+    }
+
+    private fun restoreSelectedMarkerIfNeeded() {
+        val noteBundle = noteMarkerBundle
+        if (noteBundle != null && noteBundle.containsKey(NOTE_MARKER_ID)) {
+            val markerSelection = noteBundle.getInt(NOTE_MARKER_ID)
+            noteTypeSpinner.setSelection(markerSelection)
+        }
     }
 }

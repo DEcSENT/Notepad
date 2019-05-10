@@ -33,8 +33,9 @@ class NoteViewModel @Inject constructor(
 
     val state = MutableLiveData<NoteViewState>()
 
-    //todo think about possible rotation bug
     fun initNote(noteId: Long?) {
+        // No need to load note if we have one
+        if (state.value != null) return
         val viewStateSource = if (noteId != null && noteId != 0L) {
             getNoteSource(noteId)
         } else {
