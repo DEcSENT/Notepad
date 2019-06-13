@@ -5,7 +5,7 @@ ext {
 }
 
 jacoco {
-    toolVersion = "0.8.1"
+    toolVersion = "0.8.4"
     reportsDir = file("$buildDir/reports")
 }
 
@@ -28,9 +28,9 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/kotlin"
 
-    getSourceDirectories().from([mainSrc])
-    getClassDirectories().from([debugTree])
-    getExecutionData().from(dir: project.buildDir, includes: [
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
             'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
     ])
 }
