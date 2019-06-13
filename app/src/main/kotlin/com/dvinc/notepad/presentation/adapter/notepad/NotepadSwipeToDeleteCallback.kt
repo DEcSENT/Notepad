@@ -18,9 +18,12 @@ class NotepadSwipeToDeleteCallback(
     private val onItemSwipedListener: (note: NoteUi) -> Unit
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
+    companion object {
+        private const val BACKGROUND_CORNER_OFFSET = 100
+    }
+
     private val deletedItemBackground = ColorDrawable(Color.RED)
 
-    private val backgroundCornerOffset = 100
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -59,7 +62,7 @@ class NotepadSwipeToDeleteCallback(
                 deletedItemBackground.setBounds(
                     itemView.left,
                     itemView.top,
-                    itemView.left + (dX.toInt() + backgroundCornerOffset),
+                    itemView.left + (dX.toInt() + BACKGROUND_CORNER_OFFSET),
                     itemView.bottom
                 )
 
@@ -69,7 +72,7 @@ class NotepadSwipeToDeleteCallback(
             }
             dX < 0 -> {
                 deletedItemBackground.setBounds(
-                    itemView.right + (dX.toInt() - backgroundCornerOffset),
+                    itemView.right + (dX.toInt() - BACKGROUND_CORNER_OFFSET),
                     itemView.top,
                     itemView.right,
                     itemView.bottom

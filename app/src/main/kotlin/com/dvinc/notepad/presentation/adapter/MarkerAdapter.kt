@@ -52,4 +52,3 @@ class MarkerAdapter(
         return view
     }
 }
- 
