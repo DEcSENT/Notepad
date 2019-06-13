@@ -5,8 +5,8 @@
 
 package com.dvinc.notepad.di.module
 
-import androidx.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.dvinc.notepad.common.resource.ResourceProvider
 import com.dvinc.notepad.common.resource.ResourceProviderImpl
 import com.dvinc.notepad.data.database.NotepadDatabase

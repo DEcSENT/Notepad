@@ -1,7 +1,7 @@
 package com.dvinc.notepad.presentation.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
 import com.dvinc.notepad.R
 

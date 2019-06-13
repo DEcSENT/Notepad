@@ -7,7 +7,6 @@ package com.dvinc.notepad.di
 
 import android.content.Context
 import com.dvinc.notepad.di.component.AppComponent
-import com.dvinc.notepad.di.component.DaggerAppComponent
 import com.dvinc.notepad.di.module.AppModule
 
 object DiProvider {

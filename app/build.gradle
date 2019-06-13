@@ -32,6 +32,10 @@ android {
         }
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
     androidExtensions {
         experimental = true
     }
