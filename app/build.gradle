@@ -32,6 +32,10 @@ android {
         }
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
     androidExtensions {
         experimental = true
     }
@@ -48,4 +52,7 @@ dependencies {
     kapt(librariesAnnotaionProcessors)
 
     implementation(appDependencies)
+
+    // Temp dependency because of dagger and java version annotations bug
+    implementation "javax.annotation:jsr250-api:1.0"
 }

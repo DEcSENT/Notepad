@@ -6,9 +6,8 @@ import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import io.reactivex.Completable
 import io.reactivex.Single
-import org.junit.Test
-
 import org.junit.Before
+import org.junit.Test
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -54,13 +53,13 @@ class NoteUseCaseTest {
 
     @Test
     fun addNote() {
-        noteUseCase.addNote(note)
+        noteUseCase.saveNote(note)
         verify(noteRepository).addNote(note)
     }
 
     @Test
     fun `check correct result from addNote()`() {
-        noteUseCase.addNote(note)
+        noteUseCase.saveNote(note)
                 .test()
                 .assertNoErrors()
                 .assertComplete()
