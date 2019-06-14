@@ -20,7 +20,7 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 
 class MarkerAdapter(
-        private val cntxt: Context?,
+        private val cntxt: Context,
         private val layoutId: Int,
         private val markers: List<MarkerTypeUi>
 ) : ArrayAdapter<MarkerTypeUi>(cntxt, layoutId, markers) {
@@ -42,7 +42,7 @@ class MarkerAdapter(
         val markerIcon = view.findViewById<ImageView>(R.id.item_marker_icon)
         val markerText = view.findViewById<TextView>(R.id.item_marker_text)
 
-        cntxt?.let {
+        cntxt.let {
             markerIcon.drawable.mutate().setColorFilter(
                     ContextCompat.getColor(it, marker.markerColor),
                     PorterDuff.Mode.MULTIPLY)

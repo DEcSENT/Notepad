@@ -50,9 +50,7 @@ class NotepadSwipeToDeleteCallback(
     ) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         val itemView = viewHolder.itemView
-
-        //todo think about unsafe casting here
-        val deleteIcon = recyclerView.context.getDrawable(R.drawable.ic_delete)!!
+        val deleteIcon = recyclerView.context.getDrawable(R.drawable.ic_delete) ?: return
         val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
         val iconTop = itemView.top + iconMargin
         val iconBottom = iconTop + deleteIcon.intrinsicHeight

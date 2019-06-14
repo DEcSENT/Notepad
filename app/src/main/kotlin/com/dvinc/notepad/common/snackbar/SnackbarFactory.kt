@@ -20,7 +20,7 @@ object SnackbarFactory {
         @ColorRes textColor: Int
     ): Snackbar? {
 
-        val viewGroup = mainView.findViewById(containerResId) as ViewGroup?
+        val viewGroup = mainView.findViewById(containerResId) as? ViewGroup
 
         return viewGroup?.let {
             Snackbar
@@ -30,7 +30,7 @@ object SnackbarFactory {
     }
 
     private fun Snackbar.decorate(@ColorRes backgroundId: Int, @ColorRes textColorId: Int): Snackbar {
-        val layout = view as Snackbar.SnackbarLayout
+        val layout = view as? Snackbar.SnackbarLayout ?: return this
 
         val textView = with(layout) {
             layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, backgroundId))

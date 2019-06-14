@@ -145,7 +145,7 @@ class NoteFragment : BaseFragment() {
     }
 
     private fun fillMarkersView(markers: List<MarkerTypeUi>) {
-        val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
+        val adapter = MarkerAdapter(requireContext(), R.layout.item_note_marker, markers)
         noteTypeSpinner.adapter = adapter
     }
 
