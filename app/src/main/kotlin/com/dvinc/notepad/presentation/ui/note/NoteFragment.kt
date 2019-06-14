@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 by Denis Verentsov (decsent@Yandex.ru)
+ * Copyright (c) 2019 by Denis Verentsov (decsent@yandex.ru)
  * All rights reserved.
  */
 
@@ -7,65 +7,61 @@ package com.dvinc.notepad.presentation.ui.note
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.Navigation
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.extension.makeInvisible
-import com.dvinc.notepad.common.extension.makeVisible
+import com.dvinc.notepad.common.extension.observe
+import com.dvinc.notepad.common.extension.obtainViewModel
+import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
-import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.presentation.adapter.MarkerAdapter
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
+import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseNoteScreen
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowErrorMessage
+import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
+import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_add_button as addNoteButton
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as noteContent
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_edit_button as editNoteButton
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
+import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_content as noteContent
+import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_name as noteName
+import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_save_button as saveNoteButton
+import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_toolbar as toolbar
+import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_type_spinner as noteTypeSpinner
 
-@Deprecated("replace by new Note fragment")
-class NoteFragment : BaseFragment(), NoteView {
+class NoteFragment : BaseFragment() {
 
     companion object {
         const val NOTE_ID = "noteId"
-        const val NOTE_MARKER_ID = "noteMarkerId"
+        private const val NOTE_MARKER_ID = "noteMarkerId"
     }
 
     @Inject
-    lateinit var presenter: NotePresenter
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val noteId: Long? get() = arguments?.getLong(NOTE_ID, 0)
+    private lateinit var viewModel: NoteViewModel
 
-    private var noteInfoBundle: Bundle? = null
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_note_new
 
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
+    private val noteId: Long? by lazy { arguments?.getLong(NOTE_ID, 0) }
+
+    private var noteMarkerBundle: Bundle? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         injectDependencies()
-        setupToolbar()
-        setupNoteButton()
-        setupEditNoteButton()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.attachView(this)
-        presenter.initView(noteId)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        hideKeyboard()
-        presenter.detachView()
+        initViewModel()
+        initViews()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        noteInfoBundle = savedInstanceState
+        noteMarkerBundle = savedInstanceState
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        hideKeyboard()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -76,87 +72,85 @@ class NoteFragment : BaseFragment(), NoteView {
         }
     }
 
-    override fun closeScreen() {
-        activity?.let {
-            findNavController(it, R.id.nav_host_fragment).navigateUp()
-        }
-    }
-
-    override fun showMarkers(markers: List<MarkerTypeUi>) {
-        val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
-        noteTypeSpinner.adapter = adapter
-        restoreSelectedMarker()
-    }
-
-    override fun showError(errorMessage: String) {
-        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-    }
-
-    override fun setEditMode(isEditMode: Boolean) {
-        if (isEditMode) {
-            addNoteButton.makeInvisible()
-            editNoteButton.makeVisible()
-        } else {
-            addNoteButton.makeVisible()
-            editNoteButton.makeInvisible()
-        }
-    }
-
-    override fun showNote(note: Note) {
-        if (noteInfoBundle != null) {
-            restoreSelectedMarker()
-        } else {
-            noteName.setText(note.name)
-            noteContent.setText(note.content)
-            //TODO: Think about this - using ordinal isn't good idea
-            noteTypeSpinner.setSelection(note.markerType.ordinal)
-        }
-    }
-
-    override fun setNoteNameEmptyError(isVisible: Boolean) {
-        if (isVisible) {
-            noteName.error = context?.getString(R.string.message_empty_note_name)
-        } else {
-            noteName.error = null
-        }
-    }
-
     private fun injectDependencies() {
         DiProvider.appComponent.inject(this)
     }
 
-    private fun setupToolbar() {
+    private fun initViewModel() {
+        viewModel = obtainViewModel(viewModelFactory)
+        observe(viewModel.state, ::handleViewState)
+        observe(viewModel.commands, ::handleViewCommand)
+        viewModel.initNote(noteId)
+    }
+
+    private fun initViews() {
+        setupBackButton()
+        setupSaveButton()
+    }
+
+    private fun setupBackButton() {
         toolbar.setNavigationOnClickListener {
-            activity?.let {
-                findNavController(it, R.id.nav_host_fragment).navigateUp()
+            Navigation.findNavController(requireNotNull(view)).navigateUp()
+        }
+    }
+
+    private fun setupSaveButton() {
+        saveNoteButton.setOnClickListener {
+            val noteName = noteName.text.toString()
+            val noteContent = noteContent.text.toString()
+            val markerType = noteTypeSpinner.selectedItem as MarkerTypeUi
+            viewModel.onSaveButtonClick(noteName, noteContent, markerType)
+        }
+    }
+
+    private fun handleViewState(viewState: NoteViewState) {
+        when (viewState) {
+            is NewNoteViewState -> showNewNote(viewState)
+            is ExistingNoteViewState -> showExistingNote(viewState)
+        }
+    }
+
+    private fun handleViewCommand(viewCommand: ViewCommand) {
+        when (viewCommand) {
+            is CloseNoteScreen -> {
+                Navigation.findNavController(requireNotNull(view)).navigateUp()
+            }
+            is ShowErrorMessage -> {
+                showErrorMessage(viewCommand.messageResId)
             }
         }
     }
 
-    private fun setupNoteButton() {
-        addNoteButton.setOnClickListener {
-            val name = noteName.text.toString()
-            val content = noteContent.text.toString()
-            val currentTime = System.currentTimeMillis()
-            val markerType = noteTypeSpinner.selectedItem as MarkerTypeUi
+    private fun showNewNote(viewState: NewNoteViewState) {
+        val addNoteText = getString(R.string.note_add)
+        saveNoteButton.text = addNoteText
+        fillMarkersView(viewState.availableMarkers)
+        restoreSelectedMarkerIfNeeded()
+    }
 
-            presenter.onClickNoteButton(name, content, currentTime, markerType)
+    private fun showExistingNote(viewState: ExistingNoteViewState) {
+        val editNoteText = getString(R.string.note_edit)
+        saveNoteButton.text = editNoteText
+        fillMarkersView(viewState.availableMarkers)
+        if (noteMarkerBundle != null) {
+            // Strange code because of android rotation mechanism
+            restoreSelectedMarkerIfNeeded()
+            return
+        } else {
+            val note = viewState.note
+            noteName.setText(note.name)
+            noteContent.setText(note.content)
+            noteTypeSpinner.setSelection(note.markerType.ordinal)
         }
     }
 
-    private fun setupEditNoteButton() {
-        editNoteButton.setOnClickListener {
-            val name = noteName.text.toString()
-            val content = noteContent.text.toString()
-            val currentTime = System.currentTimeMillis()
-            val markerType = noteTypeSpinner.selectedItem as MarkerTypeUi
-
-            presenter.onClickEditNoteButton(noteId, name, content, currentTime, markerType)
-        }
+    private fun fillMarkersView(markers: List<MarkerTypeUi>) {
+        val adapter = MarkerAdapter(context, R.layout.item_note_marker, markers)
+        noteTypeSpinner.adapter = adapter
     }
 
-    private fun restoreSelectedMarker() {
-        val noteBundle = noteInfoBundle
+    private fun restoreSelectedMarkerIfNeeded() {
+        val noteBundle = noteMarkerBundle
         if (noteBundle != null && noteBundle.containsKey(NOTE_MARKER_ID)) {
             val markerSelection = noteBundle.getInt(NOTE_MARKER_ID)
             noteTypeSpinner.setSelection(markerSelection)

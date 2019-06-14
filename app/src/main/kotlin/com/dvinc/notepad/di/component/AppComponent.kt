@@ -11,7 +11,6 @@ import com.dvinc.notepad.di.module.ViewModelFactoryModule
 import com.dvinc.notepad.di.module.ViewModelModule
 import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
-import com.dvinc.notepad.presentation.ui.note.NoteFragmentNew
 import com.dvinc.notepad.presentation.ui.notepad.NotepadFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -27,6 +26,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(target: NotepadFragment)
     fun inject(target: NoteFragment)
-    fun inject(target: NoteFragmentNew)
     fun inject(target: FilterDialogFragment)
 }
