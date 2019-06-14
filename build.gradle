@@ -18,7 +18,7 @@ buildscript {
 }
 
 allprojects {
-    apply from: "$rootDir/detekt.gradle"
+    apply from: "$rootDir/detekt/detekt.gradle"
 
     repositories {
         google()

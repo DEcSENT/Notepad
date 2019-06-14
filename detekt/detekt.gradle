@@ -9,7 +9,7 @@ detekt {
     // Builds the AST in parallel. Rules are always executed in parallel. Can lead to speedups in larger projects. `false` by default.
     filters = ".*build.*,.*/resources/.*,.*/tmp/.*"
     // Regular expression of paths that should be excluded separated by `;` or `,`.
-    config = files("$rootDir/detekt-config.yml")
+    config = files("$rootDir/detekt/detekt-config.yml")
     // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
     reports {
         xml {
