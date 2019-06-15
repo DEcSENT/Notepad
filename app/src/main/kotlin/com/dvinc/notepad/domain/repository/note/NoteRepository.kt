@@ -20,8 +20,5 @@ interface NoteRepository {
 
     fun deleteNoteById(id: Long): Completable
 
-    @Deprecated("remove then refactoring for Note screen will be done")
-    fun updateNote(note: Note): Completable
-
     fun getNoteById(id: Long): Single<Note>
 }

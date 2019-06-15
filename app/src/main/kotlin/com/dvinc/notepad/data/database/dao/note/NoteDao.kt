@@ -5,7 +5,10 @@
 
 package com.dvinc.notepad.data.database.dao.note
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.dvinc.notepad.data.database.entity.note.NoteEntity
 import io.reactivex.Flowable
 
@@ -23,7 +26,4 @@ interface NoteDao {
 
     @Query("SELECT * FROM Notes WHERE id = :id")
     fun getNoteById(id: Long): NoteEntity
-
-    @Update
-    fun updateNote(note: NoteEntity)
 }

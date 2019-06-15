@@ -34,7 +34,6 @@ class NoteUseCaseTest {
 
         `when`(noteRepository.getNoteById(anyLong())).thenReturn(Single.just(note))
         `when`(noteRepository.addNote(note)).thenReturn(Completable.complete())
-        `when`(noteRepository.updateNote(note)).thenReturn(Completable.complete())
     }
 
     @Test
@@ -60,20 +59,6 @@ class NoteUseCaseTest {
     @Test
     fun `check correct result from addNote()`() {
         noteUseCase.saveNote(note)
-                .test()
-                .assertNoErrors()
-                .assertComplete()
-    }
-
-    @Test
-    fun updateNote() {
-        noteUseCase.updateNote(note)
-        verify(noteRepository).updateNote(note)
-    }
-
-    @Test
-    fun `check correct result from updateNote()`() {
-        noteUseCase.updateNote(note)
                 .test()
                 .assertNoErrors()
                 .assertComplete()
