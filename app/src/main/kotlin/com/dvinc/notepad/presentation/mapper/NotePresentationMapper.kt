@@ -33,14 +33,13 @@ class NotePresentationMapper @Inject constructor() {
         noteId: Long,
         name: String,
         content: String,
-        time: Long,
         markerTypeUi: MarkerTypeUi
     ): Note {
         return Note(
             id = noteId,
             name = name,
             content = content,
-            updateTime = time,
+            updateTime = System.currentTimeMillis(),
             markerType = mapMarker(markerTypeUi)
         )
     }
