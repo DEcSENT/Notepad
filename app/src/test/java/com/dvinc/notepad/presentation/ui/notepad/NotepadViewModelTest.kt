@@ -112,7 +112,7 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show error message after note deleting`() {
+    fun `show error message when an error occurred while note deleting`() {
         // Given
         val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
         notepadViewModel.commands.observeForever(testViewCommandObserver)
@@ -124,6 +124,23 @@ class NotepadViewModelTest : ViewModelTest() {
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
             ViewCommand.ShowErrorMessage(R.string.error_while_deleting_note)
+        )
+
+        verify(testViewCommandObserver).onChanged(expectedViewCommandList)
+    }
+
+    @Test
+    fun  `show error message when an error occurred while notes loading`() {
+        // Given
+
+        // When
+        whenever(notepadUseCase.getNotes()).thenReturn(Flowable.error(NullPointerException()))
+        notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
+        notepadViewModel.commands.observeForever(testViewCommandObserver)
+
+        // Then
+        val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
+            ViewCommand.ShowErrorMessage(R.string.error_while_load_data_from_db)
         )
 
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)

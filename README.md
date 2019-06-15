@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/DEcSENT/Notepad/branch/master/graph/badge.svg)](https://codecov.io/gh/DEcSENT/Notepad)
 [![codebeat badge](https://codebeat.co/badges/62f7e4cf-c3e2-41c1-be0f-4c1864082b94)](https://codebeat.co/projects/github-com-decsent-notepad-master)
 
-Notepad application for fast and simple writing and interaction with user notes.
+Notepad application for fast and simple writing and interaction with notes.
 Work in progress.
 
 ## Technology stack
@@ -24,19 +24,20 @@ Work in progress.
 
 ### Architecture
 
+- Clean architecture (I experiment with this)
 - MVVM (View model with view states, it's experiment too)
-- Clean architecture (i experiment with this)
 
 ### Other
 
 - Travis CI
 - Unit tests
-- Codecoverage
+- Code coverage
 - Codebeat static analysis
+- Detekt checks on every CI build
 
 ### What next
 
-- UI and unit tests
+- UI tests
 - Dark theme
 - Fingerprint
 - Notes export
