@@ -3,42 +3,40 @@ package com.dvinc.notepad.domain.usecase
 import com.dvinc.notepad.domain.model.marker.MarkerType
 import com.dvinc.notepad.domain.repository.marker.MarkerRepository
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 
 class MarkerUseCaseTest {
 
-    @Mock
-    private lateinit var markerRepository: MarkerRepository
+    private lateinit var markerUseCase: MarkerUseCase
 
     private val markerTypeList = MarkerType.values().toList()
 
-    private lateinit var markerUseCase: MarkerUseCase
+    private var markerRepository: MarkerRepository = mock() {
+        on { getMarkers() }.doReturn(Single.just(markerTypeList))
+    }
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        `when`(markerRepository.getMarkers()).thenReturn(Single.just(markerTypeList))
-
         markerUseCase = MarkerUseCase(markerRepository)
     }
 
     @Test
-    fun getNoteMarkers() {
+    fun `verify markerRepo was called once when retrieving markers`() {
         markerUseCase.getNoteMarkers()
-        verify(markerRepository).getMarkers()
+        verify(markerRepository, times(1)).getMarkers()
     }
 
     @Test
     fun `check correct result from getNoteMarkers()`() {
         markerUseCase.getNoteMarkers()
-                .test()
-                .assertNoErrors()
-                .assertResult(markerTypeList)
+            .test()
+            .assertNoErrors()
+            .assertResult(markerTypeList)
     }
 }
