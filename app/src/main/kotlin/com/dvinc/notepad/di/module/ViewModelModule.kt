@@ -7,6 +7,7 @@ package com.dvinc.notepad.di.module
 
 import androidx.lifecycle.ViewModel
 import com.dvinc.notepad.di.annotation.ViewModelKey
+import com.dvinc.notepad.presentation.ui.filter.FilterViewModel
 import com.dvinc.notepad.presentation.ui.note.NoteViewModel
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewModel
 import dagger.Binds
@@ -25,4 +26,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(NoteViewModel::class)
     abstract fun provideNoteViewModel(viewModel: NoteViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FilterViewModel::class)
+    abstract fun provideFilterViewModel(viewModel: FilterViewModel): ViewModel
 }

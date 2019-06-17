@@ -7,6 +7,7 @@ import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
+import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.EmptyContent
@@ -45,6 +46,10 @@ class NotepadViewModel @Inject constructor(
                 }
             )
             .disposeOnViewModelDestroy()
+    }
+
+    fun onFilterClick() {
+        commands.onNext(ViewCommand.OpenFilterDialog)
     }
 
     private fun loadNotes() {

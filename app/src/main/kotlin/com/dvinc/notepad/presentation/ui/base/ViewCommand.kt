@@ -10,6 +10,8 @@ sealed class ViewCommand {
 
     /* Notepad screen commands region start */
     data class OpenNoteScreen(val noteId: Long) : ViewCommand()
+
+    object OpenFilterDialog : ViewCommand()
     /* Notepad screen commands region end */
 
     /* Note screen commands region start */

@@ -12,12 +12,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.extension.observe
+import com.dvinc.notepad.common.extension.obtainViewModel
+import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.item.MarkerItem
-import com.dvinc.notepad.presentation.model.MarkerTypeUi
+import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import javax.inject.Inject
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_cancel_button 
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_clear_button as clearButton
 import kotlinx.android.synthetic.main.dialog_filter.dialog_filter_recycler as filterRecycler
 
-class FilterDialogFragment : DialogFragment(), FilterView {
+class FilterDialogFragment : DialogFragment() {
 
     companion object {
 
@@ -36,7 +38,9 @@ class FilterDialogFragment : DialogFragment(), FilterView {
     }
 
     @Inject
-    lateinit var presenter: FilterPresenter
+    lateinit var viewModelFactory: ViewModelFactory
+
+    lateinit var viewModel: FilterViewModel
 
     private val markersAdapter = GroupAdapter<ViewHolder>()
 
@@ -63,48 +67,32 @@ class FilterDialogFragment : DialogFragment(), FilterView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         injectDependencies()
+        initViewModel()
         setupShadow()
         setupCancelButton()
         setupClearFilterButton()
         setupMarkersList()
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.attachView(this)
-        presenter.initMarkers()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.detachView()
-    }
-
-    override fun showMarkers(markers: List<MarkerTypeUi>) {
-        markersAdapter.clear()
-        markersAdapter.addAll(markers.map {
-            MarkerItem(it)
-        })
-    }
-
-    override fun showError(errorMessage: String) {
-        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-    }
-
-    override fun filterNotesByMarkerType(type: MarkerTypeUi) {
-        (targetFragment as? FilterClickListener)?.loadNotesBySpecificMarkerType(type)
-    }
-
-    override fun clearFilter() {
-        (targetFragment as? FilterClickListener)?.loadAllNotes()
-    }
-
-    override fun closeScreen() {
-        dismiss()
-    }
-
     private fun injectDependencies() {
         DiProvider.appComponent.inject(this)
+    }
+
+    private fun initViewModel() {
+        viewModel = obtainViewModel(viewModelFactory)
+        observe(viewModel.state, ::handleViewState)
+        observe(viewModel.commands, ::handleViewCommand)
+    }
+
+    private fun handleViewState(viewState: FilterViewState) {
+        val markerItems = viewState.markers.map {
+            MarkerItem(it)
+        }
+        markersAdapter.update(markerItems)
+    }
+
+    private fun handleViewCommand(viewCommand: ViewCommand) {
+        //TODO(dv): update
     }
 
     /*
@@ -125,7 +113,8 @@ class FilterDialogFragment : DialogFragment(), FilterView {
 
     private fun setupClearFilterButton() {
         clearButton.setOnClickListener {
-            presenter.onClearFilterClick()
+            //TODO(dv): update
+            //presenter.onClearFilterClick()
         }
     }
 
@@ -133,7 +122,8 @@ class FilterDialogFragment : DialogFragment(), FilterView {
         filterRecycler.adapter = markersAdapter
         markersAdapter.setOnItemClickListener { item, _ ->
             if (item is MarkerItem) {
-                presenter.onMarkerItemClick(item.marker)
+                //TODO(dv): update
+                //presenter.onMarkerItemClick(item.marker)
             }
         }
     }

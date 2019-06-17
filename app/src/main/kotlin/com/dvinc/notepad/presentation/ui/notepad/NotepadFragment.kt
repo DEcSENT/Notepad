@@ -7,7 +7,6 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,8 +23,8 @@ import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallba
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowMessage
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.*
+import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
@@ -108,8 +107,7 @@ class NotepadFragment : BaseFragment() {
         bottomBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fragment_notepad_filter_menu_item -> {
-                    Toast.makeText(requireContext(), "Filter will be here", Toast.LENGTH_LONG)
-                        .show()
+                    viewModel.onFilterClick()
                 }
             }
             true
@@ -137,6 +135,13 @@ class NotepadFragment : BaseFragment() {
                     messageResId = viewCommand.messageResId,
                     anchorView = bottomBarFab
                 )
+            }
+            is OpenFilterDialog -> {
+                FilterDialogFragment.newInstance()
+                    .show(
+                        requireFragmentManager(),
+                        FilterDialogFragment.TAG
+                    )
             }
         }
     }
