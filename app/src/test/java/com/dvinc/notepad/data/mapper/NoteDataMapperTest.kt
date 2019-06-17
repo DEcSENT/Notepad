@@ -5,6 +5,7 @@ import com.dvinc.notepad.data.database.entity.note.NoteEntity
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.domain.model.marker.MarkerType
 import com.dvinc.notepad.domain.model.note.Note
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -63,20 +64,16 @@ class NoteDataMapperTest {
     }
 
     @Test
-    fun `correct mapped marker type list`() {
+    fun `correct mapped marker type list size`() {
         assert(noteMapper.mapMarkerType(markerTypeEntityList).size == markerTypeDomainList.size)
     }
 
-    //Looks like dangerous test. Need to think about it later
     @Test
     fun `correct mapped marker type values from entity to domain`() {
         val mappedValue = noteMapper.mapMarkerType(markerTypeEntityList)
-        (0 until markerTypeEntityList.size).forEach {
-            assert(mappedValue[it] == markerTypeDomainList[it])
-        }
+        assertEquals(mappedValue, markerTypeDomainList)
     }
 
-    //Looks like dangerous test. Need to think about it later
     @Test
     fun `correct mapped marker type values from domain to entity`() {
         (0 until markerTypeDomainList.size).forEach {

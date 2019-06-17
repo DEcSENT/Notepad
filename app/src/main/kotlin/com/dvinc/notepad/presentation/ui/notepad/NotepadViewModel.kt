@@ -60,6 +60,7 @@ class NotepadViewModel @Inject constructor(
                     }
                 }, {
                     Timber.tag(TAG).e(it)
+                    showErrorMessage(R.string.error_while_load_data_from_db)
                 }
             )
             .disposeOnViewModelDestroy()

@@ -29,6 +29,7 @@ class NoteViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "NoteViewModel"
+        private const val DEFAULT_NOTE_ID = 0L
     }
 
     val state = MutableLiveData<NoteViewState>()
@@ -36,7 +37,7 @@ class NoteViewModel @Inject constructor(
     fun initNote(noteId: Long?) {
         // No need to load note if we have one
         if (state.value != null) return
-        val viewStateSource = if (noteId != null && noteId != 0L) {
+        val viewStateSource = if (noteId != null && noteId != DEFAULT_NOTE_ID) {
             getNoteSource(noteId)
         } else {
             getNewNoteSource()
@@ -60,8 +61,7 @@ class NoteViewModel @Inject constructor(
         noteMarkerType: MarkerTypeUi
     ) {
         val noteId = getCurrentNoteId()
-        val currentTime = System.currentTimeMillis()
-        val note = noteMapper.createNote(noteId, noteName, noteContent, currentTime, noteMarkerType)
+        val note = noteMapper.createNote(noteId, noteName, noteContent, noteMarkerType)
         noteUseCase.saveNote(note)
             .subscribe(
                 {
@@ -91,6 +91,6 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun getCurrentNoteId(): Long {
-        return (state.value as? ExistingNoteViewState)?.note?.id ?: 0
+        return (state.value as? ExistingNoteViewState)?.note?.id ?: DEFAULT_NOTE_ID
     }
 }

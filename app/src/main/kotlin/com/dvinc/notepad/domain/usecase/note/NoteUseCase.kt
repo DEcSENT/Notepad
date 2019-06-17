@@ -29,10 +29,4 @@ class NoteUseCase @Inject constructor(
         return noteRepository.addNote(note)
                 .scheduleIoToUi(scheduler)
     }
-
-    @Deprecated("remove then refactoring for Note screen will be done")
-    fun updateNote(note: Note): Completable {
-        return noteRepository.updateNote(note)
-                .scheduleIoToUi(scheduler)
-    }
 }

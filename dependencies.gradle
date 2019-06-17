@@ -13,6 +13,7 @@ def test_runner_version = '1.0.2'
 def espresso_core_version = '3.0.2'
 def junit_version = '4.12'
 def mockito_core_version = '2.18.0'
+def kotlin_mockito_version = '2.1.0'
 def android_arch_core_testing_version = '2.0.1'
 
 def timber_version = '4.7.1'
@@ -33,8 +34,6 @@ ext{
             lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:$android_lifecycle_version",
 
             constraint_layout = "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
-
-            card_view = "androidx.cardview:cardview:$android_appcompat_version",
 
             android_navigation_fragment = "androidx.navigation:navigation-fragment:$android_navigation_version",
 
@@ -64,7 +63,9 @@ ext{
 
             mockito_core = "org.mockito:mockito-core:$mockito_core_version",
 
-            android_arch_core_testing = "androidx.arch.core:core-testing:$android_arch_core_testing_version"
+            android_arch_core_testing = "androidx.arch.core:core-testing:$android_arch_core_testing_version",
+
+            kotlin_mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlin_mockito_version"
     ]
 
     androidTestDependencies = [

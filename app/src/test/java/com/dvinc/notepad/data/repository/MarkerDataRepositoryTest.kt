@@ -4,33 +4,28 @@ import com.dvinc.notepad.data.database.entity.marker.MarkerTypeEntity
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.marker.MarkerDataRepository
 import com.dvinc.notepad.domain.model.marker.MarkerType
-import org.junit.Test
-
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.Before
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
+import org.junit.Test
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 
 class MarkerDataRepositoryTest {
 
-    @Mock
-    private lateinit var noteMapper: NoteDataMapper
-
     private lateinit var markerRepository: MarkerDataRepository
 
-    private lateinit var markerEntityList: List<MarkerTypeEntity>
+    private var markerEntityList: List<MarkerTypeEntity> = MarkerTypeEntity.values().toList()
 
-    private lateinit var markerList: List<MarkerType>
+    private var markerList: List<MarkerType> = MarkerType.values().toList()
+
+    private var noteMapper: NoteDataMapper = mock() {
+        on { mapMarkerType(markerEntityList) }.doReturn(markerList)
+    }
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-
         markerRepository = MarkerDataRepository(noteMapper)
-        markerEntityList = MarkerTypeEntity.values().toList()
-        markerList = MarkerType.values().toList()
-
-        `when`(noteMapper.mapMarkerType(markerEntityList)).thenReturn(markerList)
     }
 
     @Test
@@ -40,16 +35,16 @@ class MarkerDataRepositoryTest {
     }
 
     @Test
-    fun `mapper return correct result`() {
+    fun `mapper returned correct result`() {
         markerRepository.getMarkers()
-                .test()
-                .assertValue(markerList)
+            .test()
+            .assertValue(markerList)
     }
 
     @Test
     fun `getMarkers was called without error`() {
         markerRepository.getMarkers()
-                .test()
-                .assertNoErrors()
+            .test()
+            .assertNoErrors()
     }
 }

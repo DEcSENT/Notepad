@@ -4,66 +4,61 @@ import com.dvinc.notepad.domain.TestThreadScheduler
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 
 class NotepadUseCaseTest {
 
-    @Mock
-    private lateinit var noteRepository: NoteRepository
-
-    @Mock
-    private lateinit var note: Note
-
     private lateinit var notepadUseCase: NotepadUseCase
 
-    private lateinit var noteList: List<Note>
+    private var note: Note = mock()
+
+    private var noteList: List<Note> = listOf(note, note)
+
+    private var noteRepository: NoteRepository = mock() {
+        on { getNotes() }.doReturn(Flowable.just(noteList))
+        on { deleteNoteById(anyLong()) }.doReturn(Completable.complete())
+    }
 
     private val testScheduler = TestThreadScheduler()
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-
         notepadUseCase = NotepadUseCase(noteRepository, testScheduler)
-        noteList = listOf(note, note)
-
-        `when`(noteRepository.getNotes()).thenReturn(Flowable.just(noteList))
-        `when`(noteRepository.deleteNoteById(anyLong())).thenReturn(Completable.complete())
     }
 
     @Test
     fun getNotes() {
         notepadUseCase.getNotes()
-        verify(noteRepository).getNotes()
+        verify(noteRepository, times(1)).getNotes()
     }
 
     @Test
     fun `check correct result from getNotes()`() {
         notepadUseCase.getNotes()
-                .test()
-                .assertNoErrors()
-                .assertValue(noteList)
+            .test()
+            .assertNoErrors()
+            .assertValue(noteList)
     }
 
     @Test
     fun deleteNote() {
         notepadUseCase.deleteNote(anyLong())
-        verify(noteRepository).deleteNoteById(anyLong())
+        verify(noteRepository, times(1)).deleteNoteById(anyLong())
     }
 
     @Test
     fun `check correct result from deleteNote()`() {
         notepadUseCase.deleteNote(anyLong())
-                .test()
-                .assertNoErrors()
-                .assertComplete()
+            .test()
+            .assertNoErrors()
+            .assertComplete()
     }
 }
