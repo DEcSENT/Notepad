@@ -1,5 +1,7 @@
 package com.dvinc.notepad.presentation.ui.base
 
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
+
 sealed class ViewCommand {
 
     /* Common commands region */
@@ -17,4 +19,10 @@ sealed class ViewCommand {
     /* Note screen commands region start */
     object CloseNoteScreen : ViewCommand()
     /* Note screen commands region end */
+
+    /* Filter screen commands region start */
+    data class CloseFilterDialogWithSelectedFilterType(val markerType: MarkerTypeUi) : ViewCommand()
+
+    object CloseFilterDialogWithClearResult : ViewCommand()
+    /* Filter screen commands region end */
 }

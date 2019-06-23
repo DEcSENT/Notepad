@@ -7,8 +7,11 @@ package com.dvinc.notepad.presentation.ui.filter
 
 import androidx.lifecycle.MutableLiveData
 import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
+import com.dvinc.notepad.presentation.adapter.item.MarkerItem
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseFilterDialogWithClearResult
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseFilterDialogWithSelectedFilterType
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,6 +29,15 @@ class FilterViewModel @Inject constructor(
 
     init {
         loadMarkers()
+    }
+
+    fun onMarkerItemClick(item: MarkerItem) {
+        val closeDialogWithResultCommand = CloseFilterDialogWithSelectedFilterType(item.marker)
+        commands.onNext(closeDialogWithResultCommand)
+    }
+
+    fun onClearButtonClick() {
+        commands.onNext(CloseFilterDialogWithClearResult)
     }
 
     private fun loadMarkers() {

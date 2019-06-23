@@ -20,6 +20,8 @@ import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.item.MarkerItem
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseFilterDialogWithClearResult
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseFilterDialogWithSelectedFilterType
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import javax.inject.Inject
@@ -92,7 +94,17 @@ class FilterDialogFragment : DialogFragment() {
     }
 
     private fun handleViewCommand(viewCommand: ViewCommand) {
-        //TODO(dv): update
+        when (viewCommand) {
+            is CloseFilterDialogWithClearResult -> {
+                (targetFragment as? FilterClickListener)?.loadAllNotes()
+                dismiss()
+            }
+            is CloseFilterDialogWithSelectedFilterType -> {
+                (targetFragment as? FilterClickListener)
+                    ?.loadNotesBySpecificMarkerType(viewCommand.markerType)
+                dismiss()
+            }
+        }
     }
 
     /*
@@ -113,8 +125,7 @@ class FilterDialogFragment : DialogFragment() {
 
     private fun setupClearFilterButton() {
         clearButton.setOnClickListener {
-            //TODO(dv): update
-            //presenter.onClearFilterClick()
+            viewModel.onClearButtonClick()
         }
     }
 
@@ -122,8 +133,7 @@ class FilterDialogFragment : DialogFragment() {
         filterRecycler.adapter = markersAdapter
         markersAdapter.setOnItemClickListener { item, _ ->
             if (item is MarkerItem) {
-                //TODO(dv): update
-                //presenter.onMarkerItemClick(item.marker)
+                viewModel.onMarkerItemClick(item)
             }
         }
     }
