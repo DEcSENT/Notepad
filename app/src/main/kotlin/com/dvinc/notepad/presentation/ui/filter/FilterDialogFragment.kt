@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
@@ -36,7 +37,11 @@ class FilterDialogFragment : DialogFragment() {
 
         const val TAG = "FilterDialogFragment"
 
-        fun newInstance() = FilterDialogFragment()
+        fun newInstance(targetFragment: Fragment): FilterDialogFragment {
+            return FilterDialogFragment().apply {
+                setTargetFragment(targetFragment, 0)
+            }
+        }
     }
 
     @Inject

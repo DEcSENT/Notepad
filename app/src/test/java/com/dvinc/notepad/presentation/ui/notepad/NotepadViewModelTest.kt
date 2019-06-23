@@ -49,14 +49,14 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `verify that state have EmptyContent when empty notes list returned from repository`() {
+    fun `verify that Content state has empty list when empty notes list returned from repository`() {
         // Given
         notepadViewModel.state.observeForever(testViewStateObserver)
 
         // When
 
         // Then
-        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState.EmptyContent)
+        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState.Content(emptyList()))
     }
 
     @Test
