@@ -2,7 +2,6 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import androidx.lifecycle.MutableLiveData
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.extension.onNext
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.MarkerTypeUi
@@ -54,27 +53,27 @@ class NotepadViewModel @Inject constructor(
 
     fun onClearFilterClick() {
         val filteredContentState = state.value as? BaseContent ?: return
-        val fullContent = Content(filteredContentState.notes)
-        state.onNext(fullContent)
+        val contentViewState = Content(filteredContentState.notes)
+        updateViewState(contentViewState)
     }
 
     fun onFilterTypeClick(markerType: MarkerTypeUi) {
         val contentState = state.value as? BaseContent ?: return
         val filteredNotes = filterNotesByMarkerType(contentState.notes, markerType)
-        val filteredContent = FilteredContent(
+        val newViewState = FilteredContent(
             notes = contentState.notes,
-            filteredNotes = filteredNotes
+            filteredNotes = filteredNotes,
+            currentMarkerType = markerType
         )
-        state.onNext(filteredContent)
+        updateViewState(newViewState)
     }
 
     private fun loadNotes() {
         notepadUseCase.getNotes()
             .map { noteMapper.fromDomainToUi(it) }
             .subscribe(
-                { notes ->
-                    val content = Content(notes)
-                    state.onNext(content)
+                {
+                    showNotes(it)
                 }, {
                     Timber.tag(TAG).e(it)
                     showErrorMessage(R.string.error_while_load_data_from_db)
@@ -83,8 +82,29 @@ class NotepadViewModel @Inject constructor(
             .disposeOnViewModelDestroy()
     }
 
+    private fun showNotes(notes: List<NoteUi>) {
+        when (val currentState = state.value) {
+            is FilteredContent -> {
+                val filteredNotes = filterNotesByMarkerType(notes, currentState.currentMarkerType)
+                val newViewState = currentState.copy(
+                    notes = notes,
+                    filteredNotes = filteredNotes
+                )
+                updateViewState(newViewState)
+            }
+            else -> {
+                val newContentState = Content(notes)
+                updateViewState(newContentState)
+            }
+        }
+    }
+
     private fun filterNotesByMarkerType(notes: List<NoteUi>, type: MarkerTypeUi): List<NoteUi> {
         return notes
             .filter { it.markerType == type }
+    }
+
+    private fun updateViewState(newViewState: NotepadViewState) {
+        state.value = newViewState
     }
 }
