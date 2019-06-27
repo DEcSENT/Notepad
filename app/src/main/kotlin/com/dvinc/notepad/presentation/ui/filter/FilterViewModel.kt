@@ -24,8 +24,7 @@ class FilterViewModel @Inject constructor(
         private const val TAG = "FilterViewModel"
     }
 
-    val state = MutableLiveData<FilterViewState>()
-
+    val screenState = MutableLiveData<FilterViewState>()
 
     init {
         loadMarkers()
@@ -33,11 +32,11 @@ class FilterViewModel @Inject constructor(
 
     fun onMarkerItemClick(item: MarkerItem) {
         val closeDialogWithResultCommand = CloseFilterDialogWithSelectedFilterType(item.marker)
-        commands.onNext(closeDialogWithResultCommand)
+        viewCommands.onNext(closeDialogWithResultCommand)
     }
 
     fun onClearButtonClick() {
-        commands.onNext(CloseFilterDialogWithClearResult)
+        viewCommands.onNext(CloseFilterDialogWithClearResult)
     }
 
     private fun loadMarkers() {
@@ -46,7 +45,7 @@ class FilterViewModel @Inject constructor(
             .subscribe(
                 {
                     val filterViewState = FilterViewState(it)
-                    state.value = filterViewState
+                    screenState.value = filterViewState
                 },
                 {
                     Timber.tag(TAG).e(it)

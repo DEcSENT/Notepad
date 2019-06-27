@@ -22,7 +22,7 @@ class NotepadViewModel @Inject constructor(
         private const val TAG = "NotepadViewModel"
     }
 
-    val state = MutableLiveData<NotepadViewState>()
+    val screenState = MutableLiveData<NotepadViewState>()
 
     init {
         loadNotes()
@@ -30,7 +30,7 @@ class NotepadViewModel @Inject constructor(
 
     fun onNoteItemClick(note: NoteUi) {
         val openNoteScreenCommand = OpenNoteScreen(noteId = note.id)
-        commands.onNext(openNoteScreenCommand)
+        viewCommands.onNext(openNoteScreenCommand)
     }
 
     fun onNoteDelete(note: NoteUi) {
@@ -48,17 +48,17 @@ class NotepadViewModel @Inject constructor(
     }
 
     fun onFilterClick() {
-        commands.onNext(ViewCommand.OpenFilterDialog)
+        viewCommands.onNext(ViewCommand.OpenFilterDialog)
     }
 
     fun onClearFilterClick() {
-        val filteredContentState = state.value as? BaseContent ?: return
+        val filteredContentState = screenState.value as? BaseContent ?: return
         val contentViewState = Content(filteredContentState.notes)
         updateViewState(contentViewState)
     }
 
     fun onFilterTypeClick(markerType: MarkerTypeUi) {
-        val contentState = state.value as? BaseContent ?: return
+        val contentState = screenState.value as? BaseContent ?: return
         val filteredNotes = filterNotesByMarkerType(contentState.notes, markerType)
         val newViewState = FilteredContent(
             notes = contentState.notes,
@@ -83,7 +83,7 @@ class NotepadViewModel @Inject constructor(
     }
 
     private fun showNotes(notes: List<NoteUi>) {
-        when (val currentState = state.value) {
+        when (val currentState = screenState.value) {
             is FilteredContent -> {
                 val filteredNotes = filterNotesByMarkerType(notes, currentState.currentMarkerType)
                 val newViewState = currentState.copy(
@@ -105,6 +105,6 @@ class NotepadViewModel @Inject constructor(
     }
 
     private fun updateViewState(newViewState: NotepadViewState) {
-        state.value = newViewState
+        screenState.value = newViewState
     }
 }

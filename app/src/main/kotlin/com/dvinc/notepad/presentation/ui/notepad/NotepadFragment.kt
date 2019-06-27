@@ -78,8 +78,8 @@ class NotepadFragment : BaseFragment(), FilterClickListener {
 
     private fun initViewModel() {
         viewModel = obtainViewModel(viewModelFactory)
-        observe(viewModel.state, ::handleViewState)
-        observe(viewModel.commands, ::handleViewCommand)
+        observe(viewModel.screenState, ::handleViewState)
+        observe(viewModel.viewCommands, ::handleViewCommand)
     }
 
     private fun initViews() {

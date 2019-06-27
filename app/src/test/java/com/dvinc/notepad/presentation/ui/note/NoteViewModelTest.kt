@@ -58,7 +58,7 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify that existing note state is set`() {
         // Given
-        noteViewModel.state.observeForever(testViewStateObserver)
+        noteViewModel.screenState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(10L)
@@ -71,7 +71,7 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify new note state is loaded when no note ID`() {
         // Given
-        noteViewModel.state.observeForever(testViewStateObserver)
+        noteViewModel.screenState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(null)
@@ -84,7 +84,7 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify new note state is loaded when note ID has default value`() {
         // Given
-        noteViewModel.state.observeForever(testViewStateObserver)
+        noteViewModel.screenState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(0L)
@@ -98,7 +98,7 @@ class NoteViewModelTest : ViewModelTest() {
     fun `verify that error message is shown when an error occurred while loading note`() {
         // Given
         val noteId = 10L
-        noteViewModel.commands.observeForever(testViewCommandObserver)
+        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(noteUseCase.getNoteById(noteId)).thenReturn(Single.error(NullPointerException()))
@@ -116,7 +116,7 @@ class NoteViewModelTest : ViewModelTest() {
     fun `verify that error message is shown when an error occurred while loading note markers`() {
         // Given
         val noteId = 10L
-        noteViewModel.commands.observeForever(testViewCommandObserver)
+        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(markerUseCase.getNoteMarkers()).thenReturn(Single.error(NullPointerException()))
@@ -137,7 +137,7 @@ class NoteViewModelTest : ViewModelTest() {
         val noteName = "Test title"
         val noteContent = "Content"
         val noteTypeUi = MarkerTypeUi.CRITICAL
-        noteViewModel.commands.observeForever(testViewCommandObserver)
+        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(noteMapper.createNote(noteId, noteName, noteContent, noteTypeUi)).thenReturn(note)
@@ -158,7 +158,7 @@ class NoteViewModelTest : ViewModelTest() {
         val noteName = "Test title"
         val noteContent = "Content"
         val noteTypeUi = MarkerTypeUi.CRITICAL
-        noteViewModel.commands.observeForever(testViewCommandObserver)
+        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(noteMapper.createNote(noteId, noteName, noteContent, noteTypeUi)).thenReturn(note)

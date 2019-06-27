@@ -51,7 +51,7 @@ class NotepadViewModelTest : ViewModelTest() {
     @Test
     fun `verify that Content state has empty list when empty notes list returned from repository`() {
         // Given
-        notepadViewModel.state.observeForever(testViewStateObserver)
+        notepadViewModel.screenState.observeForever(testViewStateObserver)
 
         // When
 
@@ -71,7 +71,7 @@ class NotepadViewModelTest : ViewModelTest() {
         whenever(notepadUseCase.getNotes()).thenReturn(Flowable.just(notesList))
         whenever(noteMapper.fromDomainToUi(notesList)).thenReturn(noteUiList)
         notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
-        notepadViewModel.state.observeForever(testViewStateObserver)
+        notepadViewModel.screenState.observeForever(testViewStateObserver)
 
         // Then
         verify(testViewStateObserver, times(1)).onChanged(NotepadViewState.Content(noteUiList))
@@ -90,14 +90,14 @@ class NotepadViewModelTest : ViewModelTest() {
             ViewCommand.OpenNoteScreen(noteUi.id)
         )
 
-        assertThat(notepadViewModel.commands.value!!, `is`(expectedListWithSingleCommand))
+        assertThat(notepadViewModel.viewCommands.value!!, `is`(expectedListWithSingleCommand))
     }
 
     @Test
     fun `show successful message after note deleting`() {
         // Given
         val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
-        notepadViewModel.commands.observeForever(testViewCommandObserver)
+        notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(notepadUseCase.deleteNote(noteUi.id)).thenReturn(Completable.complete())
@@ -115,7 +115,7 @@ class NotepadViewModelTest : ViewModelTest() {
     fun `show error message when an error occurred while note deleting`() {
         // Given
         val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
-        notepadViewModel.commands.observeForever(testViewCommandObserver)
+        notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(notepadUseCase.deleteNote(noteUi.id)).thenReturn(Completable.error(IllegalStateException()))
@@ -136,7 +136,7 @@ class NotepadViewModelTest : ViewModelTest() {
         // When
         whenever(notepadUseCase.getNotes()).thenReturn(Flowable.error(NullPointerException()))
         notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
-        notepadViewModel.commands.observeForever(testViewCommandObserver)
+        notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
