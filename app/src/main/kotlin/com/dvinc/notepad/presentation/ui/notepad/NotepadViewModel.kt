@@ -52,7 +52,9 @@ class NotepadViewModel @Inject constructor(
     }
 
     fun onClearFilterClick() {
-        val filteredContentState = screenState.value as? BaseContent ?: return
+        val currentState = screenState.value ?: return
+        if (currentState is Content) return
+        val filteredContentState = screenState.value as? FilteredContent ?: return
         val contentViewState = Content(filteredContentState.notes)
         updateViewState(contentViewState)
     }
