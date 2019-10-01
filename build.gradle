@@ -1,6 +1,6 @@
 buildscript {
 
-    ext.kotlin_version = '1.3.40'
+    ext.kotlin_version = '1.3.50'
     ext.detekt_version = '1.0.0-RC14'
 
     repositories {
@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
     }
