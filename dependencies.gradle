@@ -51,10 +51,6 @@ ext{
 
             stetho = "com.facebook.stetho:stetho:$stetho_version",
 
-            groupie = "com.xwray:groupie:2.1.0",
-
-            groupieExt = "com.xwray:groupie-kotlin-android-extensions:2.1.0",
-
             timber = "com.jakewharton.timber:timber:$timber_version"
     ]
 
