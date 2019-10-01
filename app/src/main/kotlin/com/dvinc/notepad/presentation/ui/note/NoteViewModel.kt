@@ -8,22 +8,19 @@ package com.dvinc.notepad.presentation.ui.note
 import androidx.lifecycle.MutableLiveData
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.onNext
-import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
 import timber.log.Timber
 import javax.inject.Inject
 
+//TODO(dv): refactor all of this
 class NoteViewModel @Inject constructor(
     private val noteUseCase: NoteUseCase,
-    private val markerUseCase: MarkerUseCase,
     private val noteMapper: NotePresentationMapper
 ) : BaseViewModel() {
 
@@ -57,11 +54,10 @@ class NoteViewModel @Inject constructor(
 
     fun onSaveButtonClick(
         noteName: String,
-        noteContent: String,
-        noteMarkerType: MarkerTypeUi
+        noteContent: String
     ) {
         val noteId = getCurrentNoteId()
-        val note = noteMapper.createNote(noteId, noteName, noteContent, noteMarkerType)
+        val note = noteMapper.createNote(noteId, noteName, noteContent)
         noteUseCase.saveNote(note)
             .subscribe(
                 {
@@ -77,17 +73,13 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun getNewNoteSource(): Single<NewNoteViewState> {
-        return markerUseCase.getNoteMarkers()
-            .map { noteMapper.mapMarkers(it) }
-            .map { NewNoteViewState(it) }
+        return Single.just(NewNoteViewState)
     }
 
     private fun getNoteSource(noteId: Long): Single<ExistingNoteViewState> {
-        return markerUseCase.getNoteMarkers()
-            .map { noteMapper.mapMarkers(it) }
-            .zipWith(noteUseCase.getNoteById(noteId), BiFunction { markers, note ->
-                ExistingNoteViewState(note, markers)
-            })
+        return noteUseCase.getNoteById(noteId).map {
+            ExistingNoteViewState(it)
+        }
     }
 
     private fun getCurrentNoteId(): Long {

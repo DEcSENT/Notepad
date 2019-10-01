@@ -7,11 +7,9 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import androidx.lifecycle.Observer
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.marker.MarkerType
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.dvinc.notepad.presentation.ui.ViewModelTest
@@ -78,7 +76,7 @@ class NotepadViewModelTest : ViewModelTest() {
     @Test
     fun `when click on note then go to Note screen by view command`() {
         // Given
-        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+        val noteUi = NoteUi(100L, "test", "content", "21.12")
 
         // When
         notepadViewModel.onNoteItemClick(noteUi)
@@ -94,7 +92,7 @@ class NotepadViewModelTest : ViewModelTest() {
     @Test
     fun `show successful message after note deleting`() {
         // Given
-        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+        val noteUi = NoteUi(100L, "test", "content", "21.12")
         notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
@@ -112,7 +110,7 @@ class NotepadViewModelTest : ViewModelTest() {
     @Test
     fun `show error message when an error occurred while note deleting`() {
         // Given
-        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+        val noteUi = NoteUi(100L, "test", "content", "21.12")
         notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
@@ -145,12 +143,12 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     private fun getNotesList(): List<Note> {
-        val note = Note(100L, "test", "content", 100L, MarkerType.CRITICAL)
+        val note = Note(100L, "test", "content", 100L)
         return listOf(note, note)
     }
 
     private fun getNotesUiList(): List<NoteUi> {
-        val noteUi = NoteUi(100L, "test", "content", "21.12", MarkerTypeUi.CRITICAL)
+        val noteUi = NoteUi(100L, "test", "content", "21.12")
         return listOf(noteUi, noteUi)
     }
 }

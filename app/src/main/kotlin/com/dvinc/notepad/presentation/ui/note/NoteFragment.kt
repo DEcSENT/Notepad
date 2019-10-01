@@ -13,8 +13,6 @@ import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
-import com.dvinc.notepad.presentation.adapter.MarkerAdapter
-import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseNoteScreen
@@ -35,12 +33,12 @@ class NoteFragment : BaseFragment() {
         private const val NOTE_MARKER_ID = "noteMarkerId"
     }
 
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_note_new
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: NoteViewModel
-
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_note_new
 
     private val noteId: Long? by lazy { arguments?.getLong(NOTE_ID, 0) }
 
@@ -98,8 +96,7 @@ class NoteFragment : BaseFragment() {
         saveNoteButton.setOnClickListener {
             val noteName = noteName.text.toString()
             val noteContent = noteContent.text.toString()
-            val markerType = noteTypeSpinner.selectedItem as MarkerTypeUi
-            viewModel.onSaveButtonClick(noteName, noteContent, markerType)
+            viewModel.onSaveButtonClick(noteName, noteContent)
         }
     }
 
@@ -124,14 +121,12 @@ class NoteFragment : BaseFragment() {
     private fun showNewNote(viewState: NewNoteViewState) {
         val addNoteText = getString(R.string.note_add)
         saveNoteButton.text = addNoteText
-        fillMarkersView(viewState.availableMarkers)
         restoreSelectedMarkerIfNeeded()
     }
 
     private fun showExistingNote(viewState: ExistingNoteViewState) {
         val editNoteText = getString(R.string.note_edit)
         saveNoteButton.text = editNoteText
-        fillMarkersView(viewState.availableMarkers)
         if (noteMarkerBundle != null) {
             // Strange code because of android rotation mechanism
             restoreSelectedMarkerIfNeeded()
@@ -140,13 +135,7 @@ class NoteFragment : BaseFragment() {
             val note = viewState.note
             noteName.setText(note.name)
             noteContent.setText(note.content)
-            noteTypeSpinner.setSelection(note.markerType.ordinal)
         }
-    }
-
-    private fun fillMarkersView(markers: List<MarkerTypeUi>) {
-        val adapter = MarkerAdapter(requireContext(), R.layout.item_note_marker, markers)
-        noteTypeSpinner.adapter = adapter
     }
 
     private fun restoreSelectedMarkerIfNeeded() {
