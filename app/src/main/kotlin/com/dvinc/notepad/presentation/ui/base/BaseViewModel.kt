@@ -7,7 +7,7 @@ import io.reactivex.disposables.Disposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    val commands = CommandsLiveData<ViewCommand>()
+    val viewCommands = CommandsLiveData<ViewCommand>()
 
     private val compositeDisposable by lazy { CompositeDisposable() }
 
@@ -18,12 +18,12 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun showMessage(@StringRes messageResId: Int) {
         val showMessageCommand = ViewCommand.ShowMessage(messageResId)
-        commands.onNext(showMessageCommand)
+        viewCommands.onNext(showMessageCommand)
     }
 
     protected fun showErrorMessage(@StringRes messageResId: Int) {
         val showMessageCommand = ViewCommand.ShowErrorMessage(messageResId)
-        commands.onNext(showMessageCommand)
+        viewCommands.onNext(showMessageCommand)
     }
 
     protected fun Disposable.disposeOnViewModelDestroy(): Disposable {

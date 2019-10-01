@@ -78,8 +78,8 @@ class NoteFragment : BaseFragment() {
 
     private fun initViewModel() {
         viewModel = obtainViewModel(viewModelFactory)
-        observe(viewModel.state, ::handleViewState)
-        observe(viewModel.commands, ::handleViewCommand)
+        observe(viewModel.screenState, ::handleViewState)
+        observe(viewModel.viewCommands, ::handleViewCommand)
         viewModel.initNote(noteId)
     }
 

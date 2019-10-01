@@ -7,33 +7,35 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.extension.makeGone
-import com.dvinc.notepad.common.extension.makeVisible
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.obtainViewModel
+import com.dvinc.notepad.common.extension.toggleGone
 import com.dvinc.notepad.common.recycler.SpaceItemDecorator
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
+import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowMessage
+import com.dvinc.notepad.presentation.ui.base.ViewCommand.*
+import com.dvinc.notepad.presentation.ui.filter.FilterClickListener
+import com.dvinc.notepad.presentation.ui.filter.FilterDialogFragment
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
+import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
+import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.FilteredContent
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_stub_container as stubContainer
 
-class NotepadFragment : BaseFragment() {
+class NotepadFragment : BaseFragment(), FilterClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -62,14 +64,22 @@ class NotepadFragment : BaseFragment() {
         initViews()
     }
 
+    override fun loadAllNotes() {
+        viewModel.onClearFilterClick()
+    }
+
+    override fun loadNotesBySpecificMarkerType(type: MarkerTypeUi) {
+        viewModel.onFilterTypeClick(type)
+    }
+
     private fun injectDependencies() {
         DiProvider.appComponent.inject(this)
     }
 
     private fun initViewModel() {
         viewModel = obtainViewModel(viewModelFactory)
-        observe(viewModel.state, ::handleViewState)
-        observe(viewModel.commands, ::handleViewCommand)
+        observe(viewModel.screenState, ::handleViewState)
+        observe(viewModel.viewCommands, ::handleViewCommand)
     }
 
     private fun initViews() {
@@ -108,8 +118,7 @@ class NotepadFragment : BaseFragment() {
         bottomBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fragment_notepad_filter_menu_item -> {
-                    Toast.makeText(requireContext(), "Filter will be here", Toast.LENGTH_LONG)
-                        .show()
+                    viewModel.onFilterClick()
                 }
             }
             true
@@ -118,13 +127,15 @@ class NotepadFragment : BaseFragment() {
 
     private fun handleViewState(viewState: NotepadViewState) {
         when (viewState) {
-            is NotepadViewState.Content -> {
+            is Content -> {
                 showNotes(viewState.notes)
-                stubContainer.makeGone()
+                val shouldShowStub = viewState.notes.isEmpty()
+                showStub(shouldShowStub)
             }
-            is NotepadViewState.EmptyContent -> {
-                showNotes(emptyList())
-                stubContainer.makeVisible()
+            is FilteredContent -> {
+                showNotes(viewState.filteredNotes)
+                val shouldShowStub = viewState.filteredNotes.isEmpty()
+                showStub(shouldShowStub)
             }
         }
     }
@@ -138,11 +149,22 @@ class NotepadFragment : BaseFragment() {
                     anchorView = bottomBarFab
                 )
             }
+            is OpenFilterDialog -> {
+                FilterDialogFragment.newInstance(this)
+                    .show(
+                        requireFragmentManager(),
+                        FilterDialogFragment.TAG
+                    )
+            }
         }
     }
 
     private fun showNotes(notes: List<NoteUi>) {
         notesAdapter.updateNotes(notes)
+    }
+
+    private fun showStub(isVisible: Boolean) {
+        stubContainer.toggleGone(isVisible)
     }
 
     private fun goToNoteScreen(noteId: Long) {

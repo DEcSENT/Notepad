@@ -32,11 +32,11 @@ class NoteViewModel @Inject constructor(
         private const val DEFAULT_NOTE_ID = 0L
     }
 
-    val state = MutableLiveData<NoteViewState>()
+    val screenState = MutableLiveData<NoteViewState>()
 
     fun initNote(noteId: Long?) {
         // No need to load note if we have one
-        if (state.value != null) return
+        if (screenState.value != null) return
         val viewStateSource = if (noteId != null && noteId != DEFAULT_NOTE_ID) {
             getNoteSource(noteId)
         } else {
@@ -45,7 +45,7 @@ class NoteViewModel @Inject constructor(
         viewStateSource
             .subscribe(
                 {
-                    state.onNext(it)
+                    screenState.onNext(it)
                 },
                 {
                     Timber.tag(TAG).e(it)
@@ -66,7 +66,7 @@ class NoteViewModel @Inject constructor(
             .subscribe(
                 {
                     val closeScreenCommand = ViewCommand.CloseNoteScreen
-                    commands.onNext(closeScreenCommand)
+                    viewCommands.onNext(closeScreenCommand)
                 },
                 {
                     showErrorMessage(R.string.error_while_adding_note)
@@ -91,6 +91,6 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun getCurrentNoteId(): Long {
-        return (state.value as? ExistingNoteViewState)?.note?.id ?: DEFAULT_NOTE_ID
+        return (screenState.value as? ExistingNoteViewState)?.note?.id ?: DEFAULT_NOTE_ID
     }
 }
