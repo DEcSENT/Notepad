@@ -1,12 +1,11 @@
-def android_appcompat_version = '1.0.0'
-def android_material_version = '1.1.0-alpha03'
+def android_material_version = '1.1.0-beta01'
 def android_lifecycle_version = '2.0.0'
 def constraint_layout_version = '2.0.0-alpha3'
 def android_navigation_version = '2.0.0'
-def dagger_version = '2.22'
-def rxJava_version = '2.2.7'
-def rxAndroid_version = '2.0.1'
-def android_room_version = '1.0.0'
+def dagger_version = '2.24'
+def rxJava_version = '2.2.13'
+def rxAndroid_version = '2.1.1'
+def android_room_version = '2.1.0'
 def stetho_version = '1.5.0'
 
 def test_runner_version = '1.0.2'
@@ -27,7 +26,6 @@ ext{
     ]
 
     appDependencies = [
-            appcompat = "androidx.appcompat:appcompat:$android_appcompat_version",
 
             material = "com.google.android.material:material:$android_material_version",
 
