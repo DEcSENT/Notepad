@@ -25,7 +25,6 @@ import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowMessage
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
-import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
@@ -67,18 +66,18 @@ class NotepadFragment : BaseFragment() {
 
     private fun initViewModel() {
         viewModel = obtainViewModel(viewModelFactory)
-        observe(viewModel.screenState, ::handleViewState)
+        observe(viewModel.viewState, ::handleViewState)
         observe(viewModel.viewCommands, ::handleViewCommand)
     }
 
     private fun initViews() {
-        setupNoteRecycler()
+        setupNotepadRecycler()
         setupFabButton()
         setupNotesAdapterClickListener()
         setupBottomBar()
     }
 
-    private fun setupNoteRecycler() {
+    private fun setupNotepadRecycler() {
         with(notesRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = notesAdapter
@@ -115,12 +114,9 @@ class NotepadFragment : BaseFragment() {
     }
 
     private fun handleViewState(viewState: NotepadViewState) {
-        when (viewState) {
-            is Content -> {
-                showNotes(viewState.notes)
-                val shouldShowStub = viewState.notes.isEmpty()
-                showStub(shouldShowStub)
-            }
+        with(viewState) {
+            showNotes(notes)
+            showStub(isStubViewVisible)
         }
     }
 

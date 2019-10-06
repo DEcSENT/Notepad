@@ -49,12 +49,12 @@ class NotepadViewModelTest : ViewModelTest() {
     @Test
     fun `verify that Content state has empty list when empty notes list returned from repository`() {
         // Given
-        notepadViewModel.screenState.observeForever(testViewStateObserver)
+        notepadViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
 
         // Then
-        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState.Content(emptyList()))
+        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState(emptyList(), true))
     }
 
     @Test
@@ -67,10 +67,10 @@ class NotepadViewModelTest : ViewModelTest() {
         whenever(notepadUseCase.getNotes()).thenReturn(Flowable.just(notesList))
         whenever(noteMapper.fromDomainToUi(notesList)).thenReturn(noteUiList)
         notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
-        notepadViewModel.screenState.observeForever(testViewStateObserver)
+        notepadViewModel.viewState.observeForever(testViewStateObserver)
 
         // Then
-        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState.Content(noteUiList))
+        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState(noteUiList, noteUiList.isEmpty()))
     }
 
     @Test

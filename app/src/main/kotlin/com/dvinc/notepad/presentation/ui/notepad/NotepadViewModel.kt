@@ -7,7 +7,6 @@ import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
-import com.dvinc.notepad.presentation.ui.notepad.NotepadViewState.Content
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,7 +19,10 @@ class NotepadViewModel @Inject constructor(
         private const val TAG = "NotepadViewModel"
     }
 
-    val screenState = MutableLiveData<NotepadViewState>()
+    val viewState = MutableLiveData<NotepadViewState>()
+        .apply {
+            value = NotepadViewState()
+        }
 
     init {
         loadNotes()
@@ -49,8 +51,13 @@ class NotepadViewModel @Inject constructor(
         notepadUseCase.getNotes()
             .map { noteMapper.fromDomainToUi(it) }
             .subscribe(
-                {
-                    showNotes(it)
+                { notes ->
+                    updateViewState { state ->
+                        state.copy(
+                            notes = notes,
+                            isStubViewVisible = notes.isEmpty()
+                        )
+                    }
                 },
                 {
                     showErrorMessage(R.string.error_while_load_data_from_db)
@@ -60,12 +67,7 @@ class NotepadViewModel @Inject constructor(
             .disposeOnViewModelDestroy()
     }
 
-    private fun showNotes(notes: List<NoteUi>) {
-        val newContentState = Content(notes)
-        updateViewState(newContentState)
-    }
-
-    private fun updateViewState(newViewState: NotepadViewState) {
-        screenState.value = newViewState
+    private inline fun updateViewState(update: (NotepadViewState) -> NotepadViewState) {
+        viewState.value = update.invoke(requireNotNull(viewState.value))
     }
 }
