@@ -13,6 +13,8 @@ import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.dvinc.notepad.presentation.ui.ViewModelTest
+import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
+import com.dvinc.notepad.presentation.ui.base.ShowMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -83,7 +85,7 @@ class NotepadViewModelTest : ViewModelTest() {
 
         // Then
         val expectedListWithSingleCommand = ViewCommandUtil.createViewCommandList(
-            ViewCommand.OpenNoteScreen(noteUi.id)
+            OpenNoteScreen(noteUi.id)
         )
 
         assertThat(notepadViewModel.viewCommands.value!!, `is`(expectedListWithSingleCommand))
@@ -101,7 +103,7 @@ class NotepadViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowMessage(R.string.note_successfully_deleted)
+            ShowMessage(R.string.note_successfully_deleted)
         )
 
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
@@ -119,7 +121,7 @@ class NotepadViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_deleting_note)
+            ShowErrorMessage(R.string.error_while_deleting_note)
         )
 
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
@@ -136,7 +138,7 @@ class NotepadViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_load_data_from_db)
+            ShowErrorMessage(R.string.error_while_load_data_from_db)
         )
 
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)

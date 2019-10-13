@@ -12,6 +12,7 @@ import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.dvinc.notepad.presentation.ui.ViewModelTest
+import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
@@ -93,7 +94,7 @@ class NoteViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_loading_note)
+            ShowErrorMessage(R.string.error_while_loading_note)
         )
 
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
@@ -114,7 +115,7 @@ class NoteViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.CloseNoteScreen
+            CloseNoteScreen
         )
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
     }
@@ -134,7 +135,7 @@ class NoteViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_adding_note)
+            ShowErrorMessage(R.string.error_while_adding_note)
         )
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
     }
