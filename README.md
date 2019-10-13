@@ -4,8 +4,12 @@
 [![codecov](https://codecov.io/gh/DEcSENT/Notepad/branch/master/graph/badge.svg)](https://codecov.io/gh/DEcSENT/Notepad)
 [![codebeat badge](https://codebeat.co/badges/62f7e4cf-c3e2-41c1-be0f-4c1864082b94)](https://codebeat.co/projects/github-com-decsent-notepad-master)
 
+This is an infinity sandbox for new technologies and ideas.
+
+The project has been rewritten many times.
+
 Notepad application for fast and simple writing and interaction with notes.
-Work in progress.
+**Work in progress.**
 
 ## Technology stack
 
@@ -20,12 +24,12 @@ Work in progress.
 - Room
 - Stetho
 - Android X
-- **Navigation Architecture Component**
+- Navigation Architecture Component
 
 ### Architecture
 
-- Clean architecture (I experiment with this)
-- MVVM (View model with view states, it's experiment too)
+- Clean architecture
+- ViewModel with ViewState on presentation layer
 
 ### Other
 
@@ -37,13 +41,14 @@ Work in progress.
 
 ### What next
 
-- UI tests
 - Dark theme
-- Fingerprint
-- Notes export
-- Security
-- User profile and synchronization with cloud
+- Note tags
+- Notes archive
 - Coroutines (possible)
+- UI tests
+- Fingerprint
+- Security
+- Notes export
 
 ### Screens
 
@@ -56,7 +61,7 @@ Work in progress.
 
 MIT License
 
-Copyright (c) 2018 Denis Verentsov
+Copyright (c) 2018 - 2019 Denis Verentsov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
