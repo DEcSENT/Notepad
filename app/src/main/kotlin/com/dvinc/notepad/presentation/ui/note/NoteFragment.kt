@@ -23,16 +23,12 @@ import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as not
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_save_button as saveNoteButton
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
-import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
 
 class NoteFragment : BaseFragment() {
 
     companion object {
         const val NOTE_ID = "noteId"
-        private const val NOTE_MARKER_ID = "noteMarkerId"
     }
-
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -41,7 +37,7 @@ class NoteFragment : BaseFragment() {
 
     private val noteId: Long? by lazy { arguments?.getLong(NOTE_ID, 0) }
 
-    private var noteMarkerBundle: Bundle? = null
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,22 +47,9 @@ class NoteFragment : BaseFragment() {
         initViews()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        noteMarkerBundle = savedInstanceState
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         hideKeyboard()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.apply {
-            val markerId = noteTypeSpinner.selectedItemId.toInt()
-            putInt(NOTE_MARKER_ID, markerId)
-        }
     }
 
     private fun injectDependencies() {
@@ -120,28 +103,13 @@ class NoteFragment : BaseFragment() {
     private fun showNewNote(viewState: NewNoteViewState) {
         val addNoteText = getString(R.string.note_add)
         saveNoteButton.text = addNoteText
-        restoreSelectedMarkerIfNeeded()
     }
 
     private fun showExistingNote(viewState: ExistingNoteViewState) {
         val editNoteText = getString(R.string.note_edit)
         saveNoteButton.text = editNoteText
-        if (noteMarkerBundle != null) {
-            // Strange code because of android rotation mechanism
-            restoreSelectedMarkerIfNeeded()
-            return
-        } else {
-            val note = viewState.note
-            noteName.setText(note.name)
-            noteContent.setText(note.content)
-        }
-    }
-
-    private fun restoreSelectedMarkerIfNeeded() {
-        val noteBundle = noteMarkerBundle
-        if (noteBundle != null && noteBundle.containsKey(NOTE_MARKER_ID)) {
-            val markerSelection = noteBundle.getInt(NOTE_MARKER_ID)
-            noteTypeSpinner.setSelection(markerSelection)
-        }
+        val note = viewState.note
+        noteName.setText(note.name)
+        noteContent.setText(note.content)
     }
 }
