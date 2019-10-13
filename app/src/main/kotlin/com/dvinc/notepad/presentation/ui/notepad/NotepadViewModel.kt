@@ -6,7 +6,6 @@ import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
 import timber.log.Timber
 import javax.inject.Inject
 

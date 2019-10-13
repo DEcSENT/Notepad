@@ -21,9 +21,8 @@ import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
+import com.dvinc.notepad.presentation.ui.base.ShowMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.OpenNoteScreen
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowMessage
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
@@ -121,8 +120,10 @@ class NotepadFragment : BaseFragment() {
     }
 
     private fun handleViewCommand(viewCommand: ViewCommand) {
-        when(viewCommand) {
-            is OpenNoteScreen -> goToNoteScreen(viewCommand.noteId)
+        when (viewCommand) {
+            is OpenNoteScreen -> {
+                goToNoteScreen(viewCommand.noteId)
+            }
             is ShowMessage -> {
                 showMessage(
                     messageResId = viewCommand.messageResId,

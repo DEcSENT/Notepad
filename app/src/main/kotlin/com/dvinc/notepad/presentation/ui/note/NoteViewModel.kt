@@ -11,7 +11,6 @@ import com.dvinc.notepad.common.extension.onNext
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import io.reactivex.Single
@@ -61,8 +60,7 @@ class NoteViewModel @Inject constructor(
         noteUseCase.saveNote(note)
             .subscribe(
                 {
-                    val closeScreenCommand = ViewCommand.CloseNoteScreen
-                    viewCommands.onNext(closeScreenCommand)
+                    viewCommands.onNext(CloseNoteScreen)
                 },
                 {
                     showErrorMessage(R.string.error_while_adding_note)

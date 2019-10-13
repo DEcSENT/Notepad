@@ -14,9 +14,8 @@ import com.dvinc.notepad.common.extension.obtainViewModel
 import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
+import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.CloseNoteScreen
-import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
