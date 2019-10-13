@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_item_note"
-    android:elevation="4dp"
-    android:foreground="?attr/selectableItemBackground">
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/item_note_name"
-        style="@style/item_note_header_style"
+        style="@style/NoteHeaderStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

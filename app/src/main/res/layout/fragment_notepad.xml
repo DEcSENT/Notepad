@@ -39,7 +39,7 @@
         android:id="@+id/fragment_notepad_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_white_24px"
+        android:src="@drawable/ic_add_white_24"
         app:backgroundTint="@color/black"
         app:layout_anchor="@id/fragment_notepad_bottom_app_bar"
         app:layout_constraintBottom_toBottomOf="parent"

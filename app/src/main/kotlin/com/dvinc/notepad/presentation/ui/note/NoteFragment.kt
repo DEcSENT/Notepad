@@ -20,11 +20,11 @@ import com.dvinc.notepad.presentation.ui.base.ViewCommand.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_content as noteContent
-import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_name as noteName
-import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_save_button as saveNoteButton
-import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_toolbar as toolbar
-import kotlinx.android.synthetic.main.fragment_note_new.fragment_note_type_spinner as noteTypeSpinner
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as noteContent
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_save_button as saveNoteButton
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
+import kotlinx.android.synthetic.main.fragment_note.fragment_note_type_spinner as noteTypeSpinner
 
 class NoteFragment : BaseFragment() {
 
@@ -33,7 +33,7 @@ class NoteFragment : BaseFragment() {
         private const val NOTE_MARKER_ID = "noteMarkerId"
     }
 
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_note_new
+    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
