@@ -15,28 +15,16 @@
     <string name="notepad_toolbar_header">Notepad</string>
     <string name="message_empty_note_name">This field can not be blank</string>
 
-    <string name="marker_note_type">Note</string>
-    <string name="marker_critical_type">Critical</string>
-    <string name="marker_todo_type">ToDo</string>
-    <string name="marker_idea_type">Idea</string>
-
     <string name="note_successfully_deleted">Note deleted</string>
 
     <string name="error_while_load_data_from_db">An error has occurred while loading from database</string>
     <string name="error_while_deleting_note">An error has occurred while deleting note</string>
     <string name="error_while_loading_note">Cannot load note from database</string>
-    <string name="error_while_loading_markers">Cannot load markers from database</string>
     <string name="error_while_adding_note">Cannot add note</string>
-    <string name="error_while_updating_note">Cannot update note</string>
-    <string name="dialog_filter_title">Notes filter</string>
-    <string name="dialog_filter_cancel_button">Cancel</string>
-    <string name="fragment_notepad_filter_icon">Filter icon</string>
-    <string name="dialog_filter_clear_button">Clear filter</string>
-    <string name="small_filter_icon_description">Filter color icon</string>
 
-    <!--notepad region -->
-    <string name="fragment_notepad_menu_filter">Filter icon</string>
+    <!--Notepad region start-->
+    <string name="fragment_notepad_filter_icon">Filter icon</string>
     <string name="fragment_notepad_stub_text">Your notepad is empty</string>
-    <!--end notepad region -->
+    <!--Notepad region end-->
 
 </resources>

@@ -7,10 +7,9 @@
 
 package com.dvinc.notepad.domain.model.note
 
-import com.dvinc.notepad.domain.model.marker.MarkerType
-
-data class Note(var id: Long,
-                val name: String,
-                val content: String,
-                val updateTime: Long,
-                val markerType: MarkerType)
+data class Note(
+    val id: Long,
+    val name: String,
+    val content: String,
+    val updateTime: Long
+)

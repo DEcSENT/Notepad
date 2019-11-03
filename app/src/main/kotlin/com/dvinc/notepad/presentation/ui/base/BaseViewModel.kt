@@ -17,12 +17,12 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected fun showMessage(@StringRes messageResId: Int) {
-        val showMessageCommand = ViewCommand.ShowMessage(messageResId)
+        val showMessageCommand = ShowMessage(messageResId)
         viewCommands.onNext(showMessageCommand)
     }
 
     protected fun showErrorMessage(@StringRes messageResId: Int) {
-        val showMessageCommand = ViewCommand.ShowErrorMessage(messageResId)
+        val showMessageCommand = ShowErrorMessage(messageResId)
         viewCommands.onNext(showMessageCommand)
     }
 

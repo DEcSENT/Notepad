@@ -7,14 +7,12 @@ package com.dvinc.notepad.presentation.ui.note
 
 import androidx.lifecycle.Observer
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.marker.MarkerType
 import com.dvinc.notepad.domain.model.note.Note
-import com.dvinc.notepad.domain.usecase.marker.MarkerUseCase
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.dvinc.notepad.presentation.ui.ViewModelTest
+import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
@@ -28,22 +26,12 @@ class NoteViewModelTest : ViewModelTest() {
 
     private lateinit var noteViewModel: NoteViewModel
 
-    private val markerTypeList = MarkerType.values().toList()
-
-    private val markerTypeUiList = MarkerTypeUi.values().toList()
-
     private val note: Note = mock()
 
-    private var noteMapper: NotePresentationMapper = mock {
-        on { mapMarkers(markerTypeList) } doReturn markerTypeUiList
-    }
+    private var noteMapper: NotePresentationMapper = mock()
 
     private val noteUseCase: NoteUseCase = mock {
         on { getNoteById(anyLong()) } doReturn Single.just(note)
-    }
-
-    private val markerUseCase: MarkerUseCase = mock {
-        on { getNoteMarkers() } doReturn Single.just(markerTypeList)
     }
 
     private val testViewStateObserver: Observer<NoteViewState> = mock()
@@ -52,45 +40,45 @@ class NoteViewModelTest : ViewModelTest() {
 
     @Before
     fun setUp() {
-        noteViewModel = NoteViewModel(noteUseCase, markerUseCase, noteMapper)
+        noteViewModel = NoteViewModel(noteUseCase, noteMapper)
     }
 
     @Test
     fun `verify that existing note state is set`() {
         // Given
-        noteViewModel.screenState.observeForever(testViewStateObserver)
+        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(10L)
 
         // Then
-        val expectedViewState = NoteViewState.ExistingNoteViewState(note, markerTypeUiList)
+        val expectedViewState = NoteViewState.ExistingNoteViewState(note)
         verify(testViewStateObserver, times(1)).onChanged(expectedViewState)
     }
 
     @Test
     fun `verify new note state is loaded when no note ID`() {
         // Given
-        noteViewModel.screenState.observeForever(testViewStateObserver)
+        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(null)
 
         // Then
-        val expectedViewState = NoteViewState.NewNoteViewState(markerTypeUiList)
+        val expectedViewState = NoteViewState.NewNoteViewState
         verify(testViewStateObserver, times(1)).onChanged(expectedViewState)
     }
 
     @Test
     fun `verify new note state is loaded when note ID has default value`() {
         // Given
-        noteViewModel.screenState.observeForever(testViewStateObserver)
+        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(0L)
 
         // Then
-        val expectedViewState = NoteViewState.NewNoteViewState(markerTypeUiList)
+        val expectedViewState = NoteViewState.NewNoteViewState
         verify(testViewStateObserver, times(1)).onChanged(expectedViewState)
     }
 
@@ -106,25 +94,7 @@ class NoteViewModelTest : ViewModelTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_loading_note)
-        )
-
-        verify(testViewCommandObserver).onChanged(expectedViewCommandList)
-    }
-
-    @Test
-    fun `verify that error message is shown when an error occurred while loading note markers`() {
-        // Given
-        val noteId = 10L
-        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
-
-        // When
-        whenever(markerUseCase.getNoteMarkers()).thenReturn(Single.error(NullPointerException()))
-        noteViewModel.initNote(noteId)
-
-        // Then
-        val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_loading_note)
+            ShowErrorMessage(R.string.error_while_loading_note)
         )
 
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
@@ -136,17 +106,16 @@ class NoteViewModelTest : ViewModelTest() {
         val noteId = 0L
         val noteName = "Test title"
         val noteContent = "Content"
-        val noteTypeUi = MarkerTypeUi.CRITICAL
         noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(noteMapper.createNote(noteId, noteName, noteContent, noteTypeUi)).thenReturn(note)
+        whenever(noteMapper.createNote(noteId, noteName, noteContent)).thenReturn(note)
         whenever(noteUseCase.saveNote(note)).thenReturn(Completable.complete())
-        noteViewModel.onSaveButtonClick(noteName, noteContent, noteTypeUi)
+        noteViewModel.onSaveButtonClick(noteName, noteContent)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.CloseNoteScreen
+            CloseNoteScreen
         )
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
     }
@@ -157,17 +126,16 @@ class NoteViewModelTest : ViewModelTest() {
         val noteId = 0L
         val noteName = "Test title"
         val noteContent = "Content"
-        val noteTypeUi = MarkerTypeUi.CRITICAL
         noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(noteMapper.createNote(noteId, noteName, noteContent, noteTypeUi)).thenReturn(note)
+        whenever(noteMapper.createNote(noteId, noteName, noteContent)).thenReturn(note)
         whenever(noteUseCase.saveNote(note)).thenReturn(Completable.error(NullPointerException()))
-        noteViewModel.onSaveButtonClick(noteName, noteContent, noteTypeUi)
+        noteViewModel.onSaveButtonClick(noteName, noteContent)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            ViewCommand.ShowErrorMessage(R.string.error_while_adding_note)
+            ShowErrorMessage(R.string.error_while_adding_note)
         )
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
     }

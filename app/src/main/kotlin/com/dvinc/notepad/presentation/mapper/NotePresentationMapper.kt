@@ -5,9 +5,7 @@
 
 package com.dvinc.notepad.presentation.mapper
 
-import com.dvinc.notepad.domain.model.marker.MarkerType
 import com.dvinc.notepad.domain.model.note.Note
-import com.dvinc.notepad.presentation.model.MarkerTypeUi
 import com.dvinc.notepad.presentation.model.NoteUi
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,22 +23,16 @@ class NotePresentationMapper @Inject constructor() {
         return notes.map { fromDomainToUi(it) }
     }
 
-    fun mapMarkers(markers: List<MarkerType>): List<MarkerTypeUi> {
-        return markers.map { mapMarker(it) }
-    }
-
     fun createNote(
         noteId: Long,
         name: String,
-        content: String,
-        markerTypeUi: MarkerTypeUi
+        content: String
     ): Note {
         return Note(
             id = noteId,
             name = name,
             content = content,
-            updateTime = System.currentTimeMillis(),
-            markerType = mapMarker(markerTypeUi)
+            updateTime = System.currentTimeMillis()
         )
     }
 
@@ -50,8 +42,7 @@ class NotePresentationMapper @Inject constructor() {
                 id = id,
                 name = name,
                 content = content,
-                updateTime = mapNoteTimeToString(updateTime),
-                markerType = mapMarker(markerType)
+                updateTime = mapNoteTimeToString(updateTime)
             )
         }
     }
@@ -71,24 +62,6 @@ class NotePresentationMapper @Inject constructor() {
             sdfWeek.format(time)
         } else {
             sdfMonth.format(time)
-        }
-    }
-
-    private fun mapMarker(marker: MarkerType): MarkerTypeUi {
-        return when (marker) {
-            MarkerType.NOTE -> MarkerTypeUi.NOTE
-            MarkerType.CRITICAL -> MarkerTypeUi.CRITICAL
-            MarkerType.TODO -> MarkerTypeUi.TODO
-            MarkerType.IDEA -> MarkerTypeUi.IDEA
-        }
-    }
-
-    private fun mapMarker(marker: MarkerTypeUi): MarkerType {
-        return when (marker) {
-            MarkerTypeUi.NOTE -> MarkerType.NOTE
-            MarkerTypeUi.CRITICAL -> MarkerType.CRITICAL
-            MarkerTypeUi.TODO -> MarkerType.TODO
-            MarkerTypeUi.IDEA -> MarkerType.IDEA
         }
     }
 }

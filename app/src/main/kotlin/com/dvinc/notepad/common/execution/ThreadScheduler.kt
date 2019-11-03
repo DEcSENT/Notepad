@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.common.execution
+package com.dvinc.notepad.common.execution
 
 import io.reactivex.Completable
 import io.reactivex.Flowable

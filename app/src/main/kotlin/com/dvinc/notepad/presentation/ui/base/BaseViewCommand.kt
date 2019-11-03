@@ -5,4 +5,6 @@
 
 package com.dvinc.notepad.presentation.ui.base
 
-interface ViewCommand
+data class ShowMessage(val messageResId: Int) : ViewCommand
+
+data class ShowErrorMessage(val messageResId: Int) : ViewCommand
