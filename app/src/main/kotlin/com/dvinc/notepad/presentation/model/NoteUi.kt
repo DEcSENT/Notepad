@@ -6,7 +6,7 @@
 package com.dvinc.notepad.presentation.model
 
 data class NoteUi(
-    var id: Long,
+    val id: Long,
     val name: String,
     val content: String,
     val updateTime: String

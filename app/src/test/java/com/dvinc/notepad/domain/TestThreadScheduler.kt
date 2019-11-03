@@ -1,6 +1,6 @@
 package com.dvinc.notepad.domain
 
-import com.dvinc.notepad.domain.common.execution.ThreadScheduler
+import com.dvinc.notepad.common.execution.ThreadScheduler
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

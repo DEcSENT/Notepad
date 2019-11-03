@@ -46,7 +46,7 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify that existing note state is set`() {
         // Given
-        noteViewModel.screenState.observeForever(testViewStateObserver)
+        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(10L)
@@ -59,7 +59,7 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify new note state is loaded when no note ID`() {
         // Given
-        noteViewModel.screenState.observeForever(testViewStateObserver)
+        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(null)
@@ -72,7 +72,7 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify new note state is loaded when note ID has default value`() {
         // Given
-        noteViewModel.screenState.observeForever(testViewStateObserver)
+        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
         noteViewModel.initNote(0L)

@@ -8,7 +8,7 @@
 package com.dvinc.notepad.domain.model.note
 
 data class Note(
-    var id: Long,
+    val id: Long,
     val name: String,
     val content: String,
     val updateTime: Long

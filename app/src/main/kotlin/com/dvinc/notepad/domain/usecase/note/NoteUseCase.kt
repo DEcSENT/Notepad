@@ -7,8 +7,8 @@
 
 package com.dvinc.notepad.domain.usecase.note
 
-import com.dvinc.notepad.domain.common.execution.ThreadScheduler
-import com.dvinc.notepad.domain.common.execution.scheduleIoToUi
+import com.dvinc.notepad.common.execution.ThreadScheduler
+import com.dvinc.notepad.common.execution.scheduleIoToUi
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import io.reactivex.Completable
