@@ -11,8 +11,20 @@
     </style>
 
     <style name="NoteHeaderStyle">
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/noteTitleTextColor</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="NoteContentStyle">
+        <item name="android:textColor">@color/noteContentTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textColor">@color/editTextColor</item>
+        <item name="android:textColorHint">@color/editTextHintColor</item>
+        <item name="android:backgroundTint">@color/editTextHintColor</item>
+        <item name="android:textCursorDrawable">@drawable/bg_edit_text_cursor</item>
     </style>
 
 </resources>
