@@ -38,10 +38,10 @@ Notepad application for fast and simple writing and interaction with notes.
 - Code coverage
 - Codebeat static analysis
 - Detekt checks on every CI build
+- Dark theme
 
 ### What next
 
-- Dark theme
 - Note tags
 - Notes archive
 - Coroutines (possible)

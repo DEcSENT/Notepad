@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Notepad</string>
     <string name="new_note_name">Note name</string>
-    <string name="new_note_content">Enter content…</string>
+    <string name="new_note_content">Note content</string>
     <string name="note_add">Add</string>
     <string name="note_edit">Edit</string>
     <string name="empty_view">Start with adding new note</string>
