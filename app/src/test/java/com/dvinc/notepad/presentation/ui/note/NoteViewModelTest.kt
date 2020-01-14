@@ -40,16 +40,17 @@ class NoteViewModelTest : ViewModelTest() {
 
     @Before
     fun setUp() {
-        noteViewModel = NoteViewModel(noteUseCase, noteMapper)
+        noteViewModel = NoteViewModel(null, noteUseCase, noteMapper)
     }
 
     @Test
     fun `verify that existing note state is set`() {
         // Given
+        val noteId = 10L
+        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
         noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
-        noteViewModel.initNote(10L)
 
         // Then
         val expectedViewState = NoteViewState.ExistingNoteViewState(note)
@@ -59,10 +60,11 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify new note state is loaded when no note ID`() {
         // Given
+        val noteId = null
+        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
         noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
-        noteViewModel.initNote(null)
 
         // Then
         val expectedViewState = NoteViewState.NewNoteViewState
@@ -72,10 +74,11 @@ class NoteViewModelTest : ViewModelTest() {
     @Test
     fun `verify new note state is loaded when note ID has default value`() {
         // Given
+        val noteId = 0L
+        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
         noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
-        noteViewModel.initNote(0L)
 
         // Then
         val expectedViewState = NoteViewState.NewNoteViewState
@@ -86,11 +89,11 @@ class NoteViewModelTest : ViewModelTest() {
     fun `verify that error message is shown when an error occurred while loading note`() {
         // Given
         val noteId = 10L
-        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         whenever(noteUseCase.getNoteById(noteId)).thenReturn(Single.error(NullPointerException()))
-        noteViewModel.initNote(noteId)
+        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
+        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(

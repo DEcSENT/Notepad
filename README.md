@@ -19,7 +19,7 @@ Notepad application for fast and simple writing and interaction with notes.
 
 ### Libraries
 
-- Dagger 2
+- Dagger 2 + Dagger Assisted Inject
 - RxJava 2
 - Room
 - Stetho

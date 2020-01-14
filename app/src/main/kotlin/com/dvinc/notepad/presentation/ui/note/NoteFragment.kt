@@ -10,8 +10,7 @@ import android.view.View
 import androidx.navigation.Navigation
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
-import com.dvinc.notepad.common.extension.obtainViewModel
-import com.dvinc.notepad.common.viewmodel.ViewModelFactory
+import com.dvinc.notepad.common.extension.viewModels
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
@@ -31,9 +30,9 @@ class NoteFragment : BaseFragment() {
     }
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: NoteViewModel.Factory
 
-    private lateinit var viewModel: NoteViewModel
+    private val viewModel: NoteViewModel by viewModels { viewModelFactory.get(noteId) }
 
     private val noteId: Long? by lazy { arguments?.getLong(NOTE_ID, 0) }
 
@@ -43,7 +42,7 @@ class NoteFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         injectDependencies()
-        initViewModel()
+        observeViewModel()
         initViews()
     }
 
@@ -56,11 +55,9 @@ class NoteFragment : BaseFragment() {
         DiProvider.appComponent.inject(this)
     }
 
-    private fun initViewModel() {
-        viewModel = obtainViewModel(viewModelFactory)
+    private fun observeViewModel() {
         observe(viewModel.viewState, ::handleViewState)
         observe(viewModel.viewCommands, ::handleViewCommand)
-        viewModel.initNote(noteId)
     }
 
     private fun initViews() {

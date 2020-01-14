@@ -13,12 +13,14 @@ import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import io.reactivex.Single
 import timber.log.Timber
-import javax.inject.Inject
 
 //TODO(dv): refactor all of this
-class NoteViewModel @Inject constructor(
+class NoteViewModel @AssistedInject constructor(
+    @Assisted noteId: Long?,
     private val noteUseCase: NoteUseCase,
     private val noteMapper: NotePresentationMapper
 ) : BaseViewModel() {
@@ -30,7 +32,11 @@ class NoteViewModel @Inject constructor(
 
     val viewState = MutableLiveData<NoteViewState>()
 
-    fun initNote(noteId: Long?) {
+    init {
+        initNote(noteId)
+    }
+
+    private fun initNote(noteId: Long?) {
         // No need to load note if we have one
         if (viewState.value != null) return
         val viewStateSource = if (noteId != null && noteId != DEFAULT_NOTE_ID) {
@@ -82,5 +88,10 @@ class NoteViewModel @Inject constructor(
 
     private fun getCurrentNoteId(): Long {
         return (viewState.value as? ExistingNoteViewState)?.note?.id ?: DEFAULT_NOTE_ID
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun get(noteId: Long?): NoteViewModel
     }
 }

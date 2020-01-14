@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
-import com.dvinc.notepad.common.extension.obtainViewModel
 import com.dvinc.notepad.common.extension.toggleGone
 import com.dvinc.notepad.common.recycler.SpaceItemDecorator
-import com.dvinc.notepad.common.viewmodel.ViewModelFactory
 import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
@@ -25,6 +23,7 @@ import com.dvinc.notepad.presentation.ui.base.ShowMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
@@ -33,9 +32,9 @@ import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_stub_con
 class NotepadFragment : BaseFragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: Provider<NotepadViewModel>
 
-    private lateinit var viewModel: NotepadViewModel
+    private val viewModel by lazy { viewModelFactory.get() }
 
     private val notesAdapter: NotepadAdapter = NotepadAdapter()
 
@@ -55,7 +54,7 @@ class NotepadFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         injectDependencies()
-        initViewModel()
+        observerViewModel()
         initViews()
     }
 
@@ -63,8 +62,7 @@ class NotepadFragment : BaseFragment() {
         DiProvider.appComponent.inject(this)
     }
 
-    private fun initViewModel() {
-        viewModel = obtainViewModel(viewModelFactory)
+    private fun observerViewModel() {
         observe(viewModel.viewState, ::handleViewState)
         observe(viewModel.viewCommands, ::handleViewCommand)
     }
