@@ -10,8 +10,9 @@ import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class NoteDataRepository @Inject constructor(
@@ -19,9 +20,9 @@ class NoteDataRepository @Inject constructor(
         private val noteMapper: NoteDataMapper
 ) : NoteRepository {
 
-    override fun getNotes(): Flowable<List<Note>> {
+    override fun getNotes(): Flow<List<Note>> {
         return noteDao.getNotes()
-                .map { noteMapper.fromEntityToDomain(it) }
+            .map { noteMapper.fromEntityToDomain(it) }
     }
 
     override fun addNote(note: Note): Completable {

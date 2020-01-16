@@ -10,7 +10,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dvinc.notepad.data.database.entity.note.NoteEntity
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -19,7 +19,7 @@ interface NoteDao {
     fun addNote(note: NoteEntity)
 
     @Query("SELECT * FROM Notes ORDER BY id DESC")
-    fun getNotes(): Flowable<List<NoteEntity>>
+    fun getNotes(): Flow<List<NoteEntity>>
 
     @Query("DELETE FROM Notes WHERE id = :id")
     fun deleteNoteById(id: Long)

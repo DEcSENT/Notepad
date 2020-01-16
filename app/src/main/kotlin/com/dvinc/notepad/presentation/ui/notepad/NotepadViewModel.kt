@@ -1,11 +1,15 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -48,22 +52,20 @@ class NotepadViewModel @Inject constructor(
 
     private fun loadNotes() {
         notepadUseCase.getNotes()
-            .map { noteMapper.fromDomainToUi(it) }
-            .subscribe(
-                { notes ->
-                    updateViewState { state ->
-                        state.copy(
-                            notes = notes,
-                            isStubViewVisible = notes.isEmpty()
-                        )
-                    }
-                },
-                {
-                    showErrorMessage(R.string.error_while_load_data_from_db)
-                    Timber.tag(TAG).e(it)
+            .onEach {
+                val notes = noteMapper.fromDomainToUi(it)
+                updateViewState { state ->
+                    state.copy(
+                        notes = notes,
+                        isStubViewVisible = notes.isEmpty()
+                    )
                 }
-            )
-            .disposeOnViewModelDestroy()
+            }
+            .catch {
+                showErrorMessage(R.string.error_while_load_data_from_db)
+                Timber.tag(TAG).e(it)
+            }
+            .launchIn(viewModelScope)
     }
 
     private inline fun updateViewState(update: (NotepadViewState) -> NotepadViewState) {

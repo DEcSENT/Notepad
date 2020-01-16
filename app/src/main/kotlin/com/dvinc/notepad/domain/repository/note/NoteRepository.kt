@@ -9,12 +9,12 @@ package com.dvinc.notepad.domain.repository.note
 
 import com.dvinc.notepad.domain.model.note.Note
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {
 
-    fun getNotes(): Flowable<List<Note>>
+    fun getNotes(): Flow<List<Note>>
 
     fun addNote(note: Note): Completable
 
