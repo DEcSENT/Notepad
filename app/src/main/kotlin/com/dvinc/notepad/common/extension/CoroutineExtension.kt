@@ -23,3 +23,18 @@ fun CoroutineScope.safeLaunch(
         }
     }
 }
+
+fun <T> CoroutineScope.safeLaunch(
+    launchBlock: suspend () -> T,
+    onSuccess: (T) -> Unit,
+    onError: (Throwable) -> Unit
+) {
+    launch {
+        try {
+            val result = launchBlock()
+            onSuccess.invoke(result)
+        } catch (t: Throwable) {
+            onError.invoke(t)
+        }
+    }
+}
