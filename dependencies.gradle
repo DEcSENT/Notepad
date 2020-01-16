@@ -1,13 +1,13 @@
+def coroutines_version = "1.3.3"
 def android_material_version = '1.1.0-beta01'
-def android_lifecycle_version = '2.0.0'
+def android_x_lifecycle_version = '2.2.0-rc03'
 def constraint_layout_version = '2.0.0-alpha3'
 def android_navigation_version = '2.0.0'
 def dagger_version = '2.25.4'
 def dagger_assisted_inject_version = '0.5.2'
 def rxJava_version = '2.2.13'
 def rxAndroid_version = '2.1.1'
-def android_room_version = '2.1.0'
-def stetho_version = '1.5.0'
+def room_version = '2.2.3'
 
 def test_runner_version = '1.0.2'
 def espresso_core_version = '3.0.2'
@@ -16,6 +16,7 @@ def mockito_core_version = '2.18.0'
 def kotlin_mockito_version = '2.1.0'
 def android_arch_core_testing_version = '2.0.1'
 
+def stetho_version = '1.5.0'
 def timber_version = '4.7.1'
 
 ext{
@@ -25,32 +26,40 @@ ext{
 
             dagger_assisted_inject_processor = "com.squareup.inject:assisted-inject-processor-dagger2:$dagger_assisted_inject_version",
 
-            android_room_processor = "android.arch.persistence.room:compiler:$android_room_version"
+            android_room_processor = "androidx.room:room-compiler:$room_version"
     ]
 
     appDependencies = [
 
+            coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
+
+            coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version",
+
             material = "com.google.android.material:material:$android_material_version",
 
-            lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:$android_lifecycle_version",
+            lifecycle_view_model = "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_x_lifecycle_version",
+
+            lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:$android_x_lifecycle_version",
 
             constraint_layout = "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
 
-            android_navigation_fragment = "androidx.navigation:navigation-fragment:$android_navigation_version",
+            navigation_fragment = "androidx.navigation:navigation-fragment:$android_navigation_version",
 
-            android_navigation_ui = "androidx.navigation:navigation-ui:$android_navigation_version",
+            navigation_ui = "androidx.navigation:navigation-ui:$android_navigation_version",
 
             dagger = "com.google.dagger:dagger:$dagger_version",
 
             dagger_assisted_inject = "com.squareup.inject:assisted-inject-annotations-dagger2:$dagger_assisted_inject_version",
 
-            rxjava = "io.reactivex.rxjava2:rxjava:$rxJava_version",
+            rx_java = "io.reactivex.rxjava2:rxjava:$rxJava_version",
 
-            rxandroid = "io.reactivex.rxjava2:rxandroid:$rxAndroid_version",
+            rx_android = "io.reactivex.rxjava2:rxandroid:$rxAndroid_version",
 
-            android_room = "android.arch.persistence.room:runtime:$android_room_version",
+            room = "androidx.room:room-runtime:$room_version",
 
-            android_room_rx = "android.arch.persistence.room:rxjava2:$android_room_version",
+            room_rx = "androidx.room:room-rxjava2:$room_version",
+
+            room_coroutines = "androidx.room:room-ktx:$room_version",
 
             stetho = "com.facebook.stetho:stetho:$stetho_version",
 
