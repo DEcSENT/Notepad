@@ -3,6 +3,7 @@ package com.dvinc.notepad.presentation.ui.notepad
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.extension.safeLaunch
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
@@ -37,17 +38,18 @@ class NotepadViewModel @Inject constructor(
     }
 
     fun onNoteDelete(note: NoteUi) {
-        notepadUseCase.deleteNote(note.id)
-            .subscribe(
-                {
-                    showMessage(R.string.note_successfully_deleted)
-                },
-                {
-                    showErrorMessage(R.string.error_while_deleting_note)
-                    Timber.tag(TAG).e(it)
-                }
-            )
-            .disposeOnViewModelDestroy()
+        viewModelScope.safeLaunch(
+            launchBlock = {
+                notepadUseCase.deleteNote(note.id)
+            },
+            onSuccess = {
+                showMessage(R.string.note_successfully_deleted)
+            },
+            onError = {
+                showMessage(R.string.error_while_deleting_note)
+                Timber.tag(TAG).e(it)
+            }
+        )
     }
 
     private fun loadNotes() {

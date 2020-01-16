@@ -32,8 +32,8 @@ class NoteDataRepository @Inject constructor(
                 }
     }
 
-    override fun deleteNoteById(id: Long): Completable {
-        return Completable.fromAction { noteDao.deleteNoteById(id) }
+    override suspend fun deleteNoteById(id: Long) {
+        noteDao.deleteNoteById(id)
     }
 
     override fun getNoteById(id: Long): Single<Note> {

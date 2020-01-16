@@ -22,7 +22,7 @@ interface NoteDao {
     fun getNotes(): Flow<List<NoteEntity>>
 
     @Query("DELETE FROM Notes WHERE id = :id")
-    fun deleteNoteById(id: Long)
+    suspend fun deleteNoteById(id: Long)
 
     @Query("SELECT * FROM Notes WHERE id = :id")
     fun getNoteById(id: Long): NoteEntity
