@@ -6,48 +6,40 @@
 package com.dvinc.notepad.presentation.ui.note
 
 import androidx.lifecycle.Observer
+import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
-import com.dvinc.notepad.presentation.ui.ViewModelTest
 import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
-import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Completable
-import io.reactivex.Single
-import org.junit.Before
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyLong
 import java.util.*
 
-class NoteViewModelTest : ViewModelTest() {
+class NoteViewModelTest : CoroutinesTest() {
 
-    private lateinit var noteViewModel: NoteViewModel
+    private val testNoteId = 10L
 
     private val note: Note = mock()
 
     private var noteMapper: NotePresentationMapper = mock()
 
-    private val noteUseCase: NoteUseCase = mock {
-        on { getNoteById(anyLong()) } doReturn Single.just(note)
-    }
+    private val noteUseCase: NoteUseCase = mock()
 
     private val testViewStateObserver: Observer<NoteViewState> = mock()
 
     private val testViewCommandObserver: Observer<LinkedList<ViewCommand>> = mock()
 
-    @Before
-    fun setUp() {
-        noteViewModel = NoteViewModel(null, noteUseCase, noteMapper)
-    }
-
     @Test
-    fun `verify that existing note state is set`() {
+    fun `verify that existing note state is set`() = runCoroutineTest {
         // Given
-        val noteId = 10L
-        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
+        whenever(noteUseCase.getNoteById(testNoteId)).thenReturn(note)
+        val noteViewModel = NoteViewModel(testNoteId, noteUseCase, noteMapper)
         noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
@@ -61,7 +53,7 @@ class NoteViewModelTest : ViewModelTest() {
     fun `verify new note state is loaded when no note ID`() {
         // Given
         val noteId = null
-        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
+        val noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
         noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
@@ -72,28 +64,14 @@ class NoteViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `verify new note state is loaded when note ID has default value`() {
-        // Given
-        val noteId = 0L
-        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
-        noteViewModel.viewState.observeForever(testViewStateObserver)
-
-        // When
-
-        // Then
-        val expectedViewState = NoteViewState.NewNoteViewState
-        verify(testViewStateObserver, times(1)).onChanged(expectedViewState)
-    }
-
-    @Test
-    fun `verify that error message is shown when an error occurred while loading note`() {
+    fun `verify that error message shown when an error occurred while loading note`() = runCoroutineTest {
         // Given
         val noteId = 10L
+        whenever(noteUseCase.getNoteById(noteId)).thenThrow(NullPointerException())
+        val noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
+        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(noteUseCase.getNoteById(noteId)).thenReturn(Single.error(NullPointerException()))
-        noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
-        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
@@ -104,16 +82,16 @@ class NoteViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `verify that screen will be close by view command after note saving`() {
+    fun `verify that screen will close by view command after note saving`() = runCoroutineTest {
         // Given
-        val noteId = 0L
         val noteName = "Test title"
         val noteContent = "Content"
+        whenever(noteMapper.createNote(testNoteId, noteName, noteContent)).thenReturn(note)
+        whenever(noteUseCase.getNoteById(testNoteId)).thenReturn(note)
+        val noteViewModel = NoteViewModel(testNoteId, noteUseCase, noteMapper)
         noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(noteMapper.createNote(noteId, noteName, noteContent)).thenReturn(note)
-        whenever(noteUseCase.saveNote(note)).thenReturn(Completable.complete())
         noteViewModel.onSaveButtonClick(noteName, noteContent)
 
         // Then
@@ -124,16 +102,17 @@ class NoteViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `verify that error message is shown when an error occurred while note saving`() {
+    fun `verify that error message is shown when an error occurred while note saving`() = runCoroutineTest {
         // Given
-        val noteId = 0L
         val noteName = "Test title"
         val noteContent = "Content"
+        whenever(noteMapper.createNote(testNoteId, noteName, noteContent)).thenReturn(note)
+        whenever(noteUseCase.getNoteById(testNoteId)).thenReturn(note)
+        whenever(noteUseCase.saveNote(note)).thenThrow(NullPointerException())
+        val noteViewModel = NoteViewModel(testNoteId, noteUseCase, noteMapper)
         noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(noteMapper.createNote(noteId, noteName, noteContent)).thenReturn(note)
-        whenever(noteUseCase.saveNote(note)).thenReturn(Completable.error(NullPointerException()))
         noteViewModel.onSaveButtonClick(noteName, noteContent)
 
         // Then

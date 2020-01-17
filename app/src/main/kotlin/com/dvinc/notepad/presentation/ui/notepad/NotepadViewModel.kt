@@ -6,7 +6,6 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.safeLaunch
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -32,21 +31,21 @@ class NotepadViewModel @Inject constructor(
         loadNotes()
     }
 
-    fun onNoteItemClick(note: NoteUi) {
-        val openNoteScreenCommand = OpenNoteScreen(noteId = note.id)
+    fun onNoteItemClick(noteId: Long) {
+        val openNoteScreenCommand = OpenNoteScreen(noteId = noteId)
         viewCommands.onNext(openNoteScreenCommand)
     }
 
-    fun onNoteDelete(note: NoteUi) {
+    fun onNoteDelete(noteId: Long) {
         viewModelScope.safeLaunch(
             launchBlock = {
-                notepadUseCase.deleteNote(note.id)
+                notepadUseCase.deleteNote(noteId)
             },
             onSuccess = {
                 showMessage(R.string.note_successfully_deleted)
             },
             onError = {
-                showMessage(R.string.error_while_deleting_note)
+                showErrorMessage(R.string.error_while_deleting_note)
                 Timber.tag(TAG).e(it)
             }
         )

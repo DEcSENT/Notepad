@@ -6,41 +6,41 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
 import androidx.lifecycle.Observer
+import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
-import com.dvinc.notepad.presentation.ui.ViewModelTest
 import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ShowMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.Completable
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.flow
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import java.util.*
 
-class NotepadViewModelTest : ViewModelTest() {
+class NotepadViewModelTest : CoroutinesTest() {
 
     private lateinit var notepadViewModel: NotepadViewModel
 
-    private var noteMapper: NotePresentationMapper = mock()
+    private var noteMapper: NotePresentationMapper = mock {
+        on { fromDomainToUi(emptyList()) } doReturn emptyList()
+    }
 
     private var testViewStateObserver: Observer<NotepadViewState> = mock()
 
     private var testViewCommandObserver: Observer<LinkedList<ViewCommand>> = mock()
 
-    private var notepadUseCase: NotepadUseCase = mock() {
-        on { getNotes() } doReturn Flowable.just(emptyList())
+    private var notepadUseCase: NotepadUseCase = mock {
+        on { getNotes() } doReturn flow { emit(emptyList()) }
     }
 
     @Before
@@ -49,30 +49,30 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `verify that Content state has empty list when empty notes list returned from repository`() {
+    fun `verify that Content state has empty list when empty notes list returned from repository`() = runCoroutineTest {
         // Given
+        whenever(notepadUseCase.getNotes()).thenReturn(flow { emit(emptyList()) })
+        val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
         notepadViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
 
         // Then
-        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState(emptyList(), true))
+        verify(testViewStateObserver).onChanged(NotepadViewState(emptyList(), true))
     }
 
     @Test
-    fun `verify that state has Content when notes list returned from repository`() {
+    fun `verify that state has Content when notes list returned from repository`() = runCoroutineTest {
         // Given
-        val notesList = getNotesList()
-        val noteUiList = getNotesUiList()
-
-        // When
-        whenever(notepadUseCase.getNotes()).thenReturn(Flowable.just(notesList))
-        whenever(noteMapper.fromDomainToUi(notesList)).thenReturn(noteUiList)
-        notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
+        whenever(notepadUseCase.getNotes()).thenReturn(flow { emit(getNotesList()) })
+        whenever(noteMapper.fromDomainToUi(getNotesList())).thenReturn(getNotesUiList())
+        val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
         notepadViewModel.viewState.observeForever(testViewStateObserver)
 
+        // When
+
         // Then
-        verify(testViewStateObserver, times(1)).onChanged(NotepadViewState(noteUiList, noteUiList.isEmpty()))
+        verify(testViewStateObserver).onChanged(NotepadViewState(getNotesUiList(), false))
     }
 
     @Test
@@ -81,7 +81,7 @@ class NotepadViewModelTest : ViewModelTest() {
         val noteUi = NoteUi(100L, "test", "content", "21.12")
 
         // When
-        notepadViewModel.onNoteItemClick(noteUi)
+        notepadViewModel.onNoteItemClick(noteUi.id)
 
         // Then
         val expectedListWithSingleCommand = ViewCommandUtil.createViewCommandList(
@@ -92,14 +92,13 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show successful message after note deleting`() {
+    fun `show successful message after note deleting`() = runCoroutineTest {
         // Given
-        val noteUi = NoteUi(100L, "test", "content", "21.12")
+        val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
         notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(notepadUseCase.deleteNote(noteUi.id)).thenReturn(Completable.complete())
-        notepadViewModel.onNoteDelete(noteUi)
+        notepadViewModel.onNoteDelete(10L)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
@@ -110,14 +109,14 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `show error message when an error occurred while note deleting`() {
+    fun `show error message when an error occurred while note deleting`() = runCoroutineTest {
         // Given
         val noteUi = NoteUi(100L, "test", "content", "21.12")
+        whenever(notepadUseCase.deleteNote(noteUi.id)).thenThrow(IllegalStateException())
         notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
-        whenever(notepadUseCase.deleteNote(noteUi.id)).thenReturn(Completable.error(IllegalStateException()))
-        notepadViewModel.onNoteDelete(noteUi)
+        notepadViewModel.onNoteDelete(noteUi.id)
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
@@ -128,13 +127,13 @@ class NotepadViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun  `show error message when an error occurred while notes loading`() {
+    fun `show error message when an error occurred while notes loading`() = runCoroutineTest {
         // Given
-
-        // When
-        whenever(notepadUseCase.getNotes()).thenReturn(Flowable.error(NullPointerException()))
+        whenever(notepadUseCase.getNotes()).thenReturn(flow { throw NullPointerException() })
         notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
         notepadViewModel.viewCommands.observeForever(testViewCommandObserver)
+
+        // When
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
