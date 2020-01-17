@@ -20,7 +20,7 @@ Notepad application for fast and simple writing and interaction with notes.
 ### Libraries
 
 - Dagger 2 + Dagger Assisted Inject
-- RxJava 2
+- ~~RxJava 2~~ Kotlin Coroutines
 - Room
 - Stetho
 - Android X
@@ -44,7 +44,6 @@ Notepad application for fast and simple writing and interaction with notes.
 
 - Note tags
 - Notes archive
-- Coroutines (possible)
 - UI tests
 - Fingerprint
 - Security
@@ -61,7 +60,7 @@ Notepad application for fast and simple writing and interaction with notes.
 
 MIT License
 
-Copyright (c) 2018 - 2019 Denis Verentsov
+Copyright (c) 2018 - 2020 Denis Verentsov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
