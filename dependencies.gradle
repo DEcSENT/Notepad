@@ -73,7 +73,9 @@ ext{
 
             android_arch_core_testing = "androidx.arch.core:core-testing:$android_arch_core_testing_version",
 
-            kotlin_mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlin_mockito_version"
+            kotlin_mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlin_mockito_version",
+
+            coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     ]
 
     androidTestDependencies = [
