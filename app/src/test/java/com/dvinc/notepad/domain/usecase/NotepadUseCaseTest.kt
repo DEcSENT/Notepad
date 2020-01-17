@@ -1,64 +1,47 @@
 package com.dvinc.notepad.domain.usecase
 
-import com.dvinc.notepad.domain.TestThreadScheduler
+import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
-import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import io.reactivex.Completable
-import io.reactivex.Flowable
+import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.Mockito.verify
 
-class NotepadUseCaseTest {
+class NotepadUseCaseTest : CoroutinesTest() {
 
     private lateinit var notepadUseCase: NotepadUseCase
 
     private var note: Note = mock()
 
-    private var noteList: List<Note> = listOf(note, note)
-
-    private var noteRepository: NoteRepository = mock() {
-        on { getNotes() }.doReturn(Flowable.just(noteList))
-        on { deleteNoteById(anyLong()) }.doReturn(Completable.complete())
-    }
-
-    private val testScheduler = TestThreadScheduler()
+    private var noteRepository: NoteRepository = mock()
 
     @Before
     fun setUp() {
-        notepadUseCase = NotepadUseCase(noteRepository, testScheduler)
+        notepadUseCase = NotepadUseCase(noteRepository)
     }
 
     @Test
-    fun getNotes() {
+    fun `getNotes test`() = runCoroutineTest{
+        // Given
+
+        // When
         notepadUseCase.getNotes()
-        verify(noteRepository, times(1)).getNotes()
+
+        // Then
+        verify(noteRepository).getNotes()
     }
 
     @Test
-    fun `check correct result from getNotes()`() {
-        notepadUseCase.getNotes()
-            .test()
-            .assertNoErrors()
-            .assertValue(noteList)
-    }
+    fun `deleteNote test`() = runCoroutineTest{
+        // Given
+        val noteId = 10L
 
-    @Test
-    fun deleteNote() {
-        notepadUseCase.deleteNote(anyLong())
-        verify(noteRepository, times(1)).deleteNoteById(anyLong())
-    }
+        // When
+        notepadUseCase.deleteNote(noteId)
 
-    @Test
-    fun `check correct result from deleteNote()`() {
-        notepadUseCase.deleteNote(anyLong())
-            .test()
-            .assertNoErrors()
-            .assertComplete()
+        // Then
+        verify(noteRepository).deleteNoteById(noteId)
     }
 }
