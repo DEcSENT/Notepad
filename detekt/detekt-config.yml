@@ -533,6 +533,6 @@ style:
   VarCouldBeVal:
     active: false
   WildcardImport:
-    active: false
+    active: true
     excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
     excludeImports: 'java.util.*,kotlinx.android.synthetic.*'

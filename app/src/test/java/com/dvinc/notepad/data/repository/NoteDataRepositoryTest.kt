@@ -63,7 +63,7 @@ class NoteDataRepositoryTest : CoroutinesTest() {
     }
 
     @Test
-    fun `when delete note called then call dao with same note id`()  = runCoroutineTest {
+    fun `when delete note called then call dao with same note id`() = runCoroutineTest {
         // Given
         val noteId = 10L
 

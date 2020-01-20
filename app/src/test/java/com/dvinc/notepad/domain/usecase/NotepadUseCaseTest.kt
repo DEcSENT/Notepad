@@ -23,7 +23,7 @@ class NotepadUseCaseTest : CoroutinesTest() {
     }
 
     @Test
-    fun `getNotes test`() = runCoroutineTest{
+    fun `getNotes test`() = runCoroutineTest {
         // Given
 
         // When
@@ -34,7 +34,7 @@ class NotepadUseCaseTest : CoroutinesTest() {
     }
 
     @Test
-    fun `deleteNote test`() = runCoroutineTest{
+    fun `deleteNote test`() = runCoroutineTest {
         // Given
         val noteId = 10L
 
