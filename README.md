@@ -33,12 +33,13 @@ Notepad application for fast and simple writing and interaction with notes.
 
 ### Other
 
-- Travis CI
+- Dark theme
 - Unit tests
+- Travis CI
 - Code coverage
 - Codebeat static analysis
 - Detekt checks on every CI build
-- Dark theme
+- Spotless plugin (manual run)
 
 ### What next
 
