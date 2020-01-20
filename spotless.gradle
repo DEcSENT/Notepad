@@ -1,0 +1,15 @@
+apply plugin: "com.diffplug.gradle.spotless"
+
+ext {
+    ktlintVersion = "0.30.0"
+}
+
+spotless {
+    kotlin {
+        target '**/*.kt'
+        ktlint(ktlintVersion)
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
