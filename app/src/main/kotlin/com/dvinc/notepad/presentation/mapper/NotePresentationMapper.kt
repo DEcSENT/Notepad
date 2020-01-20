@@ -13,6 +13,10 @@ import javax.inject.Inject
 
 class NotePresentationMapper @Inject constructor() {
 
+    companion object {
+        private const val DEFAULT_NOTE_ID = 0L
+    }
+
     private val sdfToday = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     private val sdfWeek = SimpleDateFormat("d MMM", Locale.getDefault())
@@ -24,12 +28,13 @@ class NotePresentationMapper @Inject constructor() {
     }
 
     fun createNote(
-        noteId: Long,
+        noteId: Long?,
         name: String,
         content: String
     ): Note {
+        val id = noteId ?: DEFAULT_NOTE_ID
         return Note(
-            id = noteId,
+            id = id,
             name = name,
             content = content,
             updateTime = System.currentTimeMillis()

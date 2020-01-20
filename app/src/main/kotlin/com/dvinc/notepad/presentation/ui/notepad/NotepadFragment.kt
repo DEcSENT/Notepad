@@ -40,12 +40,12 @@ class NotepadFragment : BaseFragment() {
 
     private val noteItemClickListener = object : NotepadAdapter.ItemClickListener {
         override fun onItemClick(note: NoteUi) {
-            viewModel.onNoteItemClick(note)
+            viewModel.onNoteItemClick(note.id)
         }
     }
 
     private val noteItemSwipeListener: (note: NoteUi) -> Unit = {
-        viewModel.onNoteDelete(it)
+        viewModel.onNoteDelete(it.id)
     }
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad

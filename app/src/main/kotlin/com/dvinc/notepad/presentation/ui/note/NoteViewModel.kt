@@ -6,8 +6,10 @@
 package com.dvinc.notepad.presentation.ui.note
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.onNext
+import com.dvinc.notepad.common.extension.safeLaunch
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.base.BaseViewModel
@@ -15,19 +17,16 @@ import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewStat
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import io.reactivex.Single
 import timber.log.Timber
 
-//TODO(dv): refactor all of this
 class NoteViewModel @AssistedInject constructor(
-    @Assisted noteId: Long?,
+    @Assisted private val noteId: Long?,
     private val noteUseCase: NoteUseCase,
     private val noteMapper: NotePresentationMapper
 ) : BaseViewModel() {
 
     companion object {
         private const val TAG = "NoteViewModel"
-        private const val DEFAULT_NOTE_ID = 0L
     }
 
     val viewState = MutableLiveData<NoteViewState>()
@@ -37,57 +36,43 @@ class NoteViewModel @AssistedInject constructor(
     }
 
     private fun initNote(noteId: Long?) {
-        // No need to load note if we have one
-        if (viewState.value != null) return
-        val viewStateSource = if (noteId != null && noteId != DEFAULT_NOTE_ID) {
-            getNoteSource(noteId)
-        } else {
-            getNewNoteSource()
-        }
-        viewStateSource
-            .subscribe(
-                {
-                    viewState.onNext(it)
-                },
-                {
-                    Timber.tag(TAG).e(it)
-                    showErrorMessage(R.string.error_while_loading_note)
+        viewModelScope.safeLaunch<NoteViewState>(
+            launchBlock = {
+                val noteViewState = if (noteId == null) {
+                    NewNoteViewState
+                } else {
+                    val note = noteUseCase.getNoteById(noteId)
+                    ExistingNoteViewState(note)
                 }
-            )
-            .disposeOnViewModelDestroy()
+                noteViewState
+            },
+            onSuccess = {
+                viewState.onNext(it)
+            },
+            onError = {
+                Timber.tag(TAG).e(it)
+                showErrorMessage(R.string.error_while_loading_note)
+            }
+        )
     }
 
     fun onSaveButtonClick(
         noteName: String,
         noteContent: String
     ) {
-        val noteId = getCurrentNoteId()
-        val note = noteMapper.createNote(noteId, noteName, noteContent)
-        noteUseCase.saveNote(note)
-            .subscribe(
-                {
-                    viewCommands.onNext(CloseNoteScreen)
-                },
-                {
-                    showErrorMessage(R.string.error_while_adding_note)
-                    Timber.tag(TAG).e(it)
-                }
-            )
-            .disposeOnViewModelDestroy()
-    }
-
-    private fun getNewNoteSource(): Single<NewNoteViewState> {
-        return Single.just(NewNoteViewState)
-    }
-
-    private fun getNoteSource(noteId: Long): Single<ExistingNoteViewState> {
-        return noteUseCase.getNoteById(noteId).map {
-            ExistingNoteViewState(it)
-        }
-    }
-
-    private fun getCurrentNoteId(): Long {
-        return (viewState.value as? ExistingNoteViewState)?.note?.id ?: DEFAULT_NOTE_ID
+        viewModelScope.safeLaunch(
+            launchBlock = {
+                val note = noteMapper.createNote(noteId, noteName, noteContent)
+                noteUseCase.saveNote(note)
+            },
+            onSuccess = {
+                viewCommands.onNext(CloseNoteScreen)
+            },
+            onError = {
+                showErrorMessage(R.string.error_while_adding_note)
+                Timber.tag(TAG).e(it)
+            }
+        )
     }
 
     @AssistedInject.Factory

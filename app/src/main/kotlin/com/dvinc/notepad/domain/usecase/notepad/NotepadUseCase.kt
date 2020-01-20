@@ -7,26 +7,20 @@
 
 package com.dvinc.notepad.domain.usecase.notepad
 
-import com.dvinc.notepad.common.execution.ThreadScheduler
-import com.dvinc.notepad.common.execution.scheduleIoToUi
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
-import io.reactivex.Completable
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NotepadUseCase @Inject constructor(
-        private val noteRepository: NoteRepository,
-        private val scheduler: ThreadScheduler
+    private val noteRepository: NoteRepository
 ) {
 
-    fun getNotes(): Flowable<List<Note>> {
+    fun getNotes(): Flow<List<Note>> {
         return noteRepository.getNotes()
-                .scheduleIoToUi(scheduler)
     }
 
-    fun deleteNote(noteId: Long): Completable {
-        return noteRepository.deleteNoteById(noteId)
-                .scheduleIoToUi(scheduler)
+    suspend fun deleteNote(noteId: Long) {
+        noteRepository.deleteNoteById(noteId)
     }
 }

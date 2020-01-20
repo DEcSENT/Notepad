@@ -10,20 +10,20 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dvinc.notepad.data.database.entity.note.NoteEntity
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addNote(note: NoteEntity)
+    suspend fun addNote(note: NoteEntity)
 
     @Query("SELECT * FROM Notes ORDER BY id DESC")
-    fun getNotes(): Flowable<List<NoteEntity>>
+    fun getNotes(): Flow<List<NoteEntity>>
 
     @Query("DELETE FROM Notes WHERE id = :id")
-    fun deleteNoteById(id: Long)
+    suspend fun deleteNoteById(id: Long)
 
     @Query("SELECT * FROM Notes WHERE id = :id")
-    fun getNoteById(id: Long): NoteEntity
+    suspend fun getNoteById(id: Long): NoteEntity
 }

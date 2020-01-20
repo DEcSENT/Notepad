@@ -1,21 +1,22 @@
 package com.dvinc.notepad.data.repository
 
+import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.data.database.dao.note.NoteDao
 import com.dvinc.notepad.data.database.entity.note.NoteEntity
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.note.NoteDataRepository
 import com.dvinc.notepad.domain.model.note.Note
-import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import io.reactivex.Flowable
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 
-class NoteDataRepositoryTest {
+class NoteDataRepositoryTest : CoroutinesTest() {
 
-    private lateinit var repository: NoteDataRepository
+    private lateinit var noteRepository: NoteDataRepository
 
     private var noteEntity: NoteEntity = mock()
 
@@ -25,99 +26,65 @@ class NoteDataRepositoryTest {
 
     private var noteList: List<Note> = listOf(note)
 
-    private val testNoteId = 100L
+    private var noteDao: NoteDao = mock()
 
-    private var noteDao: NoteDao = mock() {
-        on { getNoteById(testNoteId) }.doReturn(noteEntity)
-        on { getNotes() }.doReturn(Flowable.just(entityList))
-    }
-
-    private var noteMapper: NoteDataMapper = mock() {
-        on { fromEntityToDomain(noteEntity) }.doReturn(note)
-        on { fromDomainToEntity(note) }.doReturn(noteEntity)
-        on { fromEntityToDomain(entityList) }.doReturn(noteList)
-    }
+    private var noteMapper: NoteDataMapper = mock()
 
     @Before
     fun setUp() {
-        repository = NoteDataRepository(noteDao, noteMapper)
+        noteRepository = NoteDataRepository(noteDao, noteMapper)
     }
 
     @Test
-    fun getNotes() {
-        repository.getNotes()
-                .test()
-                .assertNoErrors()
-                .assertValue(noteList)
-    }
-
-    @Test
-    fun `verify noteMapper was called once when noteDao returned notes list`() {
+    fun `when dao returned entities list then flow emits notes list`() = runCoroutineTest {
         // Given
+        whenever(noteDao.getNotes()).thenReturn(flow { emit(entityList) })
+        whenever(noteMapper.fromEntityToDomain(entityList)).thenReturn(noteList)
 
         // When
-        repository.getNotes().test()
+        val flow = noteRepository.getNotes()
 
         // Then
-        verify(noteMapper, times(1)).fromEntityToDomain(entityList)
+        flow.collect { flowEmit ->
+            assert(flowEmit == noteList)
+        }
     }
 
     @Test
-    fun addNote() {
-        repository.addNote(note)
-                .test()
-                .assertNoErrors()
-                .assertComplete()
-    }
-
-    @Test
-    fun `verify noteMapper was called once when adding new note`() {
+    fun `when add note called then call dao`() = runCoroutineTest {
         // Given
+        whenever(noteMapper.fromDomainToEntity(note)).thenReturn(noteEntity)
 
         // When
-        repository.addNote(note).test()
+        noteRepository.addNote(note)
 
         // Then
-        verify(noteMapper, times(1)).fromDomainToEntity(note)
+        verify(noteDao).addNote(noteEntity)
     }
 
     @Test
-    fun deleteNoteById() {
-        repository.deleteNoteById(0)
-                .test()
-                .assertNoErrors()
-                .assertComplete()
-    }
-
-    @Test
-    fun `verify noteDao was called when deleting note by id`() {
+    fun `when delete note called then call dao with same note id`()  = runCoroutineTest {
         // Given
         val noteId = 10L
 
         // When
-        repository.deleteNoteById(noteId).test()
+        noteRepository.deleteNoteById(noteId)
 
         // Then
-        verify(noteDao, times(1)).deleteNoteById(noteId)
+        verify(noteDao).deleteNoteById(noteId)
     }
 
     @Test
-    fun getNoteById() {
-        repository.getNoteById(testNoteId)
-                .test()
-                .assertNoErrors()
-                .assertValue(note)
-    }
-
-    @Test
-    fun `verify noteMapper and noteDao were called once when requesting note by id`() {
+    fun `when get note called then return correct note`() = runCoroutineTest {
         // Given
+        val noteId = 10L
+        whenever(noteDao.getNoteById(noteId)).thenReturn(noteEntity)
+        whenever(noteMapper.fromEntityToDomain(noteEntity)).thenReturn(note)
 
         // When
-        repository.getNoteById(testNoteId).test()
+        val resultNote = noteRepository.getNoteById(noteId)
 
         // Then
-        verify(noteDao, times(1)).getNoteById(testNoteId)
-        verify(noteMapper, times(1)).fromEntityToDomain(noteEntity)
+        assert(resultNote == note)
     }
 }
