@@ -7,7 +7,7 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import com.dvinc.notepad.presentation.model.NoteUi
 
-data class NotepadViewState (
+data class NotepadViewState(
     val notes: List<NoteUi> = emptyList(),
     val isStubViewVisible: Boolean = false
 )

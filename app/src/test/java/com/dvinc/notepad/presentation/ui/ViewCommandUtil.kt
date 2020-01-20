@@ -1,7 +1,7 @@
 package com.dvinc.notepad.presentation.ui
 
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
-import java.util.*
+import java.util.LinkedList
 
 object ViewCommandUtil {
 

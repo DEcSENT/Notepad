@@ -103,7 +103,7 @@ class NotepadFragment : BaseFragment() {
         bottomBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fragment_notepad_filter_menu_item -> {
-                    //TODO(dv): handle filter click
+                    // TODO(dv): handle filter click
                 }
             }
             true
