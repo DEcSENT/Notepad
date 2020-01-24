@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply from: rootProject.file('dependencies.gradle')
 apply from: rootProject.file('versions.gradle')
 apply from: rootProject.file('jacoco.gradle')
+apply from: rootProject.file('spotless.gradle')
 
 android {
     compileSdkVersion versions.compileSdk

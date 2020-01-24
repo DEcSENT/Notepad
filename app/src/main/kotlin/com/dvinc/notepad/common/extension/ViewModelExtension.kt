@@ -6,10 +6,15 @@
 package com.dvinc.notepad.common.extension
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.dvinc.notepad.presentation.ui.base.CommandsLiveData
-import java.util.*
+import java.util.LinkedList
 
 fun <T> MutableLiveData<T>.onNext(next: T) {
     this.value = next

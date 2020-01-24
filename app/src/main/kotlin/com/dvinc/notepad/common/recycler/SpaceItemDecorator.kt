@@ -12,7 +12,8 @@ class SpaceItemDecorator(
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
-        outRect: Rect, view: View,
+        outRect: Rect,
+        view: View,
         parent: RecyclerView,
         state: RecyclerView.State
     ) {

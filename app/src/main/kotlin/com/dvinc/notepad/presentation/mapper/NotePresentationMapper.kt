@@ -8,7 +8,9 @@ package com.dvinc.notepad.presentation.mapper
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.presentation.model.NoteUi
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class NotePresentationMapper @Inject constructor() {
@@ -57,12 +59,12 @@ class NotePresentationMapper @Inject constructor() {
         val currentCalendar = Calendar.getInstance()
         currentCalendar.time = Date(time)
 
-        return if (calendar.get(Calendar.DAY_OF_YEAR) == currentCalendar.get(Calendar.DAY_OF_YEAR)
-            && calendar.get(Calendar.DAY_OF_WEEK) == currentCalendar.get(Calendar.DAY_OF_WEEK)
+        return if (calendar.get(Calendar.DAY_OF_YEAR) == currentCalendar.get(Calendar.DAY_OF_YEAR) &&
+            calendar.get(Calendar.DAY_OF_WEEK) == currentCalendar.get(Calendar.DAY_OF_WEEK)
         ) {
             sdfToday.format(time)
-        } else if (calendar.get(Calendar.DAY_OF_YEAR) != currentCalendar.get(Calendar.DAY_OF_YEAR)
-            && calendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)
+        } else if (calendar.get(Calendar.DAY_OF_YEAR) != currentCalendar.get(Calendar.DAY_OF_YEAR) &&
+            calendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)
         ) {
             sdfWeek.format(time)
         } else {

@@ -24,7 +24,6 @@ class NotepadSwipeToDeleteCallback(
 
     private val deletedItemBackground = ColorDrawable(Color.RED)
 
-
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,

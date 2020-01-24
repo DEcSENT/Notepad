@@ -1,7 +1,7 @@
 package com.dvinc.notepad.presentation.ui.base
 
 import androidx.lifecycle.MutableLiveData
-import java.util.*
+import java.util.LinkedList
 
 class CommandsLiveData<T> : MutableLiveData<LinkedList<T>>() {
 

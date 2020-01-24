@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class NoteDataRepository @Inject constructor(
-        private val noteDao: NoteDao,
-        private val noteMapper: NoteDataMapper
+    private val noteDao: NoteDao,
+    private val noteMapper: NoteDataMapper
 ) : NoteRepository {
 
     override fun getNotes(): Flow<List<Note>> {

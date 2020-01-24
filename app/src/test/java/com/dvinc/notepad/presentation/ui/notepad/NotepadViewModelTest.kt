@@ -25,7 +25,7 @@ import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.verify
-import java.util.*
+import java.util.LinkedList
 
 class NotepadViewModelTest : CoroutinesTest() {
 
