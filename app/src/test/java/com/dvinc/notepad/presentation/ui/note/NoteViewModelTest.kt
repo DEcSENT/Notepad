@@ -5,23 +5,21 @@
 
 package com.dvinc.notepad.presentation.ui.note
 
-import androidx.lifecycle.Observer
-import com.dvinc.notepad.CoroutinesTest
+import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.notepad.presentation.ui.getOrAwaitValue
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.util.LinkedList
 
-class NoteViewModelTest : CoroutinesTest() {
+class NoteViewModelTest : BaseTest() {
 
     private val testNoteId = 10L
 
@@ -31,22 +29,18 @@ class NoteViewModelTest : CoroutinesTest() {
 
     private val noteUseCase: NoteUseCase = mock()
 
-    private val testViewStateObserver: Observer<NoteViewState> = mock()
-
-    private val testViewCommandObserver: Observer<LinkedList<ViewCommand>> = mock()
-
     @Test
-    fun `verify that existing note state is set`() = runCoroutineTest {
+    fun `verify that existing note state is set`() = runBlocking {
         // Given
         whenever(noteUseCase.getNoteById(testNoteId)).thenReturn(note)
         val noteViewModel = NoteViewModel(testNoteId, noteUseCase, noteMapper)
-        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
 
         // Then
+        val resultViewState = noteViewModel.viewState.getOrAwaitValue()
         val expectedViewState = NoteViewState.ExistingNoteViewState(note)
-        verify(testViewStateObserver, times(1)).onChanged(expectedViewState)
+        assertEquals(resultViewState, expectedViewState)
     }
 
     @Test
@@ -54,55 +48,54 @@ class NoteViewModelTest : CoroutinesTest() {
         // Given
         val noteId = null
         val noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
-        noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
 
         // Then
+        val resultViewState = noteViewModel.viewState.getOrAwaitValue()
         val expectedViewState = NoteViewState.NewNoteViewState
-        verify(testViewStateObserver, times(1)).onChanged(expectedViewState)
+        assertEquals(resultViewState, expectedViewState)
     }
 
     @Test
-    fun `verify that error message shown when an error occurred while loading note`() = runCoroutineTest {
+    fun `verify that error message shown when an error occurred while loading note`() = runBlocking {
         // Given
         val noteId = 10L
         whenever(noteUseCase.getNoteById(noteId)).thenThrow(NullPointerException())
         val noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
-        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
 
         // Then
+        val resultViewCommandList = noteViewModel.viewCommands.getOrAwaitValue()
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
             ShowErrorMessage(R.string.error_while_loading_note)
         )
-
-        verify(testViewCommandObserver).onChanged(expectedViewCommandList)
+        assertEquals(resultViewCommandList, expectedViewCommandList)
     }
 
     @Test
-    fun `verify that screen will close by view command after note saving`() = runCoroutineTest {
+    fun `verify that screen will close by view command after note saving`() = runBlocking {
         // Given
         val noteName = "Test title"
         val noteContent = "Content"
         whenever(noteMapper.createNote(testNoteId, noteName, noteContent)).thenReturn(note)
         whenever(noteUseCase.getNoteById(testNoteId)).thenReturn(note)
         val noteViewModel = NoteViewModel(testNoteId, noteUseCase, noteMapper)
-        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         noteViewModel.onSaveButtonClick(noteName, noteContent)
 
         // Then
+        val resultViewCommandList = noteViewModel.viewCommands.getOrAwaitValue()
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
             CloseNoteScreen
         )
-        verify(testViewCommandObserver).onChanged(expectedViewCommandList)
+        assertEquals(resultViewCommandList, expectedViewCommandList)
     }
 
     @Test
-    fun `verify that error message is shown when an error occurred while note saving`() = runCoroutineTest {
+    fun `verify that error message is shown when an error occurred while note saving`() = runBlocking {
         // Given
         val noteName = "Test title"
         val noteContent = "Content"
@@ -110,15 +103,15 @@ class NoteViewModelTest : CoroutinesTest() {
         whenever(noteUseCase.getNoteById(testNoteId)).thenReturn(note)
         whenever(noteUseCase.saveNote(note)).thenThrow(NullPointerException())
         val noteViewModel = NoteViewModel(testNoteId, noteUseCase, noteMapper)
-        noteViewModel.viewCommands.observeForever(testViewCommandObserver)
 
         // When
         noteViewModel.onSaveButtonClick(noteName, noteContent)
 
         // Then
+        val resultViewCommandList = noteViewModel.viewCommands.getOrAwaitValue()
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
             ShowErrorMessage(R.string.error_while_adding_note)
         )
-        verify(testViewCommandObserver).onChanged(expectedViewCommandList)
+        assertEquals(resultViewCommandList, expectedViewCommandList)
     }
 }
