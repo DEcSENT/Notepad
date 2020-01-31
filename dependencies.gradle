@@ -13,6 +13,7 @@ def junit_version = '4.12'
 def mockito_core_version = '2.18.0'
 def kotlin_mockito_version = '2.1.0'
 def android_arch_core_testing_version = '2.0.1'
+def test_rules_version = '1.2.0'
 
 def stetho_version = '1.5.0'
 def timber_version = '4.7.1'
@@ -73,6 +74,8 @@ ext{
     androidTestDependencies = [
             test_runner =  "com.android.support.test:runner:$test_runner_version",
 
-            espresso_core =  "com.android.support.test.espresso:espresso-core:$espresso_core_version"
+            espresso_core =  "com.android.support.test.espresso:espresso-core:$espresso_core_version",
+
+            test_rules =  "androidx.test:rules:$test_rules_version"
     ]
 }
