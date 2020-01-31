@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dvinc.notepad">
+    package="com.dvinc.notepad"
+    android:sharedUserId="com.dvinc.notepad.uid">
+<!--    The line above is important for Shot plugin - it must be the same as in Manifest at androidTest folder. -->
 
     <application
         android:name=".NotepadApplication"

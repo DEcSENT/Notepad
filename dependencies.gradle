@@ -76,6 +76,8 @@ ext{
 
             espresso_core =  "com.android.support.test.espresso:espresso-core:$espresso_core_version",
 
-            test_rules =  "androidx.test:rules:$test_rules_version"
+            test_rules =  "androidx.test:rules:$test_rules_version",
+
+            kotlin_mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlin_mockito_version"
     ]
 }

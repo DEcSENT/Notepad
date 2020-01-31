@@ -18,7 +18,9 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode versions.code
         versionName versions.name
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "com.dvinc.notepad.ScreenshotTestRunner"
+
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
