@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
+apply plugin: 'shot'
+
 apply from: rootProject.file('dependencies.gradle')
 apply from: rootProject.file('versions.gradle')
 apply from: rootProject.file('jacoco.gradle')
@@ -15,13 +18,16 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode versions.code
         versionName versions.name
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "com.dvinc.notepad.ScreenshotTestRunner"
+
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         debug {
             minifyEnabled false
-            applicationIdSuffix '.debug'
+            // This line may produce Shot error when he tries download screenshots
+            //applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -53,4 +59,11 @@ dependencies {
     kapt(librariesAnnotaionProcessors)
 
     implementation(appDependencies)
+
+    // Fix for: Generated not found *javax.annotation.processing.Generated*
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+}
+
+shot {
+    appId = 'com.dvinc.notepad'
 }
