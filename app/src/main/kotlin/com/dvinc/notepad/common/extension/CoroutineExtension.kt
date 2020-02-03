@@ -15,8 +15,7 @@ fun CoroutineScope.safeLaunch(
 ) {
     launch {
         try {
-            // .invoke() doesn't work here: https://youtrack.jetbrains.com/issue/KT-31269
-            launchBlock()
+            launchBlock.invoke()
             onSuccess.invoke()
         } catch (t: Throwable) {
             onError.invoke(t)
@@ -31,7 +30,7 @@ fun <T> CoroutineScope.safeLaunch(
 ) {
     launch {
         try {
-            val result = launchBlock()
+            val result = launchBlock.invoke()
             onSuccess.invoke(result)
         } catch (t: Throwable) {
             onError.invoke(t)

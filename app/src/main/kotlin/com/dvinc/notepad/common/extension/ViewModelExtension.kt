@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.dvinc.notepad.presentation.ui.base.CommandsLiveData
 import java.util.LinkedList
 
@@ -59,6 +58,6 @@ inline fun <reified VM : ViewModel> Fragment.createViewModel(
         @Suppress("UNCHECKED_CAST")
         override fun <VM : ViewModel> create(modelClass: Class<VM>) = viewModelProducer() as VM
     }
-    val viewModelProvider = ViewModelProviders.of(this, factory)
+    val viewModelProvider = ViewModelProvider(this, factory)
     return viewModelProvider[VM::class.java]
 }
