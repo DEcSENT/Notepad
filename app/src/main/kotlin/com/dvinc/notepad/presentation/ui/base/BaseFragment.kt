@@ -15,9 +15,9 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import com.dvinc.core.snackbar.SnackbarFactory
 import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.snackbar.SnackbarFactory
 
 abstract class BaseFragment : Fragment(), BaseView {
 

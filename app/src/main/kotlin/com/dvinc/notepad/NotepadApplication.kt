@@ -8,7 +8,7 @@ package com.dvinc.notepad
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
-import com.dvinc.notepad.common.timber.ReleaseTree
+import com.dvinc.core.timber.ReleaseTree
 import com.dvinc.notepad.di.component.AppComponent
 import com.dvinc.notepad.di.component.DaggerAppComponent
 import com.dvinc.notepad.di.module.AppModule

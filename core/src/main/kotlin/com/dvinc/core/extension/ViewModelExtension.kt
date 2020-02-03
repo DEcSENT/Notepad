@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.common.extension
+package com.dvinc.core.extension
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dvinc.notepad.presentation.ui.base.CommandsLiveData
+import com.dvinc.core.ui.CommandsLiveData
 import java.util.LinkedList
 
 fun <T> MutableLiveData<T>.onNext(next: T) {

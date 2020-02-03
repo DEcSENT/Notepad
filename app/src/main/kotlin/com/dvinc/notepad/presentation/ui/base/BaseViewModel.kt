@@ -2,6 +2,7 @@ package com.dvinc.notepad.presentation.ui.base
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.dvinc.core.ui.CommandsLiveData
 
 abstract class BaseViewModel : ViewModel() {
 

@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.common.timber
+package com.dvinc.core.timber
 
 import android.util.Log
 import timber.log.Timber

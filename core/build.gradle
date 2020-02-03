@@ -32,6 +32,22 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    implementation(
+            deps.kotlin.stdlib,
+            deps.kotlin.coroutines,
+
+            deps.material.material,
+
+            deps.dagger.dagger,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.tools.timber
+    )
+
+    kapt(
+            deps.dagger.processor
+    )
 }

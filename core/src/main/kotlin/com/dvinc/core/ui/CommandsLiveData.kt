@@ -1,4 +1,4 @@
-package com.dvinc.notepad.presentation.ui.base
+package com.dvinc.core.ui
 
 import androidx.lifecycle.MutableLiveData
 import java.util.LinkedList

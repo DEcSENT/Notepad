@@ -10,10 +10,10 @@ import android.view.View
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dvinc.core.extension.observe
+import com.dvinc.core.extension.toggleGone
+import com.dvinc.core.recycler.SpaceItemDecorator
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.extension.observe
-import com.dvinc.notepad.common.extension.toggleGone
-import com.dvinc.notepad.common.recycler.SpaceItemDecorator
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi

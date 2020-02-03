@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.common.extension
+package com.dvinc.core.extension
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

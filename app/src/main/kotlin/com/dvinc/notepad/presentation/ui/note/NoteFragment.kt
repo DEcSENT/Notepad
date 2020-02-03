@@ -8,9 +8,9 @@ package com.dvinc.notepad.presentation.ui.note
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
+import com.dvinc.core.extension.observe
+import com.dvinc.core.extension.viewModels
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.extension.observe
-import com.dvinc.notepad.common.extension.viewModels
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand

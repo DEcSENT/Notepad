@@ -1,4 +1,4 @@
-package com.dvinc.notepad.common.snackbar
+package com.dvinc.core.snackbar
 
 import android.content.res.ColorStateList
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.dvinc.notepad.R
+import com.dvinc.core.R
 import com.google.android.material.snackbar.Snackbar
 
 object SnackbarFactory {

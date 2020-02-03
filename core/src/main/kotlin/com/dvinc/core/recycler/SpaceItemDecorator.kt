@@ -1,9 +1,9 @@
-package com.dvinc.notepad.common.recycler
+package com.dvinc.core.recycler
 
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.dvinc.notepad.common.extension.toPx
+import com.dvinc.core.extension.toPx
 
 class SpaceItemDecorator(
     private val bottomPadding: Int = 8,
