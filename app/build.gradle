@@ -45,13 +45,42 @@ android {
 }
 
 dependencies {
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(":core")
+
+    implementation(
+            deps.kotlin.stdlib,
+            deps.kotlin.coroutines,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.material.material,
+
+            deps.constraint.constraint,
+
+            deps.navigation.fragment,
+            deps.navigation.ui,
+
+            deps.dagger.dagger,
+            deps.dagger.assisted_inject,
+
+            deps.room.room,
+            deps.room.coroutines,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.tools.timber,
+            deps.tools.stetho
+    )
+
+    kapt(
+            deps.dagger.processor,
+            deps.dagger.assisted_inject_processor,
+            deps.room.processor
+    )
 
     testImplementation(testDependencies)
 
     androidTestImplementation(androidTestDependencies)
-
-    kapt(librariesAnnotaionProcessors)
-
-    implementation(appDependencies)
 }
