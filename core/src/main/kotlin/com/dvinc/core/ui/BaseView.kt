@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.base
+package com.dvinc.core.ui
 
 import android.view.View
 import androidx.annotation.StringRes

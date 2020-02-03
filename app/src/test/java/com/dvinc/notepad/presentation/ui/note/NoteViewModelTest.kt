@@ -6,14 +6,14 @@
 package com.dvinc.notepad.presentation.ui.note
 
 import androidx.lifecycle.Observer
+import com.dvinc.core.ui.ShowErrorMessage
+import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
-import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify

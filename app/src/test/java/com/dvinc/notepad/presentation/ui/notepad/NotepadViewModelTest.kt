@@ -6,6 +6,9 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
 import androidx.lifecycle.Observer
+import com.dvinc.core.ui.ShowErrorMessage
+import com.dvinc.core.ui.ShowMessage
+import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
@@ -13,9 +16,6 @@ import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
-import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
-import com.dvinc.notepad.presentation.ui.base.ShowMessage
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever

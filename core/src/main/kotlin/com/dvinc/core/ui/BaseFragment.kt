@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.base
+package com.dvinc.core.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -15,13 +15,13 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import com.dvinc.core.R
 import com.dvinc.core.snackbar.SnackbarFactory
-import com.dvinc.notepad.NotepadApplication
-import com.dvinc.notepad.R
 
 abstract class BaseFragment : Fragment(), BaseView {
 
-    val appComponent by lazy { (requireActivity().applicationContext as NotepadApplication).appComponent }
+    //TODO(dv): update DI
+    //val appComponent by lazy { (requireActivity().applicationContext as NotepadApplication).appComponent }
 
     private val decorView by lazy { requireActivity().window.decorView }
 

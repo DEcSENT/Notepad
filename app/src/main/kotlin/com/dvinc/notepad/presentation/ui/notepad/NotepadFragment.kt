@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.core.extension.observe
 import com.dvinc.core.extension.toggleGone
 import com.dvinc.core.recycler.SpaceItemDecorator
+import com.dvinc.core.ui.BaseFragment
+import com.dvinc.core.ui.ShowMessage
+import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi
-import com.dvinc.notepad.presentation.ui.base.BaseFragment
-import com.dvinc.notepad.presentation.ui.base.ShowMessage
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import javax.inject.Inject
 import javax.inject.Provider
@@ -50,7 +50,8 @@ class NotepadFragment : BaseFragment() {
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
     override fun injectDependencies() {
-        appComponent.inject(this)
+        //TODO(dv):
+        //appComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

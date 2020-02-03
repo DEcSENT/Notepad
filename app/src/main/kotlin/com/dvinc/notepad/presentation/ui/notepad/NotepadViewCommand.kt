@@ -5,6 +5,6 @@
 
 package com.dvinc.notepad.presentation.ui.notepad
 
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.core.ui.ViewCommand
 
 data class OpenNoteScreen(val noteId: Long) : ViewCommand

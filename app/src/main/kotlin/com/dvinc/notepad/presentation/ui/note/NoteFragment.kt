@@ -10,10 +10,10 @@ import android.view.View
 import androidx.navigation.Navigation
 import com.dvinc.core.extension.observe
 import com.dvinc.core.extension.viewModels
+import com.dvinc.core.ui.BaseFragment
+import com.dvinc.core.ui.ShowErrorMessage
+import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
-import com.dvinc.notepad.presentation.ui.base.BaseFragment
-import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
@@ -38,7 +38,8 @@ class NoteFragment : BaseFragment() {
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     override fun injectDependencies() {
-        appComponent.inject(this)
+        //TODO(dv):
+        //appComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

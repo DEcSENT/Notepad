@@ -5,6 +5,6 @@
 
 package com.dvinc.notepad.presentation.ui.note
 
-import com.dvinc.notepad.presentation.ui.base.ViewCommand
+import com.dvinc.core.ui.ViewCommand
 
 object CloseNoteScreen : ViewCommand
