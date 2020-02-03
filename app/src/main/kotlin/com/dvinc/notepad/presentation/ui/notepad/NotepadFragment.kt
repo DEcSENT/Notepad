@@ -14,7 +14,6 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.toggleGone
 import com.dvinc.notepad.common.recycler.SpaceItemDecorator
-import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi
@@ -50,16 +49,15 @@ class NotepadFragment : BaseFragment() {
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
+    override fun injectDependencies() {
+        appComponent.inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        injectDependencies()
         observerViewModel()
         initViews()
-    }
-
-    private fun injectDependencies() {
-        DiProvider.appComponent.inject(this)
     }
 
     private fun observerViewModel() {

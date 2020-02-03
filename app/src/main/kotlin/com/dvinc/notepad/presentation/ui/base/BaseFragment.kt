@@ -15,10 +15,13 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import com.dvinc.notepad.NotepadApplication
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.snackbar.SnackbarFactory
 
 abstract class BaseFragment : Fragment(), BaseView {
+
+    val appComponent by lazy { (requireActivity().applicationContext as NotepadApplication).appComponent }
 
     private val decorView by lazy { requireActivity().window.decorView }
 
@@ -29,6 +32,13 @@ abstract class BaseFragment : Fragment(), BaseView {
      */
     @LayoutRes
     abstract fun getFragmentLayoutId(): Int
+
+    abstract fun injectDependencies()
+
+    override fun onAttach(context: Context) {
+        injectDependencies()
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getFragmentLayoutId(), container, false)

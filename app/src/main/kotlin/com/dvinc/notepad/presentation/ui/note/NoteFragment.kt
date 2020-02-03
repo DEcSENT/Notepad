@@ -11,7 +11,6 @@ import androidx.navigation.Navigation
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.extension.observe
 import com.dvinc.notepad.common.extension.viewModels
-import com.dvinc.notepad.di.DiProvider
 import com.dvinc.notepad.presentation.ui.base.BaseFragment
 import com.dvinc.notepad.presentation.ui.base.ShowErrorMessage
 import com.dvinc.notepad.presentation.ui.base.ViewCommand
@@ -38,10 +37,13 @@ class NoteFragment : BaseFragment() {
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
+    override fun injectDependencies() {
+        appComponent.inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        injectDependencies()
         observeViewModel()
         initViews()
     }
@@ -49,10 +51,6 @@ class NoteFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         hideKeyboard()
-    }
-
-    private fun injectDependencies() {
-        DiProvider.appComponent.inject(this)
     }
 
     private fun observeViewModel() {
