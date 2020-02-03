@@ -9,6 +9,7 @@ apply from: rootProject.file('spotless.gradle')
 
 android {
     compileSdkVersion versions.compileSdk
+
     defaultConfig {
         applicationId versions.appId
         minSdkVersion versions.minSdk
@@ -16,8 +17,8 @@ android {
         versionCode versions.code
         versionName versions.name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -28,6 +29,7 @@ android {
 
         release {
             shrinkResources true
+            debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -43,7 +45,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     testImplementation(testDependencies)
