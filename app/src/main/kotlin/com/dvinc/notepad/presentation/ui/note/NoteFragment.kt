@@ -14,6 +14,7 @@ import com.dvinc.core.ui.BaseFragment
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
+import com.dvinc.notepad.di.component.NotepadComponent
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
@@ -38,8 +39,9 @@ class NoteFragment : BaseFragment() {
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
     override fun injectDependencies() {
-        //TODO(dv):
-        //appComponent.inject(this)
+        NotepadComponent.Builder
+            .build(appComponent)
+            .inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

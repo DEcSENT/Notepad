@@ -6,23 +6,22 @@
 package com.dvinc.notepad
 
 import android.app.Application
-import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import com.dvinc.core.di.DaggerApplication
+import com.dvinc.core.di.provider.ApplicationProvider
 import com.dvinc.core.timber.ReleaseTree
 import com.dvinc.notepad.di.component.AppComponent
-import com.dvinc.notepad.di.component.DaggerAppComponent
-import com.dvinc.notepad.di.module.AppModule
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 
-class NotepadApplication : Application() {
+class NotepadApplication : Application(), DaggerApplication {
 
-    lateinit var appComponent: AppComponent
+    private lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
 
-        buildDi(this)
+        buildDi()
 
         Stetho.initializeWithDefaults(this)
 
@@ -31,9 +30,11 @@ class NotepadApplication : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
-    private fun buildDi(context: Context) {
-        appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(context))
-            .build()
+    override fun getApplicationProvider(): ApplicationProvider {
+        return appComponent
+    }
+
+    private fun buildDi() {
+        appComponent = AppComponent.Builder.build(this)
     }
 }

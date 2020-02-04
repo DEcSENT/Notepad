@@ -42,6 +42,7 @@ dependencies {
             deps.dagger.dagger,
 
             deps.room.room,
+            deps.room.coroutines,
 
             deps.lifecycle.view_model,
             deps.lifecycle.extensions,
@@ -50,6 +51,7 @@ dependencies {
     )
 
     kapt(
-            deps.dagger.processor
+            deps.dagger.processor,
+            deps.room.processor
     )
 }

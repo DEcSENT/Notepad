@@ -16,12 +16,15 @@ import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.dvinc.core.R
+import com.dvinc.core.di.DaggerApplication
+import com.dvinc.core.di.provider.ApplicationProvider
 import com.dvinc.core.snackbar.SnackbarFactory
 
 abstract class BaseFragment : Fragment(), BaseView {
 
-    //TODO(dv): update DI
-    //val appComponent by lazy { (requireActivity().applicationContext as NotepadApplication).appComponent }
+    val appComponent: ApplicationProvider by lazy {
+        (requireActivity().applicationContext as DaggerApplication).getApplicationProvider()
+    }
 
     private val decorView by lazy { requireActivity().window.decorView }
 

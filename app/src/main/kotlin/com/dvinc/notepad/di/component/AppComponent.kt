@@ -5,23 +5,41 @@
 
 package com.dvinc.notepad.di.component
 
-import com.dvinc.notepad.di.module.AppModule
-import com.dvinc.notepad.di.module.AssistedInjectModule
-import com.dvinc.notepad.di.module.DataModule
-import com.dvinc.notepad.presentation.ui.note.NoteFragment
-import com.dvinc.notepad.presentation.ui.notepad.NotepadFragment
+import com.dvinc.core.di.component.AppToolsComponent
+import com.dvinc.core.di.component.DaggerDatabaseComponent
+import com.dvinc.core.di.provider.AppToolsProvider
+import com.dvinc.core.di.provider.ApplicationProvider
+import com.dvinc.core.di.provider.DatabaseProvider
+import com.dvinc.notepad.NotepadApplication
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [
-        AppModule::class,
-        DataModule::class,
-        AssistedInjectModule::class
+    dependencies = [
+        AppToolsProvider::class,
+        DatabaseProvider::class
     ]
 )
-interface AppComponent {
-    fun inject(target: NotepadFragment)
-    fun inject(target: NoteFragment)
+interface AppComponent : ApplicationProvider {
+
+    class Builder private constructor() {
+
+        companion object {
+
+            fun build(application: NotepadApplication): AppComponent {
+
+                val appToolsProvider = AppToolsComponent.Builder.build(application)
+
+                val databaseProvider = DaggerDatabaseComponent.builder()
+                    .appToolsProvider(appToolsProvider)
+                    .build()
+
+                return DaggerAppComponent.builder()
+                    .appToolsProvider(appToolsProvider)
+                    .databaseProvider(databaseProvider)
+                    .build()
+            }
+        }
+    }
 }
