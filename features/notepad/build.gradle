@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+
 apply from: rootProject.file('dependencies.gradle')
 apply from: rootProject.file('versions.gradle')
 
@@ -63,4 +64,7 @@ dependencies {
     testImplementation(testDependencies)
 
     androidTestImplementation(androidTestDependencies)
+
+    // Fix for: Generated not found *javax.annotation.processing.Generated*
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 }

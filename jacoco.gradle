@@ -1,42 +1,12 @@
-apply plugin: 'jacoco'
+//
+// Gradle plugin that generates JaCoCo reports from an Android Gradle Project.
+// This plugin supports multi-modular test code coverage.
+//
+// https://github.com/vanniktech/gradle-android-junit-jacoco-plugin
+//
+apply plugin: "com.vanniktech.android.junit.jacoco"
 
-ext {
-    coverageSourceDirs = 'src/test/java'
-}
-
-jacoco {
-    toolVersion = "0.8.4"
-    reportsDir = file("$buildDir/reports")
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = [
-            '**/R.class',
-            '**/R$*.class',
-            '**/BuildConfig.*',
-            '**/Manifest*.*',
-            '**/*Test*.*',
-            'android/**/*.*',
-            '**/*Fragment.*',
-            '**/*Activity*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/kotlin"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
-    ])
-}
-
-tasks.withType(Test) {
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+junitJacoco {
+    jacocoVersion = '0.8.5'
+    includeInstrumentationCoverageInMergedReport = false
 }

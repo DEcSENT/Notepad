@@ -1,9 +1,12 @@
+apply from: rootProject.file('jacoco.gradle')
+
 buildscript {
 
     ext.kotlin_version = '1.3.61'
     ext.detekt_version = '1.0.0-RC14'
     ext.spotless_version = '3.27.1'
     ext.navigation_safe_arg_version = "2.2.0"
+    ext.jacoco_plugin_version = "0.15.0"
 
     repositories {
         google()
@@ -18,6 +21,7 @@ buildscript {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_safe_arg_version"
+        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:$jacoco_plugin_version"
     }
 }
 
