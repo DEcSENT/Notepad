@@ -88,10 +88,9 @@ class NotepadFragment : BaseFragment() {
 
     private fun setupFabButton() {
         bottomBarFab.setOnClickListener {
-            activity?.let {
-                findNavController(it, R.id.nav_host_fragment)
-                    .navigate(R.id.action_notepadFragment_to_noteFragment)
-            }
+            //TODO(dv): update navigation dependency
+//                findNavController(it, R.id.nav_host_fragment)
+//                    .navigate(R.id.action_notepadFragment_to_noteFragment)
         }
     }
 

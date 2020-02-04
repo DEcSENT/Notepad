@@ -46,6 +46,7 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":features:notepad")
 
     implementation(
             deps.kotlin.stdlib,
