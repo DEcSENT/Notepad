@@ -80,8 +80,4 @@ dependencies {
             deps.dagger.assisted_inject_processor,
             deps.room.processor
     )
-
-    testImplementation(testDependencies)
-
-    androidTestImplementation(androidTestDependencies)
 }
