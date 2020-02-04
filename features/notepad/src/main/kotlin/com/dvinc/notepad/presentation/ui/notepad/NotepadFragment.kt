@@ -7,7 +7,6 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.core.extension.observe
@@ -21,7 +20,6 @@ import com.dvinc.notepad.di.component.NotepadComponent
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi
-import com.dvinc.notepad.presentation.ui.note.NoteFragment
 import javax.inject.Inject
 import javax.inject.Provider
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
@@ -88,8 +86,7 @@ class NotepadFragment : BaseFragment() {
 
     private fun setupFabButton() {
         bottomBarFab.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_notepadFragment_to_noteFragment)
+            viewModel.onNewNoteClick()
         }
     }
 
@@ -116,11 +113,9 @@ class NotepadFragment : BaseFragment() {
         }
     }
 
-    private fun handleViewCommand(viewCommand: ViewCommand) {
+    override fun handleViewCommand(viewCommand: ViewCommand) {
+        super.handleViewCommand(viewCommand)
         when (viewCommand) {
-            is OpenNoteScreen -> {
-                goToNoteScreen(viewCommand.noteId)
-            }
             is ShowMessage -> {
                 showMessage(
                     messageResId = viewCommand.messageResId,
@@ -136,11 +131,5 @@ class NotepadFragment : BaseFragment() {
 
     private fun showStub(isVisible: Boolean) {
         stubContainer.toggleGone(isVisible)
-    }
-
-    private fun goToNoteScreen(noteId: Long) {
-        val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
-        findNavController()
-            .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
     }
 }

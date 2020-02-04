@@ -15,6 +15,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.dvinc.core.R
 import com.dvinc.core.di.DaggerApplication
 import com.dvinc.core.di.provider.ApplicationProvider
@@ -69,6 +70,19 @@ abstract class BaseFragment : Fragment(), BaseView {
     fun hideKeyboard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    protected open fun handleViewCommand(viewCommand: ViewCommand) {
+        when (viewCommand) {
+            is NavigateTo -> {
+                findNavController()
+                    .navigate(viewCommand.direction)
+            }
+            is NavigateUp -> {
+                findNavController()
+                    .navigateUp()
+            }
+        }
     }
 
     private fun showSnackBar(

@@ -6,10 +6,12 @@
 package com.dvinc.notepad.presentation.ui.note
 
 import androidx.lifecycle.Observer
+import com.dvinc.core.ui.NavigateUp
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.CoroutinesTest
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
@@ -52,8 +54,7 @@ class NoteViewModelTest : CoroutinesTest() {
     @Test
     fun `verify new note state is loaded when no note ID`() {
         // Given
-        val noteId = null
-        val noteViewModel = NoteViewModel(noteId, noteUseCase, noteMapper)
+        val noteViewModel = NoteViewModel(DEFAULT_NOTE_ID, noteUseCase, noteMapper)
         noteViewModel.viewState.observeForever(testViewStateObserver)
 
         // When
@@ -96,7 +97,7 @@ class NoteViewModelTest : CoroutinesTest() {
 
         // Then
         val expectedViewCommandList = ViewCommandUtil.createViewCommandList(
-            CloseNoteScreen
+            NavigateUp
         )
         verify(testViewCommandObserver).onChanged(expectedViewCommandList)
     }

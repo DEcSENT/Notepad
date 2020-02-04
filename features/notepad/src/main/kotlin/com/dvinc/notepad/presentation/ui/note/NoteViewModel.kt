@@ -11,6 +11,7 @@ import com.dvinc.core.extension.onNext
 import com.dvinc.core.extension.safeLaunch
 import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
@@ -20,7 +21,7 @@ import com.squareup.inject.assisted.AssistedInject
 import timber.log.Timber
 
 class NoteViewModel @AssistedInject constructor(
-    @Assisted private val noteId: Long?,
+    @Assisted private val noteId: Long,
     private val noteUseCase: NoteUseCase,
     private val noteMapper: NotePresentationMapper
 ) : BaseViewModel() {
@@ -35,10 +36,33 @@ class NoteViewModel @AssistedInject constructor(
         initNote(noteId)
     }
 
-    private fun initNote(noteId: Long?) {
+    fun onSaveButtonClick(
+        noteName: String,
+        noteContent: String
+    ) {
+        viewModelScope.safeLaunch(
+            launchBlock = {
+                val note = noteMapper.createNote(noteId, noteName, noteContent)
+                noteUseCase.saveNote(note)
+            },
+            onSuccess = {
+                navigateBack()
+            },
+            onError = {
+                showErrorMessage(R.string.error_while_adding_note)
+                Timber.tag(TAG).e(it)
+            }
+        )
+    }
+
+    fun onBackClick() {
+        navigateBack()
+    }
+
+    private fun initNote(noteId: Long) {
         viewModelScope.safeLaunch<NoteViewState>(
             launchBlock = {
-                val noteViewState = if (noteId == null) {
+                val noteViewState = if (noteId == DEFAULT_NOTE_ID) {
                     NewNoteViewState
                 } else {
                     val note = noteUseCase.getNoteById(noteId)
@@ -56,27 +80,8 @@ class NoteViewModel @AssistedInject constructor(
         )
     }
 
-    fun onSaveButtonClick(
-        noteName: String,
-        noteContent: String
-    ) {
-        viewModelScope.safeLaunch(
-            launchBlock = {
-                val note = noteMapper.createNote(noteId, noteName, noteContent)
-                noteUseCase.saveNote(note)
-            },
-            onSuccess = {
-                viewCommands.onNext(CloseNoteScreen)
-            },
-            onError = {
-                showErrorMessage(R.string.error_while_adding_note)
-                Timber.tag(TAG).e(it)
-            }
-        )
-    }
-
     @AssistedInject.Factory
     interface Factory {
-        fun get(noteId: Long?): NoteViewModel
+        fun get(noteId: Long): NoteViewModel
     }
 }

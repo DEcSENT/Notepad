@@ -6,6 +6,7 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
 import androidx.lifecycle.Observer
+import com.dvinc.core.ui.NavigateTo
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ShowMessage
 import com.dvinc.core.ui.ViewCommand
@@ -85,7 +86,9 @@ class NotepadViewModelTest : CoroutinesTest() {
 
         // Then
         val expectedListWithSingleCommand = ViewCommandUtil.createViewCommandList(
-            OpenNoteScreen(noteUi.id)
+            NavigateTo(
+                NotepadFragmentDirections.toNoteFragment(noteUi.id)
+            )
         )
 
         assertThat(notepadViewModel.viewCommands.value!!, `is`(expectedListWithSingleCommand))

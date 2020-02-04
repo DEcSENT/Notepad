@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.safeLaunch
 import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import kotlinx.coroutines.flow.catch
@@ -32,8 +33,14 @@ class NotepadViewModel @Inject constructor(
     }
 
     fun onNoteItemClick(noteId: Long) {
-        val openNoteScreenCommand = OpenNoteScreen(noteId = noteId)
-        viewCommands.onNext(openNoteScreenCommand)
+        val noteNavDirection = NotepadFragmentDirections.toNoteFragment(noteId)
+        navigateTo(noteNavDirection)
+    }
+
+    fun onNewNoteClick() {
+        // Zero is default value because SafeArgs doesn't support null value for Long
+        val noteNavDirection = NotepadFragmentDirections.toNoteFragment(DEFAULT_NOTE_ID)
+        navigateTo(noteNavDirection)
     }
 
     fun onNoteDelete(noteId: Long) {

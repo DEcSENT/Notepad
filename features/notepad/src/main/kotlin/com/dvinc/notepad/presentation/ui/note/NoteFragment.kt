@@ -7,13 +7,13 @@ package com.dvinc.notepad.presentation.ui.note
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.Navigation
 import com.dvinc.core.extension.observe
 import com.dvinc.core.extension.viewModels
 import com.dvinc.core.ui.BaseFragment
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
+import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.di.component.NotepadComponent
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
@@ -34,7 +34,7 @@ class NoteFragment : BaseFragment() {
 
     private val viewModel: NoteViewModel by viewModels { viewModelFactory.get(noteId) }
 
-    private val noteId: Long? by lazy { arguments?.getLong(NOTE_ID, 0) }
+    private val noteId: Long by lazy { arguments?.getLong(NOTE_ID, DEFAULT_NOTE_ID) as Long }
 
     override fun getFragmentLayoutId(): Int = R.layout.fragment_note
 
@@ -68,7 +68,7 @@ class NoteFragment : BaseFragment() {
 
     private fun setupBackButton() {
         toolbar.setNavigationOnClickListener {
-            Navigation.findNavController(requireNotNull(view)).navigateUp()
+            viewModel.onBackClick()
         }
     }
 
@@ -82,23 +82,21 @@ class NoteFragment : BaseFragment() {
 
     private fun handleViewState(viewState: NoteViewState) {
         when (viewState) {
-            is NewNoteViewState -> showNewNote(viewState)
+            is NewNoteViewState -> showNewNote()
             is ExistingNoteViewState -> showExistingNote(viewState)
         }
     }
 
-    private fun handleViewCommand(viewCommand: ViewCommand) {
+    override fun handleViewCommand(viewCommand: ViewCommand) {
+        super.handleViewCommand(viewCommand)
         when (viewCommand) {
-            is CloseNoteScreen -> {
-                Navigation.findNavController(requireNotNull(view)).navigateUp()
-            }
             is ShowErrorMessage -> {
                 showErrorMessage(viewCommand.messageResId)
             }
         }
     }
 
-    private fun showNewNote(viewState: NewNoteViewState) {
+    private fun showNewNote() {
         val addNoteText = getString(R.string.note_add)
         saveNoteButton.text = addNoteText
     }
