@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.database.dao.note
+package com.dvinc.core.database.dao.note
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dvinc.notepad.data.database.entity.note.NoteEntity
+import com.dvinc.core.database.entity.note.NoteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

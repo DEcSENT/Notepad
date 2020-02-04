@@ -1,6 +1,6 @@
 package com.dvinc.notepad.data.mapper
 
-import com.dvinc.notepad.data.database.entity.note.NoteEntity
+import com.dvinc.core.database.entity.note.NoteEntity
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.domain.model.note.Note
 import org.junit.Before
@@ -20,7 +20,8 @@ class NoteDataMapperTest {
 
     private val note = Note(id, name, content, time)
 
-    private val noteEntity = NoteEntity(id, name, content, time)
+    private val noteEntity =
+        NoteEntity(id, name, content, time)
 
     private var entityList = listOf(noteEntity, noteEntity)
 

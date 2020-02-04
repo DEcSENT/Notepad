@@ -41,6 +41,8 @@ dependencies {
 
             deps.dagger.dagger,
 
+            deps.room.room,
+
             deps.lifecycle.view_model,
             deps.lifecycle.extensions,
 

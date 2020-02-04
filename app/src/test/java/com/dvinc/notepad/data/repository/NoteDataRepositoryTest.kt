@@ -1,8 +1,8 @@
 package com.dvinc.notepad.data.repository
 
+import com.dvinc.core.database.dao.note.NoteDao
+import com.dvinc.core.database.entity.note.NoteEntity
 import com.dvinc.notepad.CoroutinesTest
-import com.dvinc.notepad.data.database.dao.note.NoteDao
-import com.dvinc.notepad.data.database.entity.note.NoteEntity
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.note.NoteDataRepository
 import com.dvinc.notepad.domain.model.note.Note
