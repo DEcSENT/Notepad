@@ -11,7 +11,7 @@ versions.lifecycle = "2.2.0-rc03"
 
 versions.constraint_layout = "2.0.0-alpha3"
 
-versions.navigation = "2.0.0"
+versions.navigation = "2.2.0"
 
 versions.dagger = "2.25.4"
 versions.dagger_assisted_inject = "0.5.2"
@@ -70,8 +70,8 @@ constraint.constraint = "androidx.constraintlayout:constraintlayout:$versions.co
 deps.constraint = constraint
 
 def navigation = [:]
-navigation.fragment = "androidx.navigation:navigation-fragment:$versions.navigation"
-navigation.ui = "androidx.navigation:navigation-ui:$versions.navigation"
+navigation.fragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+navigation.ui = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 deps.navigation = navigation
 
 def dagger = [:]

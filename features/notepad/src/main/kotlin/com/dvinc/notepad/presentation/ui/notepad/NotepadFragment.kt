@@ -7,7 +7,7 @@ package com.dvinc.notepad.presentation.ui.notepad
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.core.extension.observe
@@ -88,9 +88,8 @@ class NotepadFragment : BaseFragment() {
 
     private fun setupFabButton() {
         bottomBarFab.setOnClickListener {
-            //TODO(dv): update navigation dependency
-//                findNavController(it, R.id.nav_host_fragment)
-//                    .navigate(R.id.action_notepadFragment_to_noteFragment)
+            findNavController()
+                .navigate(R.id.action_notepadFragment_to_noteFragment)
         }
     }
 
@@ -141,7 +140,7 @@ class NotepadFragment : BaseFragment() {
 
     private fun goToNoteScreen(noteId: Long) {
         val bundle = Bundle().apply { putLong(NoteFragment.NOTE_ID, noteId) }
-        findNavController(requireNotNull(view))
+        findNavController()
             .navigate(R.id.action_notepadFragment_to_noteFragment, bundle)
     }
 }

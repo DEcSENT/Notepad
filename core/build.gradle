@@ -41,6 +41,8 @@ dependencies {
 
             deps.dagger.dagger,
 
+            deps.navigation.fragment,
+
             deps.room.room,
             deps.room.coroutines,
 
