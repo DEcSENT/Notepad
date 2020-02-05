@@ -27,12 +27,10 @@ jobs:
       - store_artifacts:
           path: app/build/reports
           destination: reports
-#      - store_test_results:
-#          path: app/build/test-results
       - run:
           name: JaCoCo
           command: ./gradlew rootCodeCoverageReport
       - store_artifacts:
           path: build/reports
       - codecov/upload:
-          file: build/reports
+          file: build/reports/jacoco.xml
