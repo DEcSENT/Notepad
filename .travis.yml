@@ -40,9 +40,9 @@ install:
 
 script:
   - ./gradlew check
-  - ./gradlew jacocoTestReportDebug
-  - ./gradlew mergeJacocoReports
-  - ./gradlew jacocoTestReportMerged --stacktrace
+#  - ./gradlew jacocoTestReportDebug
+#  - ./gradlew mergeJacocoReports
+#  - ./gradlew jacocoTestReportMerged --stacktrace
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
