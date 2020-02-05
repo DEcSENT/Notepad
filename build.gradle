@@ -1,4 +1,4 @@
-apply from: rootProject.file('jacoco.gradle')
+apply plugin: 'org.neotech.plugin.rootcoverage'
 
 buildscript {
 
@@ -21,7 +21,9 @@ buildscript {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_safe_arg_version"
-        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:$jacoco_plugin_version"
+        //classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:$jacoco_plugin_version"
+
+        classpath 'org.neotech.plugin:android-root-coverage-plugin:1.2.1'
     }
 }
 
