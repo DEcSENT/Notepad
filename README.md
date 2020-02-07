@@ -1,6 +1,5 @@
 # **Notepad**
-
-[![Build Status](https://travis-ci.org/DEcSENT/Notepad.svg?branch=master)](https://travis-ci.org/DEcSENT/Notepad) 
+[![CircleCI](https://circleci.com/gh/DEcSENT/Notepad/tree/master.svg?style=svg)](https://circleci.com/gh/DEcSENT/Notepad/tree/master)
 [![codecov](https://codecov.io/gh/DEcSENT/Notepad/branch/master/graph/badge.svg)](https://codecov.io/gh/DEcSENT/Notepad)
 [![codebeat badge](https://codebeat.co/badges/62f7e4cf-c3e2-41c1-be0f-4c1864082b94)](https://codebeat.co/projects/github-com-decsent-notepad-master)
 
@@ -25,23 +24,25 @@ Notepad application for fast and simple writing and interaction with notes.
 - Stetho
 - Android X
 - Navigation Architecture Component
+- SafeArgs
 
 ### Architecture
 
 - Clean architecture
+- Multi-modular structure
 - ViewModel with ViewState on presentation layer
 
 ### Other
 
 - Dark theme
 - Unit tests
-- Travis CI
-- Code coverage
+- Circle CI
+- Jacoco with multi-modular coverage (thanks to [Android Root Coverage Plugin](https://github.com/NeoTech-Software/Android-Root-Coverage-Plugin))
 - Codebeat static analysis
 - Detekt checks on every CI build
 - Spotless plugin (manual run)
 
-### What next
+## What next
 
 - Note tags
 - Notes archive
@@ -50,7 +51,7 @@ Notepad application for fast and simple writing and interaction with notes.
 - Security
 - Notes export
 
-### Screens
+## Screens
 
 ** For now this screens are outdated. Will be updated soon.**
 
