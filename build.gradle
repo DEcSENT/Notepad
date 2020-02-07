@@ -1,8 +1,4 @@
-apply plugin: 'org.neotech.plugin.rootcoverage'
-
-rootCoverage {
-    generateXml = true
-}
+apply from: "$rootDir/jacoco.gradle"
 
 buildscript {
 
@@ -10,7 +6,7 @@ buildscript {
     ext.detekt_version = '1.0.0-RC14'
     ext.spotless_version = '3.27.1'
     ext.navigation_safe_arg_version = "2.2.0"
-    ext.jacoco_plugin_version = "0.15.0"
+    ext.root_coverage_version = "1.2.1"
 
     repositories {
         google()
@@ -25,9 +21,7 @@ buildscript {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_safe_arg_version"
-        //classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:$jacoco_plugin_version"
-
-        classpath 'org.neotech.plugin:android-root-coverage-plugin:1.2.1'
+        classpath "org.neotech.plugin:android-root-coverage-plugin:$root_coverage_version"
     }
 }
 
