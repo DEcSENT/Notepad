@@ -2,13 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
 apply from: rootProject.file('dependencies.gradle')
 apply from: rootProject.file('versions.gradle')
-apply from: rootProject.file('jacoco.gradle')
 apply from: rootProject.file('spotless.gradle')
 
 android {
     compileSdkVersion versions.compileSdk
+
     defaultConfig {
         applicationId versions.appId
         minSdkVersion versions.minSdk
@@ -16,10 +17,11 @@ android {
         versionCode versions.code
         versionName versions.name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         debug {
+            testCoverageEnabled true
             minifyEnabled false
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
@@ -28,6 +30,7 @@ android {
 
         release {
             shrinkResources true
+            debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -43,14 +46,42 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(":core")
+    implementation project(":features:notepad")
 
-    testImplementation(testDependencies)
+    implementation(
+            deps.kotlin.stdlib,
+            deps.kotlin.coroutines,
 
-    androidTestImplementation(androidTestDependencies)
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
 
-    kapt(librariesAnnotaionProcessors)
+            deps.material.material,
 
-    implementation(appDependencies)
+            deps.constraint.constraint,
+
+            deps.navigation.fragment,
+            deps.navigation.ui,
+
+            deps.dagger.dagger,
+            deps.dagger.assisted_inject,
+
+            deps.room.room,
+            deps.room.coroutines,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.tools.timber,
+            deps.tools.stetho
+    )
+
+    kapt(
+            deps.dagger.processor,
+            deps.dagger.assisted_inject_processor,
+            deps.room.processor
+    )
+
+    // Fix for: Generated not found *javax.annotation.processing.Generated*
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 }

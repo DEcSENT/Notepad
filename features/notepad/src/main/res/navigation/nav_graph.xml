@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/notepadFragment">
+
+    <fragment
+        android:id="@+id/notepadFragment"
+        android:name="com.dvinc.notepad.presentation.ui.notepad.NotepadFragment"
+        android:label="NotepadFragment"
+        tools:layout="@layout/fragment_notepad">
+        <action
+            android:id="@+id/to_noteFragment"
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim">
+
+            <argument
+                android:name="noteId"
+                android:defaultValue="0L"
+                app:argType="long" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.dvinc.notepad.presentation.ui.note.NoteFragment"
+        android:label="NoteFragment"
+        tools:layout="@layout/fragment_note" />
+</navigation>

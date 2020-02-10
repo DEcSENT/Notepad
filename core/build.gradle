@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply from: rootProject.file('dependencies.gradle')
+apply from: rootProject.file('versions.gradle')
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.code
+        versionName versions.name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+}
+
+dependencies {
+
+    implementation(
+            deps.kotlin.stdlib,
+            deps.kotlin.coroutines,
+
+            deps.material.material,
+
+            deps.dagger.dagger,
+
+            deps.navigation.fragment,
+
+            deps.room.room,
+            deps.room.coroutines,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.tools.timber
+    )
+
+    kapt(
+            deps.dagger.processor,
+            deps.room.processor
+    )
+
+    // Fix for: Generated not found *javax.annotation.processing.Generated*
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+}

@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+apply from: rootProject.file('dependencies.gradle')
+apply from: rootProject.file('versions.gradle')
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    implementation project(":core")
+
+    implementation(
+            deps.kotlin.stdlib,
+            deps.kotlin.coroutines,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.material.material,
+
+            deps.constraint.constraint,
+
+            deps.navigation.fragment,
+            deps.navigation.ui,
+
+            deps.dagger.dagger,
+            deps.dagger.assisted_inject,
+
+            deps.room.room,
+            deps.room.coroutines,
+
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.tools.timber,
+    )
+
+    kapt(
+            deps.dagger.processor,
+            deps.dagger.assisted_inject_processor,
+            deps.room.processor
+    )
+
+    testImplementation(testDependencies)
+
+    androidTestImplementation(androidTestDependencies)
+
+    // Fix for: Generated not found *javax.annotation.processing.Generated*
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+}

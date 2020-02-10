@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="screenBackgroundColor">@color/darkScreenBackgroundColor</color>
-    <color name="noteItemBackgroundColor">@color/darkItemBackgroundColor</color>
-    <color name="noteTitleTextColor">@color/darkTextColor</color>
-    <color name="noteContentTextColor">@color/darkTextColor</color>
-    <color name="editTextColor">@color/white</color>
-    <color name="editTextHintColor">@color/darkTextHintColor</color>
-</resources>
