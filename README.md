@@ -32,15 +32,19 @@ Notepad application for fast and simple writing and interaction with notes.
 - Multi-modular structure
 - ViewModel with ViewState on presentation layer
 
+### Tools
+
+- Detekt checks on every CI build
+- [Danger](https://danger.systems/ruby/) with [Android Lint plugin](https://github.com/workivate/danger-android_lint) for PR process automation
+- Jacoco with multi-modular coverage (thanks to [Android Root Coverage Plugin](https://github.com/NeoTech-Software/Android-Root-Coverage-Plugin))
+- Codebeat static analysis
+- Spotless plugin (manual run)
+
 ### Other
 
 - Dark theme
 - Unit tests
 - Circle CI
-- Jacoco with multi-modular coverage (thanks to [Android Root Coverage Plugin](https://github.com/NeoTech-Software/Android-Root-Coverage-Plugin))
-- Codebeat static analysis
-- Detekt checks on every CI build
-- Spotless plugin (manual run)
 
 ## What next
 

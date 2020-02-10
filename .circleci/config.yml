@@ -21,12 +21,14 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
       - run:
-          name: Run Lint
+          name: Lint
           command: ./gradlew lint
       - store_artifacts:
           path: app/build/reports
           destination: reports
+
       - run:
           name: JaCoCo
           command: ./gradlew rootCodeCoverageReport
@@ -34,3 +36,15 @@ jobs:
           path: build/reports
       - codecov/upload:
           file: build/reports/jacoco.xml
+
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install RubyGems
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          key: gems-{{ checksum "Gemfile.lock" }}
+          paths: vendor/bundle
+      - run:
+          name: Danger
+          command: bundle exec danger
