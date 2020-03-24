@@ -1,15 +1,16 @@
 package com.dvinc.notepad.domain.usecase
 
-import com.dvinc.notepad.CoroutinesTest
+import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class NotepadUseCaseTest : CoroutinesTest() {
+class NotepadUseCaseTest : BaseTest() {
 
     private lateinit var notepadUseCase: NotepadUseCase
 
@@ -23,7 +24,7 @@ class NotepadUseCaseTest : CoroutinesTest() {
     }
 
     @Test
-    fun `getNotes test`() = runCoroutineTest {
+    fun `getNotes test`() {
         // Given
 
         // When
@@ -34,7 +35,7 @@ class NotepadUseCaseTest : CoroutinesTest() {
     }
 
     @Test
-    fun `deleteNote test`() = runCoroutineTest {
+    fun `deleteNote test`() = runBlocking {
         // Given
         val noteId = 10L
 

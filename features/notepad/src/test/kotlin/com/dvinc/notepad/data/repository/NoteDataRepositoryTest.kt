@@ -2,7 +2,7 @@ package com.dvinc.notepad.data.repository
 
 import com.dvinc.core.database.dao.note.NoteDao
 import com.dvinc.core.database.entity.note.NoteEntity
-import com.dvinc.notepad.CoroutinesTest
+import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.note.NoteDataRepository
 import com.dvinc.notepad.domain.model.note.Note
@@ -11,10 +11,11 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class NoteDataRepositoryTest : CoroutinesTest() {
+class NoteDataRepositoryTest : BaseTest() {
 
     private lateinit var noteRepository: NoteDataRepository
 
@@ -36,7 +37,7 @@ class NoteDataRepositoryTest : CoroutinesTest() {
     }
 
     @Test
-    fun `when dao returned entities list then flow emits notes list`() = runCoroutineTest {
+    fun `when dao returned entities list then flow emits notes list`() = runBlocking {
         // Given
         whenever(noteDao.getNotes()).thenReturn(flow { emit(entityList) })
         whenever(noteMapper.fromEntityToDomain(entityList)).thenReturn(noteList)
@@ -51,7 +52,7 @@ class NoteDataRepositoryTest : CoroutinesTest() {
     }
 
     @Test
-    fun `when add note called then call dao`() = runCoroutineTest {
+    fun `when add note called then call dao`() = runBlocking {
         // Given
         whenever(noteMapper.fromDomainToEntity(note)).thenReturn(noteEntity)
 
@@ -63,7 +64,7 @@ class NoteDataRepositoryTest : CoroutinesTest() {
     }
 
     @Test
-    fun `when delete note called then call dao with same note id`() = runCoroutineTest {
+    fun `when delete note called then call dao with same note id`() = runBlocking {
         // Given
         val noteId = 10L
 
@@ -75,7 +76,7 @@ class NoteDataRepositoryTest : CoroutinesTest() {
     }
 
     @Test
-    fun `when get note called then return correct note`() = runCoroutineTest {
+    fun `when get note called then return correct note`() = runBlocking {
         // Given
         val noteId = 10L
         whenever(noteDao.getNoteById(noteId)).thenReturn(noteEntity)
