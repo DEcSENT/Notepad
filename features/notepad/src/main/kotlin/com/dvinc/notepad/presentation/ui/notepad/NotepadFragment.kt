@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvinc.core.extension.observe
 import com.dvinc.core.extension.toggleGone
+import com.dvinc.core.extension.viewModels
 import com.dvinc.core.recycler.SpaceItemDecorator
 import com.dvinc.core.ui.BaseFragment
 import com.dvinc.core.ui.ShowMessage
@@ -32,7 +33,7 @@ class NotepadFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: Provider<NotepadViewModel>
 
-    private val viewModel by lazy { viewModelFactory.get() }
+    private val viewModel: NotepadViewModel by viewModels { viewModelFactory.get() }
 
     private val notesAdapter: NotepadAdapter = NotepadAdapter()
 
