@@ -25,8 +25,3 @@ class MainCoroutineRule(
         testDispatcher.cleanupTestCoroutines()
     }
 }
-
-@ExperimentalCoroutinesApi
-fun MainCoroutineRule.runBlocking(block: suspend () -> Unit) = this.testDispatcher.runBlockingTest {
-    block()
-}

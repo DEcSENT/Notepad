@@ -1,15 +1,18 @@
 package com.dvinc.notepad.domain.usecase
 
-import com.dvinc.notepad.CoroutinesTest
+import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class NoteUseCaseTest : CoroutinesTest() {
+class NoteUseCaseTest : BaseTest() {
 
     private lateinit var noteUseCase: NoteUseCase
 
@@ -23,19 +26,21 @@ class NoteUseCaseTest : CoroutinesTest() {
     }
 
     @Test
-    fun `getNoteById test`() = runCoroutineTest {
+    fun `getNoteById test`() = runBlocking {
         // Given
         val noteId = 10L
+        whenever(noteRepository.getNoteById(noteId)).thenReturn(note)
 
         // When
         noteUseCase.getNoteById(noteId)
 
         // Then
-        verify(noteRepository).getNoteById(noteId)
+        val resultNote = noteRepository.getNoteById(noteId)
+        assertEquals(resultNote, note)
     }
 
     @Test
-    fun `addNote test`() = runCoroutineTest {
+    fun `addNote test`() = runBlocking {
         // Given
 
         // When
