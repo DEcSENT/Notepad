@@ -72,5 +72,5 @@ dependencies {
     androidTestImplementation(androidTestDependencies)
 
     // Fix for: Generated not found *javax.annotation.processing.Generated*
-    compileOnly 'javax.annotation:jsr250-api:1.0'
+    compileOnly 'javax.annotation:jsr250-api:1.0-20050927.133100'
 }
