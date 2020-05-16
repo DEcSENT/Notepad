@@ -39,6 +39,7 @@ Notepad application for fast and simple writing and interaction with notes.
 - Jacoco with multi-modular coverage (thanks to [Android Root Coverage Plugin](https://github.com/NeoTech-Software/Android-Root-Coverage-Plugin))
 - Codebeat static analysis
 - Spotless plugin (manual run)
+- Github bots: Dependabot, Prosebot
 
 ### Other
 
