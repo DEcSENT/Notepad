@@ -27,15 +27,8 @@ interface NotepadComponent {
 
     fun inject(target: NoteFragment)
 
-    class Builder private constructor() {
-
-        companion object {
-
-            fun build(applicationProvider: ApplicationProvider): NotepadComponent {
-                return DaggerNotepadComponent.builder()
-                    .applicationProvider(applicationProvider)
-                    .build()
-            }
-        }
+    @Component.Factory
+    interface Factory {
+        fun create(applicationProvider: ApplicationProvider): NotepadComponent
     }
 }

@@ -14,7 +14,7 @@ import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.DEFAULT_NOTE_ID
-import com.dvinc.notepad.di.component.NotepadComponent
+import com.dvinc.notepad.di.component.DaggerNotepadComponent
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
@@ -37,8 +37,8 @@ class NoteFragment : BaseFragment(layoutResId = R.layout.fragment_note) {
     private val noteId: Long by lazy { arguments?.getLong(NOTE_ID, DEFAULT_NOTE_ID) as Long }
 
     override fun injectDependencies() {
-        NotepadComponent.Builder
-            .build(appComponent)
+        DaggerNotepadComponent.factory()
+            .create(appComponent)
             .inject(this)
     }
 

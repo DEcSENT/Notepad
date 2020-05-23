@@ -17,7 +17,7 @@ import com.dvinc.core.ui.BaseFragment
 import com.dvinc.core.ui.ShowMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
-import com.dvinc.notepad.di.component.NotepadComponent
+import com.dvinc.notepad.di.component.DaggerNotepadComponent
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
 import com.dvinc.notepad.presentation.model.NoteUi
@@ -48,8 +48,8 @@ class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
     }
 
     override fun injectDependencies() {
-        NotepadComponent.Builder
-            .build(appComponent)
+        DaggerNotepadComponent.factory()
+            .create(appComponent)
             .inject(this)
     }
 
