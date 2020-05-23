@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as b
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_stub_container as stubContainer
 
-class NotepadFragment : BaseFragment() {
+class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
 
     @Inject
     lateinit var viewModelFactory: Provider<NotepadViewModel>
@@ -46,8 +46,6 @@ class NotepadFragment : BaseFragment() {
     private val noteItemSwipeListener: (note: NoteUi) -> Unit = {
         viewModel.onNoteDelete(it.id)
     }
-
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_notepad
 
     override fun injectDependencies() {
         NotepadComponent.Builder
