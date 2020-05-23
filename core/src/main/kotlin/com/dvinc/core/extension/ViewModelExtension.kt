@@ -16,7 +16,17 @@ import com.dvinc.core.ui.CommandsLiveData
 import java.util.LinkedList
 
 fun <T> MutableLiveData<T>.onNext(next: T) {
-    this.value = next
+    value = next
+}
+
+inline fun <reified T : Any> LiveData<T>.requireValue(): T {
+    return requireNotNull(value)
+}
+
+inline fun <reified T : Any> MutableLiveData<T>.update(
+    update: (T) -> T
+) {
+    value = update.invoke(requireValue())
 }
 
 inline fun <reified T : Any, reified L : LiveData<T>> Fragment.observe(
