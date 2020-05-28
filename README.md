@@ -25,6 +25,7 @@ Notepad application for fast and simple writing and interaction with notes.
 - Android X
 - Navigation Architecture Component
 - SafeArgs
+- LeakCanary
 
 ### Architecture
 

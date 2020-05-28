@@ -93,4 +93,6 @@ dependencies {
 
     // Fix for: Generated not found *javax.annotation.processing.Generated*
     compileOnly 'javax.annotation:jsr250-api:1.0'
+
+    debugImplementation (deps.tools.leakcanary)
 }
