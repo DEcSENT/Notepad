@@ -33,14 +33,14 @@ inline fun <reified T : Any, reified L : LiveData<T>> Fragment.observe(
     liveData: L,
     noinline block: (T) -> Unit
 ) {
-    liveData.observe(this.viewLifecycleOwner, Observer<T> { it?.let { block.invoke(it) } })
+    liveData.observe(this.viewLifecycleOwner, Observer { it?.let { block.invoke(it) } })
 }
 
 inline fun <reified T : Any, reified L : CommandsLiveData<T>> LifecycleOwner.observe(
     liveData: L,
     noinline block: (T) -> Unit
 ) {
-    liveData.observe(this, Observer<LinkedList<T>> { commands ->
+    liveData.observe(this, Observer { commands ->
         if (commands == null) {
             return@Observer
         }

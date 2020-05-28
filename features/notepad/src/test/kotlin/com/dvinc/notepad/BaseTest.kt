@@ -6,7 +6,6 @@
 package com.dvinc.notepad
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 
 abstract class BaseTest {
