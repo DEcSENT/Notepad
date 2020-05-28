@@ -7,9 +7,7 @@ package com.dvinc.core.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
@@ -21,7 +19,7 @@ import com.dvinc.core.di.DaggerApplication
 import com.dvinc.core.di.provider.ApplicationProvider
 import com.dvinc.core.snackbar.SnackbarFactory
 
-abstract class BaseFragment : Fragment(), BaseView {
+abstract class BaseFragment(@LayoutRes layoutResId: Int) : Fragment(layoutResId), BaseView {
 
     val appComponent: ApplicationProvider by lazy {
         (requireActivity().applicationContext as DaggerApplication).getApplicationProvider()
@@ -29,23 +27,11 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     private val decorView by lazy { requireActivity().window.decorView }
 
-    /**
-     * Getting fragment layout resource id.
-     *
-     * @return - fragment layout id.
-     */
-    @LayoutRes
-    abstract fun getFragmentLayoutId(): Int
-
     abstract fun injectDependencies()
 
     override fun onAttach(context: Context) {
         injectDependencies()
         super.onAttach(context)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getFragmentLayoutId(), container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

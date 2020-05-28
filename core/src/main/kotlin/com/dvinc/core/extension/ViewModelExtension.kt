@@ -16,21 +16,31 @@ import com.dvinc.core.ui.CommandsLiveData
 import java.util.LinkedList
 
 fun <T> MutableLiveData<T>.onNext(next: T) {
-    this.value = next
+    value = next
+}
+
+inline fun <reified T : Any> LiveData<T>.requireValue(): T {
+    return requireNotNull(value)
+}
+
+inline fun <reified T : Any> MutableLiveData<T>.update(
+    update: (T) -> T
+) {
+    value = update.invoke(requireValue())
 }
 
 inline fun <reified T : Any, reified L : LiveData<T>> Fragment.observe(
     liveData: L,
     noinline block: (T) -> Unit
 ) {
-    liveData.observe(this.viewLifecycleOwner, Observer<T> { it?.let { block.invoke(it) } })
+    liveData.observe(this.viewLifecycleOwner, Observer { it?.let { block.invoke(it) } })
 }
 
 inline fun <reified T : Any, reified L : CommandsLiveData<T>> LifecycleOwner.observe(
     liveData: L,
     noinline block: (T) -> Unit
 ) {
-    liveData.observe(this, Observer<LinkedList<T>> { commands ->
+    liveData.observe(this, Observer { commands ->
         if (commands == null) {
             return@Observer
         }

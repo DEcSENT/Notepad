@@ -7,14 +7,14 @@ package com.dvinc.notepad.presentation.ui.note
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.navArgs
 import com.dvinc.core.extension.observe
 import com.dvinc.core.extension.viewModels
 import com.dvinc.core.ui.BaseFragment
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
-import com.dvinc.notepad.common.DEFAULT_NOTE_ID
-import com.dvinc.notepad.di.component.NotepadComponent
+import com.dvinc.notepad.di.component.DaggerNotepadComponent
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
@@ -23,24 +23,18 @@ import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteNa
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_save_button as saveNoteButton
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_toolbar as toolbar
 
-class NoteFragment : BaseFragment() {
-
-    companion object {
-        const val NOTE_ID = "noteId"
-    }
+class NoteFragment : BaseFragment(layoutResId = R.layout.fragment_note) {
 
     @Inject
     lateinit var viewModelFactory: NoteViewModel.Factory
 
-    private val viewModel: NoteViewModel by viewModels { viewModelFactory.get(noteId) }
+    private val viewModel: NoteViewModel by viewModels { viewModelFactory.get(navArgs.noteId) }
 
-    private val noteId: Long by lazy { arguments?.getLong(NOTE_ID, DEFAULT_NOTE_ID) as Long }
-
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_note
+    private val navArgs: NoteFragmentArgs by navArgs()
 
     override fun injectDependencies() {
-        NotepadComponent.Builder
-            .build(appComponent)
+        DaggerNotepadComponent.factory()
+            .create(appComponent)
             .inject(this)
     }
 

@@ -3,6 +3,7 @@ package com.dvinc.notepad.presentation.ui.notepad
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.safeLaunch
+import com.dvinc.core.extension.update
 import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.DEFAULT_NOTE_ID
@@ -23,10 +24,7 @@ class NotepadViewModel @Inject constructor(
         private const val TAG = "NotepadViewModel"
     }
 
-    val viewState = MutableLiveData<NotepadViewState>()
-        .apply {
-            value = NotepadViewState()
-        }
+    val viewState = MutableLiveData(NotepadViewState())
 
     init {
         loadNotes()
@@ -62,7 +60,7 @@ class NotepadViewModel @Inject constructor(
         notepadUseCase.getNotes()
             .onEach {
                 val notes = noteMapper.fromDomainToUi(it)
-                updateViewState { state ->
+                viewState.update { state ->
                     state.copy(
                         notes = notes,
                         isStubViewVisible = notes.isEmpty()
@@ -74,9 +72,5 @@ class NotepadViewModel @Inject constructor(
                 Timber.tag(TAG).e(it)
             }
             .launchIn(viewModelScope)
-    }
-
-    private inline fun updateViewState(update: (NotepadViewState) -> NotepadViewState) {
-        viewState.value = update.invoke(requireNotNull(viewState.value))
     }
 }
