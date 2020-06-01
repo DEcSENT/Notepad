@@ -19,7 +19,8 @@ import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
 import com.dvinc.notepad.di.component.DaggerNotepadComponent
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
-import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeToDeleteCallback
+import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeCallback
+import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.notepad.presentation.model.NoteUi
 import javax.inject.Inject
 import javax.inject.Provider
@@ -43,9 +44,10 @@ class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
         }
     }
 
-    private val noteItemSwipeListener: (note: NoteUi) -> Unit = {
-        viewModel.onNoteDelete(it.id)
-    }
+    private val noteItemSwipeListener: (note: NoteUi, swipeDirection: NotepadSwipeDirection) -> Unit =
+        { note, direction ->
+            viewModel.onNoteSwipe(note.id, direction)
+        }
 
     override fun injectDependencies() {
         DaggerNotepadComponent.factory()
@@ -78,7 +80,7 @@ class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
             adapter = notesAdapter
             addItemDecoration(SpaceItemDecorator())
         }
-        val notepadTouchCallback = NotepadSwipeToDeleteCallback(notesAdapter, noteItemSwipeListener)
+        val notepadTouchCallback = NotepadSwipeCallback(notesAdapter, noteItemSwipeListener)
         val swipeToDeleteTouchHelper = ItemTouchHelper(notepadTouchCallback)
         swipeToDeleteTouchHelper.attachToRecyclerView(notesRecycler)
     }

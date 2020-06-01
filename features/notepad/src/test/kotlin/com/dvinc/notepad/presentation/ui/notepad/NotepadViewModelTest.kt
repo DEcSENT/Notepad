@@ -13,6 +13,7 @@ import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
+import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
@@ -94,7 +95,7 @@ class NotepadViewModelTest : BaseTest() {
         val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
 
         // When
-        notepadViewModel.onNoteDelete(10L)
+        notepadViewModel.onNoteSwipe(10L, NotepadSwipeDirection.RIGHT)
 
         // Then
         val resultViewCommandList = notepadViewModel.viewCommands.getOrAwaitValue()
@@ -111,7 +112,7 @@ class NotepadViewModelTest : BaseTest() {
         whenever(notepadUseCase.deleteNote(noteUi.id)).thenThrow(IllegalStateException())
 
         // When
-        notepadViewModel.onNoteDelete(noteUi.id)
+        notepadViewModel.onNoteSwipe(noteUi.id, NotepadSwipeDirection.RIGHT)
 
         // Then
         val resultViewCommandList = notepadViewModel.viewCommands.getOrAwaitValue()

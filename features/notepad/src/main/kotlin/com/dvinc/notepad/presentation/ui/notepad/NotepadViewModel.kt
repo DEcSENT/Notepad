@@ -8,7 +8,9 @@ import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
+import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.notepad.presentation.model.NoteUi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -41,7 +43,14 @@ class NotepadViewModel @Inject constructor(
         navigateTo(noteNavDirection)
     }
 
-    fun onNoteDelete(noteId: Long) {
+    fun onNoteSwipe(noteId: Long, swipeDirection: NotepadSwipeDirection) {
+        when (swipeDirection) {
+            NotepadSwipeDirection.LEFT -> onNoteArchive(noteId)
+            NotepadSwipeDirection.RIGHT -> onNoteDelete(noteId)
+        }
+    }
+
+    private fun onNoteDelete(noteId: Long) {
         viewModelScope.safeLaunch(
             launchBlock = {
                 notepadUseCase.deleteNote(noteId)
@@ -54,6 +63,10 @@ class NotepadViewModel @Inject constructor(
                 Timber.tag(TAG).e(it)
             }
         )
+    }
+
+    private fun onNoteArchive(noteId: Long) {
+        //TODO(dv):
     }
 
     private fun loadNotes() {
