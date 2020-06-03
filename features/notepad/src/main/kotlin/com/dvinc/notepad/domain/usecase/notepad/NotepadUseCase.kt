@@ -23,4 +23,8 @@ class NotepadUseCase @Inject constructor(
     suspend fun deleteNote(noteId: Long) {
         noteRepository.deleteNoteById(noteId)
     }
+
+    suspend fun archiveNote(noteId: Long) {
+        noteRepository.archiveNoteById(noteId)
+    }
 }

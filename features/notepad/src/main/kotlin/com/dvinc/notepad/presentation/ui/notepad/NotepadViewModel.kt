@@ -66,7 +66,18 @@ class NotepadViewModel @Inject constructor(
     }
 
     private fun onNoteArchive(noteId: Long) {
-        //TODO(dv):
+        viewModelScope.safeLaunch(
+            launchBlock = {
+                notepadUseCase.archiveNote(noteId)
+            },
+            onSuccess = {
+                showMessage(R.string.note_successfully_archived)
+            },
+            onError = {
+                showErrorMessage(R.string.error_while_archiving_note)
+                Timber.tag(TAG).e(it)
+            }
+        )
     }
 
     private fun loadNotes() {

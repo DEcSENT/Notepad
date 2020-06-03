@@ -36,4 +36,8 @@ class NoteDataRepository @Inject constructor(
         val noteEntity = noteDao.getNoteById(id)
         return noteMapper.fromEntityToDomain(noteEntity)
     }
+
+    override suspend fun archiveNoteById(id: Long) {
+        //TODO(dv):
+    }
 }
