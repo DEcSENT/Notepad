@@ -36,7 +36,7 @@ class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
 
     private val viewModel: NotepadViewModel by viewModels { viewModelFactory.get() }
 
-    private val notesAdapter: NotepadAdapter = NotepadAdapter()
+    private val notesAdapter: NotepadAdapter by lazy { NotepadAdapter() }
 
     private val noteItemClickListener = object : NotepadAdapter.ItemClickListener {
         override fun onItemClick(note: NoteUi) {
@@ -100,7 +100,7 @@ class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
         bottomBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fragment_notepad_filter_menu_item -> {
-                    // TODO(dv): handle filter click
+                    viewModel.onArchiveClick()
                 }
             }
             true

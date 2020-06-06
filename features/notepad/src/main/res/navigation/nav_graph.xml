@@ -16,6 +16,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_notepadFragment_to_archiveFragment"
+            app:destination="@id/archiveFragment" />
     </fragment>
 
     <fragment
@@ -28,5 +31,12 @@
             android:name="noteId"
             android:defaultValue="0L"
             app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/archiveFragment"
+        android:name="com.dvinc.notepad.presentation.ui.archive.ArchiveFragment"
+        android:label="ArchiveFragment"
+        tools:layout="@layout/fragment_archive">
     </fragment>
 </navigation>

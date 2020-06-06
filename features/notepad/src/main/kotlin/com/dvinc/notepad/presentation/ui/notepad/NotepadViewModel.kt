@@ -50,6 +50,11 @@ class NotepadViewModel @Inject constructor(
         }
     }
 
+    fun onArchiveClick() {
+        val archiveNavDirection = NotepadFragmentDirections.actionNotepadFragmentToArchiveFragment()
+        navigateTo(archiveNavDirection)
+    }
+
     private fun onNoteDelete(noteId: Long) {
         viewModelScope.safeLaunch(
             launchBlock = {
