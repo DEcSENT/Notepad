@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 by Denis Verentsov (decsent@yandex.ru)
+ * All rights reserved.
+ */
+
 package com.dvinc.notepad.presentation.ui.archive
 
 import android.os.Bundle

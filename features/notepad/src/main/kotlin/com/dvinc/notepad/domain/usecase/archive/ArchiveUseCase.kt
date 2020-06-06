@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 by Denis Verentsov (decsent@yandex.ru)
+ * All rights reserved.
+ */
+
 package com.dvinc.notepad.domain.usecase.archive
 
 import com.dvinc.notepad.domain.model.note.Note
