@@ -4,6 +4,8 @@ import com.dvinc.core.database.dao.note.NoteDao
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.domain.model.note.Note
 import com.dvinc.notepad.domain.repository.ArchiveRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ArchiveDataRepository @Inject constructor(
@@ -12,10 +14,11 @@ class ArchiveDataRepository @Inject constructor(
 ) : ArchiveRepository {
 
     override suspend fun archiveNoteById(id: Long) {
-        TODO("Not yet implemented")
+        noteDao.markNoteAsArchived(id)
     }
 
-    override suspend fun getArchivedNotes(): List<Note> {
-        TODO("Not yet implemented")
+    override fun getArchivedNotes(): Flow<List<Note>> {
+        return noteDao.getArchive()
+            .map { noteMapper.fromEntityToDomain(it) }
     }
 }

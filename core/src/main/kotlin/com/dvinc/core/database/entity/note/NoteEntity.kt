@@ -22,5 +22,8 @@ data class NoteEntity(
     val content: String,
 
     @ColumnInfo(name = "update_time")
-    val updateTime: Long
+    val updateTime: Long,
+
+    @ColumnInfo(name = "is_archived")
+    val isArchived: Boolean = false
 )

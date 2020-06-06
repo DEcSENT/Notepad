@@ -1,10 +1,11 @@
 package com.dvinc.notepad.domain.repository
 
 import com.dvinc.notepad.domain.model.note.Note
+import kotlinx.coroutines.flow.Flow
 
 interface ArchiveRepository {
 
     suspend fun archiveNoteById(id: Long)
 
-    suspend fun getArchivedNotes(): List<Note>
+    fun getArchivedNotes(): Flow<List<Note>>
 }
