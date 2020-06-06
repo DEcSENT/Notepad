@@ -1,6 +1,5 @@
 package com.dvinc.notepad.presentation.ui.archive
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.update
 import com.dvinc.core.ui.BaseViewModel
@@ -16,9 +15,7 @@ import javax.inject.Inject
 class ArchiveViewModel @Inject constructor(
     private val archiveUseCase: ArchiveUseCase,
     private val noteMapper: NotePresentationMapper
-) : BaseViewModel() {
-
-    val viewState = MutableLiveData(ArchiveViewState())
+) : BaseViewModel<ArchiveViewState>(initialViewState = ArchiveViewState()) {
 
     init {
         loadArchive()

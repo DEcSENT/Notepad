@@ -5,7 +5,6 @@
 
 package com.dvinc.notepad.presentation.ui.note
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.onNext
 import com.dvinc.core.extension.safeLaunch
@@ -24,13 +23,11 @@ class NoteViewModel @AssistedInject constructor(
     @Assisted private val noteId: Long,
     private val noteUseCase: NoteUseCase,
     private val noteMapper: NotePresentationMapper
-) : BaseViewModel() {
+) : BaseViewModel<NoteViewState>() {
 
     companion object {
         private const val TAG = "NoteViewModel"
     }
-
-    val viewState = MutableLiveData<NoteViewState>()
 
     init {
         initNote(noteId)

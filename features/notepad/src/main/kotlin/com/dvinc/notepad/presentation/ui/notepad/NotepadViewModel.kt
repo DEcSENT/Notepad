@@ -1,6 +1,5 @@
 package com.dvinc.notepad.presentation.ui.notepad
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.safeLaunch
 import com.dvinc.core.extension.update
@@ -10,7 +9,6 @@ import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.NoteUi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,13 +18,11 @@ import javax.inject.Inject
 class NotepadViewModel @Inject constructor(
     private val notepadUseCase: NotepadUseCase,
     private val noteMapper: NotePresentationMapper
-) : BaseViewModel() {
+) : BaseViewModel<NotepadViewState>(initialViewState = NotepadViewState()) {
 
     companion object {
         private const val TAG = "NotepadViewModel"
     }
-
-    val viewState = MutableLiveData(NotepadViewState())
 
     init {
         loadNotes()
