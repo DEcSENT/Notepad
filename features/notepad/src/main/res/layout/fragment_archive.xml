@@ -6,21 +6,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/fragment_archive_stub_container"
+    <TextView
+        android:id="@+id/fragment_archive_stub_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone">
-
-<!--        TODO(DV): remove nested?-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_archive_stub_text"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
+        android:text="@string/fragment_archive_stub_text"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_archive_recycler"

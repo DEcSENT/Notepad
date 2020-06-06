@@ -27,7 +27,7 @@ import javax.inject.Provider
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_fab as bottomBarFab
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_recycler as notesRecycler
-import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_stub_container as stubContainer
+import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_stub_text as stubContainer
 
 class NotepadFragment : BaseFragment(layoutResId = R.layout.fragment_notepad) {
 

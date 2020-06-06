@@ -12,7 +12,7 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.di.component.DaggerNotepadComponent
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_recycler as archiveRecycle
-import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_stub_container as stubContainer
+import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_stub_text as stubContainer
 import javax.inject.Inject
 import javax.inject.Provider
 
