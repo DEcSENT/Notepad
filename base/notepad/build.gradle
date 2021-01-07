@@ -40,7 +40,8 @@ dependencies {
     implementation(
             deps.kotlin.stdlib,
             deps.dagger.dagger,
-            deps.material.material
+            deps.material.material,
+            deps.constraint.constraint
     )
     kapt(
             deps.dagger.processor
