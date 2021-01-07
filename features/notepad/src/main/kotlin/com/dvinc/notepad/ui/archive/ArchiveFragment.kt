@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.archive
+package com.dvinc.notepad.ui.archive
 
 import android.os.Bundle
 import android.view.View
@@ -15,7 +15,7 @@ import com.dvinc.core.recycler.SpaceItemDecorator
 import com.dvinc.core.ui.BaseFragment
 import com.dvinc.notepad.R
 import com.dvinc.notepad.di.component.DaggerNotepadComponent
-import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
+import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadAdapter
 import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_recycler as archiveRecycle
 import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_stub_text as stubContainer
 import javax.inject.Inject

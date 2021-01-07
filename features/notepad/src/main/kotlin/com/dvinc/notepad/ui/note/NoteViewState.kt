@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.note
+package com.dvinc.notepad.ui.note
 
 import com.dvinc.core.ui.ViewState
 import com.dvinc.base.notepad.domain.model.Note

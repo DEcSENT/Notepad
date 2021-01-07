@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.notepad
+package com.dvinc.notepad.ui.notepad
 
 import android.os.Bundle
 import android.view.View
@@ -18,9 +18,9 @@ import com.dvinc.core.ui.ShowMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
 import com.dvinc.notepad.di.component.DaggerNotepadComponent
-import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
-import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeCallback
-import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
+import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadAdapter
+import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadSwipeCallback
+import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.base.notepad.presentation.model.NoteUi
 import javax.inject.Inject
 import javax.inject.Provider

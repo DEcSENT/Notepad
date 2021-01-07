@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.note
+package com.dvinc.notepad.ui.note
 
 import android.os.Bundle
 import android.view.View
@@ -15,8 +15,9 @@ import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
 import com.dvinc.notepad.di.component.DaggerNotepadComponent
-import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
-import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
+import com.dvinc.notepad.presentation.ui.note.NoteFragmentArgs
+import com.dvinc.notepad.ui.note.NoteViewState.ExistingNoteViewState
+import com.dvinc.notepad.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_content as noteContent
 import kotlinx.android.synthetic.main.fragment_note.fragment_note_name as noteName

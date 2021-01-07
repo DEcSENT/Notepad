@@ -14,6 +14,8 @@ import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
+import com.dvinc.notepad.ui.note.NoteViewModel
+import com.dvinc.notepad.ui.note.NoteViewState
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking

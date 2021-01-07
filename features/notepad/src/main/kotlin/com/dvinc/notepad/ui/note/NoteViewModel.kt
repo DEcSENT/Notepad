@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.note
+package com.dvinc.notepad.ui.note
 
 import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.onNext
@@ -13,8 +13,8 @@ import com.dvinc.notepad.R
 import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
-import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
+import com.dvinc.notepad.ui.note.NoteViewState.ExistingNoteViewState
+import com.dvinc.notepad.ui.note.NoteViewState.NewNoteViewState
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import timber.log.Timber

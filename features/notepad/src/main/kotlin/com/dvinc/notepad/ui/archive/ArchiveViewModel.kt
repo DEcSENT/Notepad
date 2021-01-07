@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.ui.archive
+package com.dvinc.notepad.ui.archive
 
 import androidx.lifecycle.viewModelScope
 import com.dvinc.core.extension.update

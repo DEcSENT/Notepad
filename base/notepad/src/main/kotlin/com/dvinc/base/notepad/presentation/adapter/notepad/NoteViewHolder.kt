@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.adapter.notepad
+package com.dvinc.base.notepad.presentation.adapter.notepad
 
 import android.view.View
 import com.dvinc.core.ui.BaseViewHolder
