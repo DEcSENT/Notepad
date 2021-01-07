@@ -15,7 +15,6 @@ import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ViewCommand
 import com.dvinc.notepad.R
 import com.dvinc.notepad.di.component.DaggerNotepadComponent
-import com.dvinc.notepad.presentation.ui.note.NoteFragmentArgs
 import com.dvinc.notepad.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.ui.note.NoteViewState.NewNoteViewState
 import javax.inject.Inject

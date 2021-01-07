@@ -7,10 +7,8 @@ package com.dvinc.notepad.di.module
 
 import com.dvinc.core.database.NotepadDatabase
 import com.dvinc.core.database.dao.note.NoteDao
-import com.dvinc.notepad.data.mapper.note.NoteDataMapper
-import com.dvinc.notepad.data.repository.archive.ArchiveDataRepository
+import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.note.NoteDataRepository
-import com.dvinc.notepad.domain.repository.ArchiveRepository
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import dagger.Module
 import dagger.Provides
@@ -18,6 +16,7 @@ import dagger.Provides
 @Module
 class NotepadModule {
 
+    // TODO(dv): create base DI component for this?
     @Provides
     fun provideNoteDao(notepadDatabase: NotepadDatabase): NoteDao {
         return notepadDatabase.notesDao()
@@ -29,13 +28,5 @@ class NotepadModule {
         noteDataMapper: NoteDataMapper
     ): NoteRepository {
         return NoteDataRepository(noteDao, noteDataMapper)
-    }
-
-    @Provides
-    fun provideArchiveRepository(
-        noteDao: NoteDao,
-        noteDataMapper: NoteDataMapper
-    ): ArchiveRepository {
-        return ArchiveDataRepository(noteDao, noteDataMapper)
     }
 }

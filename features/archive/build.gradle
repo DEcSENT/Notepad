@@ -43,9 +43,27 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":base:notepad")
 
     implementation(
             deps.kotlin.stdlib,
-            deps.kotlin.coroutines
+            deps.kotlin.coroutines,
+
+            deps.dagger.dagger,
+            deps.dagger.assisted_inject,
+
+            deps.material.material,
+            deps.lifecycle.view_model,
+            deps.lifecycle.extensions,
+
+            deps.room.room,
+            deps.room.coroutines,
+
+            deps.tools.timber
+    )
+
+    kapt(
+            deps.dagger.processor,
+            deps.dagger.assisted_inject_processor,
     )
 }

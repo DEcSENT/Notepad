@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/archiveFragment"
-        android:name="com.dvinc.notepad.ui.archive.ArchiveFragment"
+        android:name="com.dvinc.archive.ui.archive.ArchiveFragment"
         android:label="ArchiveFragment"
         tools:layout="@layout/fragment_archive">
     </fragment>

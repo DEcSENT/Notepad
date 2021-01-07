@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.mapper.note
+package com.dvinc.base.notepad.data.mapper.note
 
 import com.dvinc.core.database.entity.note.NoteEntity
 import com.dvinc.base.notepad.domain.model.Note

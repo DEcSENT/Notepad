@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.usecase.archive
+package com.dvinc.archive.domain.usecase.archive
 
+import com.dvinc.archive.domain.repository.ArchiveRepository
 import com.dvinc.base.notepad.domain.model.Note
-import com.dvinc.notepad.domain.repository.ArchiveRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

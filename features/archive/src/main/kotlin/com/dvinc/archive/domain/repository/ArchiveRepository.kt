@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.repository
+package com.dvinc.archive.domain.repository
 
 import com.dvinc.base.notepad.domain.model.Note
 import kotlinx.coroutines.flow.Flow

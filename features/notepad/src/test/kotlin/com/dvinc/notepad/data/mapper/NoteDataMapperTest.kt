@@ -1,7 +1,7 @@
 package com.dvinc.notepad.data.mapper
 
 import com.dvinc.core.database.entity.note.NoteEntity
-import com.dvinc.notepad.data.mapper.note.NoteDataMapper
+import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.base.notepad.domain.model.Note
 import org.junit.Before
 import org.junit.Test

@@ -3,7 +3,7 @@ package com.dvinc.notepad.data.repository
 import com.dvinc.core.database.dao.note.NoteDao
 import com.dvinc.core.database.entity.note.NoteEntity
 import com.dvinc.notepad.BaseTest
-import com.dvinc.notepad.data.mapper.note.NoteDataMapper
+import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.note.NoteDataRepository
 import com.dvinc.base.notepad.domain.model.Note
 import com.nhaarman.mockitokotlin2.mock

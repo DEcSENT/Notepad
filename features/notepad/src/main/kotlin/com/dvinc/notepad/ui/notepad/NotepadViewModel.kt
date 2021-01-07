@@ -9,7 +9,6 @@ import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.ui.notepad.NotepadFragmentDirections
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -3,23 +3,23 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.archive
+package com.dvinc.archive.ui.archive
 
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dvinc.archive.R
+import com.dvinc.archive.di.component.DaggerArchiveComponent
+import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.core.extension.observe
 import com.dvinc.core.extension.toggleGone
 import com.dvinc.core.extension.viewModels
 import com.dvinc.core.recycler.SpaceItemDecorator
 import com.dvinc.core.ui.BaseFragment
-import com.dvinc.notepad.R
-import com.dvinc.notepad.di.component.DaggerNotepadComponent
-import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadAdapter
-import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_recycler as archiveRecycle
-import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_stub_text as stubContainer
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_recycler as archiveRecycle
+import kotlinx.android.synthetic.main.fragment_archive.fragment_archive_stub_text as stubContainer
 
 class ArchiveFragment : BaseFragment(layoutResId = R.layout.fragment_archive) {
 
@@ -31,7 +31,7 @@ class ArchiveFragment : BaseFragment(layoutResId = R.layout.fragment_archive) {
     private val notesAdapter: NotepadAdapter by lazy { NotepadAdapter() }
 
     override fun injectDependencies() {
-        DaggerNotepadComponent.factory()
+        DaggerArchiveComponent.factory()
             .create(appComponent)
             .inject(this)
     }

@@ -1,7 +1,6 @@
 package com.dvinc.notepad.domain.usecase
 
 import com.dvinc.notepad.BaseTest
-import com.dvinc.notepad.domain.repository.ArchiveRepository
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.nhaarman.mockitokotlin2.mock
@@ -16,11 +15,9 @@ class NotepadUseCaseTest : BaseTest() {
 
     private var noteRepository: NoteRepository = mock()
 
-    private var acrhiveRepository: ArchiveRepository = mock()
-
     @Before
     fun setUp() {
-        notepadUseCase = NotepadUseCase(noteRepository, acrhiveRepository)
+        notepadUseCase = NotepadUseCase(noteRepository)
     }
 
     @Test

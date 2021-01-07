@@ -8,19 +8,8 @@
     <string name="note_successfully_deleted">Note deleted</string>
     <string name="note_successfully_archived">Note archived</string>
 
-<!--    TODO(dv): to base module?-->
-    <string name="error_while_load_data_from_db">An error has occurred while loading from database</string>
-    <string name="error_while_deleting_note">An error has occurred while deleting note</string>
-    <string name="error_while_loading_note">Cannot load note from database</string>
-    <string name="error_while_adding_note">Cannot add note</string>
-    <string name="error_while_archiving_note">An error has occurred while archiving note</string>
-
     <!--Notepad region start-->
     <string name="fragment_notepad_filter_icon">Filter icon</string>
     <string name="fragment_notepad_stub_text">Your notepad is empty</string>
     <!--Notepad region end-->
-
-    <!--Archive region start-->
-    <string name="fragment_archive_stub_text">Your archive is empty</string>
-    <!--Archive region start-->
 </resources>

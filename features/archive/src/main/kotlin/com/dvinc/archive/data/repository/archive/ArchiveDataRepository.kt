@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.data.repository.archive
+package com.dvinc.archive.data.repository.archive
 
-import com.dvinc.core.database.dao.note.NoteDao
-import com.dvinc.notepad.data.mapper.note.NoteDataMapper
+import com.dvinc.archive.domain.repository.ArchiveRepository
+import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.base.notepad.domain.model.Note
-import com.dvinc.notepad.domain.repository.ArchiveRepository
+import com.dvinc.core.database.dao.note.NoteDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

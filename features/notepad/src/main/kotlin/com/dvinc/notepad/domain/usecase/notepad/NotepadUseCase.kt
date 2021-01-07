@@ -8,14 +8,12 @@
 package com.dvinc.notepad.domain.usecase.notepad
 
 import com.dvinc.base.notepad.domain.model.Note
-import com.dvinc.notepad.domain.repository.ArchiveRepository
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NotepadUseCase @Inject constructor(
-    private val noteRepository: NoteRepository,
-    private val archiveRepository: ArchiveRepository
+    private val noteRepository: NoteRepository
 ) {
 
     fun getNotes(): Flow<List<Note>> {
@@ -27,6 +25,7 @@ class NotepadUseCase @Inject constructor(
     }
 
     suspend fun archiveNote(noteId: Long) {
-        archiveRepository.archiveNoteById(noteId)
+        // TODO(dv): fix it
+        throw NotImplementedError()
     }
 }

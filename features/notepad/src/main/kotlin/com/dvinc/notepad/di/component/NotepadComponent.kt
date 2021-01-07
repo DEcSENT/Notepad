@@ -8,7 +8,6 @@ package com.dvinc.notepad.di.component
 import com.dvinc.core.di.provider.ApplicationProvider
 import com.dvinc.notepad.di.module.AssistedInjectModule
 import com.dvinc.notepad.di.module.NotepadModule
-import com.dvinc.notepad.ui.archive.ArchiveFragment
 import com.dvinc.notepad.ui.note.NoteFragment
 import com.dvinc.notepad.ui.notepad.NotepadFragment
 import dagger.Component
@@ -27,8 +26,6 @@ interface NotepadComponent {
     fun inject(target: NotepadFragment)
 
     fun inject(target: NoteFragment)
-
-    fun inject(target: ArchiveFragment)
 
     @Component.Factory
     interface Factory {

@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.ui.archive
+package com.dvinc.archive.ui.archive
 
 import androidx.lifecycle.viewModelScope
+import com.dvinc.archive.domain.usecase.archive.ArchiveUseCase
 import com.dvinc.core.extension.update
 import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.usecase.archive.ArchiveUseCase
 import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
