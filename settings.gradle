@@ -1,3 +1,4 @@
 include ':app',
         ':core',
-        ':features:notepad'
+        ':features:notepad',
+        ':features:archive'
