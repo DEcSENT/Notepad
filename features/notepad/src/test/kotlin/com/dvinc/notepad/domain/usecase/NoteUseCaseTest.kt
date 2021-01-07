@@ -2,7 +2,7 @@ package com.dvinc.notepad.domain.usecase
 
 import com.dvinc.notepad.BaseTest
 import com.dvinc.base.notepad.domain.model.Note
-import com.dvinc.notepad.domain.repository.note.NoteRepository
+import com.dvinc.notepad.domain.repository.notepad.NotepadRepository
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -18,24 +18,24 @@ class NoteUseCaseTest : BaseTest() {
 
     private var note: Note = mock()
 
-    private var noteRepository: NoteRepository = mock()
+    private var notepadRepository: NotepadRepository = mock()
 
     @Before
     fun setUp() {
-        noteUseCase = NoteUseCase(noteRepository)
+        noteUseCase = NoteUseCase(notepadRepository)
     }
 
     @Test
     fun `getNoteById test`() = runBlocking {
         // Given
         val noteId = 10L
-        whenever(noteRepository.getNoteById(noteId)).thenReturn(note)
+        whenever(notepadRepository.getNoteById(noteId)).thenReturn(note)
 
         // When
         noteUseCase.getNoteById(noteId)
 
         // Then
-        val resultNote = noteRepository.getNoteById(noteId)
+        val resultNote = notepadRepository.getNoteById(noteId)
         assertEquals(resultNote, note)
     }
 
@@ -47,6 +47,6 @@ class NoteUseCaseTest : BaseTest() {
         noteUseCase.saveNote(note)
 
         // Then
-        verify(noteRepository).addNote(note)
+        verify(notepadRepository).addNote(note)
     }
 }

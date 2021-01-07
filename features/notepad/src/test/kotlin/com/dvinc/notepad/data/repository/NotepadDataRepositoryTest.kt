@@ -4,7 +4,7 @@ import com.dvinc.core.database.dao.note.NoteDao
 import com.dvinc.core.database.entity.note.NoteEntity
 import com.dvinc.notepad.BaseTest
 import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
-import com.dvinc.notepad.data.repository.note.NoteDataRepository
+import com.dvinc.notepad.data.repository.notepad.NotepadDataRepository
 import com.dvinc.base.notepad.domain.model.Note
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -15,9 +15,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class NoteDataRepositoryTest : BaseTest() {
+class NotepadDataRepositoryTest : BaseTest() {
 
-    private lateinit var noteRepository: NoteDataRepository
+    private lateinit var notepadRepository: NotepadDataRepository
 
     private var noteEntity: NoteEntity = mock()
 
@@ -33,7 +33,7 @@ class NoteDataRepositoryTest : BaseTest() {
 
     @Before
     fun setUp() {
-        noteRepository = NoteDataRepository(noteDao, noteMapper)
+        notepadRepository = NotepadDataRepository(noteDao, noteMapper)
     }
 
     @Test
@@ -43,7 +43,7 @@ class NoteDataRepositoryTest : BaseTest() {
         whenever(noteMapper.fromEntityToDomain(entityList)).thenReturn(noteList)
 
         // When
-        val flow = noteRepository.getNotes()
+        val flow = notepadRepository.getNotes()
 
         // Then
         flow.collect { flowEmit ->
@@ -57,7 +57,7 @@ class NoteDataRepositoryTest : BaseTest() {
         whenever(noteMapper.fromDomainToEntity(note)).thenReturn(noteEntity)
 
         // When
-        noteRepository.addNote(note)
+        notepadRepository.addNote(note)
 
         // Then
         verify(noteDao).addNote(noteEntity)
@@ -69,7 +69,7 @@ class NoteDataRepositoryTest : BaseTest() {
         val noteId = 10L
 
         // When
-        noteRepository.deleteNoteById(noteId)
+        notepadRepository.deleteNoteById(noteId)
 
         // Then
         verify(noteDao).deleteNoteById(noteId)
@@ -83,7 +83,7 @@ class NoteDataRepositoryTest : BaseTest() {
         whenever(noteMapper.fromEntityToDomain(noteEntity)).thenReturn(note)
 
         // When
-        val resultNote = noteRepository.getNoteById(noteId)
+        val resultNote = notepadRepository.getNoteById(noteId)
 
         // Then
         assert(resultNote == note)

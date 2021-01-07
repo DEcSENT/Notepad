@@ -26,10 +26,4 @@ interface NoteDao {
 
     @Query("SELECT * FROM Notes WHERE id = :id")
     suspend fun getNoteById(id: Long): NoteEntity
-
-    @Query("UPDATE Notes SET is_archived = 1 WHERE id =:noteId")
-    suspend fun markNoteAsArchived(noteId: Long)
-
-    @Query("SELECT * FROM Notes WHERE is_archived = 1 ORDER BY id DESC")
-    fun getArchive(): Flow<List<NoteEntity>>
 }

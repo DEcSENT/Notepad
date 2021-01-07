@@ -8,22 +8,22 @@ package com.dvinc.archive.data.repository.archive
 import com.dvinc.archive.domain.repository.ArchiveRepository
 import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.base.notepad.domain.model.Note
-import com.dvinc.core.database.dao.note.NoteDao
+import com.dvinc.core.database.dao.archive.ArchiveDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ArchiveDataRepository @Inject constructor(
-    private val noteDao: NoteDao,
+    private val archiveDao: ArchiveDao,
     private val noteMapper: NoteDataMapper
 ) : ArchiveRepository {
 
     override suspend fun archiveNoteById(id: Long) {
-        noteDao.markNoteAsArchived(id)
+        archiveDao.markNoteAsArchived(id)
     }
 
     override fun getArchivedNotes(): Flow<List<Note>> {
-        return noteDao.getArchive()
+        return archiveDao.getArchive()
             .map { noteMapper.fromEntityToDomain(it) }
     }
 }

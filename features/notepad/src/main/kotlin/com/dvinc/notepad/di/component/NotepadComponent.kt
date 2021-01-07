@@ -13,12 +13,12 @@ import com.dvinc.notepad.ui.notepad.NotepadFragment
 import dagger.Component
 
 @Component(
-    dependencies = [
-        ApplicationProvider::class
-    ],
     modules = [
         NotepadModule::class,
         AssistedInjectModule::class
+    ],
+    dependencies = [
+        ApplicationProvider::class
     ]
 )
 interface NotepadComponent {

@@ -5,12 +5,12 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.repository.note
+package com.dvinc.notepad.domain.repository.notepad
 
 import com.dvinc.base.notepad.domain.model.Note
 import kotlinx.coroutines.flow.Flow
 
-interface NoteRepository {
+interface NotepadRepository {
 
     fun getNotes(): Flow<List<Note>>
 
@@ -19,4 +19,6 @@ interface NoteRepository {
     suspend fun deleteNoteById(id: Long)
 
     suspend fun getNoteById(id: Long): Note
+
+    suspend fun archiveNoteById(id: Long)
 }
