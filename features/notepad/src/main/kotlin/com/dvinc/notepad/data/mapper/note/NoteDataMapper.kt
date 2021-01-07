@@ -6,7 +6,7 @@
 package com.dvinc.notepad.data.mapper.note
 
 import com.dvinc.core.database.entity.note.NoteEntity
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import javax.inject.Inject
 
 class NoteDataMapper @Inject constructor() {

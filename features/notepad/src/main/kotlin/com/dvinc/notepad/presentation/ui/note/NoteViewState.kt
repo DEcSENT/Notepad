@@ -6,7 +6,7 @@
 package com.dvinc.notepad.presentation.ui.note
 
 import com.dvinc.core.ui.ViewState
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 
 sealed class NoteViewState : ViewState {
 

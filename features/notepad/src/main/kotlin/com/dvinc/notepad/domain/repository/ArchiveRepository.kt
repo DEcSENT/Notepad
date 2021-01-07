@@ -5,7 +5,7 @@
 
 package com.dvinc.notepad.domain.repository
 
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import kotlinx.coroutines.flow.Flow
 
 interface ArchiveRepository {

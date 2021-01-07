@@ -10,7 +10,7 @@ import com.dvinc.core.extension.update
 import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
 import com.dvinc.notepad.domain.usecase.archive.ArchiveUseCase
-import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

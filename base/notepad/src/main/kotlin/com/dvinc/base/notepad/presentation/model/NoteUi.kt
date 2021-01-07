@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.model
+package com.dvinc.base.notepad.presentation.model
 
 data class NoteUi(
     val id: Long,

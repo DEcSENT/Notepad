@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.domain.model.note
+package com.dvinc.base.notepad.domain.model
 
 data class Note(
     val id: Long,

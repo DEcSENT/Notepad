@@ -11,11 +11,11 @@ import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ShowMessage
 import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
-import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.base.notepad.presentation.model.NoteUi
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -35,7 +35,7 @@ class NotepadViewModelTest : BaseTest() {
     }
 
     private var notepadUseCase: NotepadUseCase = mock {
-        on { getNotes() } doReturn flow { emit(emptyList()) }
+        on { getNotes() } doReturn flow { emit(emptyList<Note>()) }
     }
 
     @Before
@@ -46,7 +46,7 @@ class NotepadViewModelTest : BaseTest() {
     @Test
     fun `verify that Content state has empty list when empty notes list returned from repository`() = runBlocking {
         // Given
-        whenever(notepadUseCase.getNotes()).thenReturn(flow { emit(emptyList()) })
+        whenever(notepadUseCase.getNotes()).thenReturn(flow { emit(emptyList<Note>()) })
         val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
 
         // When

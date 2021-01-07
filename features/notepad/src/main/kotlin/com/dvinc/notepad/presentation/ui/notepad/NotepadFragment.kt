@@ -21,7 +21,7 @@ import com.dvinc.notepad.di.component.DaggerNotepadComponent
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadAdapter
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeCallback
 import com.dvinc.notepad.presentation.adapter.notepad.NotepadSwipeDirection
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.presentation.model.NoteUi
 import javax.inject.Inject
 import javax.inject.Provider
 import kotlinx.android.synthetic.main.fragment_notepad.fragment_notepad_bottom_app_bar as bottomBar

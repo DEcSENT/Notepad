@@ -1,7 +1,7 @@
 package com.dvinc.notepad.domain.usecase
 
 import com.dvinc.notepad.BaseTest
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repository.note.NoteRepository
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
 import com.nhaarman.mockitokotlin2.mock

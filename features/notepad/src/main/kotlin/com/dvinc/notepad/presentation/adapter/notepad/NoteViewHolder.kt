@@ -7,7 +7,7 @@ package com.dvinc.notepad.presentation.adapter.notepad
 
 import android.view.View
 import com.dvinc.core.ui.BaseViewHolder
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.presentation.model.NoteUi
 import kotlinx.android.synthetic.main.item_note.item_note_content as content
 import kotlinx.android.synthetic.main.item_note.item_note_name as name
 import kotlinx.android.synthetic.main.item_note.item_note_updating_time as updateTime

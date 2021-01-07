@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-package com.dvinc.notepad.presentation.mapper
+package com.dvinc.base.notepad.presentation.mapper
 
-import com.dvinc.notepad.domain.model.note.Note
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.domain.model.Note
+import com.dvinc.base.notepad.presentation.model.NoteUi
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

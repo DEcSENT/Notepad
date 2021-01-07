@@ -6,7 +6,7 @@
 package com.dvinc.notepad.presentation.adapter.notepad
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.presentation.model.NoteUi
 
 class NotepadDiffUtilsCallback(
     private val oldNotesList: List<NoteUi>,

@@ -12,7 +12,7 @@ import com.dvinc.core.ui.BaseViewModel
 import com.dvinc.notepad.R
 import com.dvinc.notepad.common.DEFAULT_NOTE_ID
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
-import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.ExistingNoteViewState
 import com.dvinc.notepad.presentation.ui.note.NoteViewState.NewNoteViewState
 import com.squareup.inject.assisted.Assisted

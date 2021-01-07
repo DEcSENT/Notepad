@@ -7,7 +7,7 @@ package com.dvinc.notepad.data.repository.archive
 
 import com.dvinc.core.database.dao.note.NoteDao
 import com.dvinc.notepad.data.mapper.note.NoteDataMapper
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.repository.ArchiveRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

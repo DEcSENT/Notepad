@@ -10,9 +10,9 @@ import com.dvinc.core.ui.NavigateUp
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.notepad.BaseTest
 import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.usecase.note.NoteUseCase
-import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever

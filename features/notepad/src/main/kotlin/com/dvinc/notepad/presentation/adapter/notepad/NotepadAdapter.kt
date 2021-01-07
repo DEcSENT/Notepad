@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dvinc.notepad.R
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.presentation.model.NoteUi
 
 class NotepadAdapter : RecyclerView.Adapter<NoteViewHolder>() {
 
