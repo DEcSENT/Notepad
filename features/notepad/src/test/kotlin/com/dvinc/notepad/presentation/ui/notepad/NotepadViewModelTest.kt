@@ -10,12 +10,16 @@ import com.dvinc.core.ui.NavigateTo
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ShowMessage
 import com.dvinc.notepad.BaseTest
-import com.dvinc.notepad.R
-import com.dvinc.notepad.domain.model.note.Note
+import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
-import com.dvinc.notepad.presentation.mapper.NotePresentationMapper
-import com.dvinc.notepad.presentation.model.NoteUi
+import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadSwipeDirection
+import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
+import com.dvinc.base.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
+import com.dvinc.notepad.ui.notepad.NotepadFragmentDirections
+import com.dvinc.notepad.ui.notepad.NotepadViewModel
+import com.dvinc.notepad.ui.notepad.NotepadViewState
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -34,7 +38,7 @@ class NotepadViewModelTest : BaseTest() {
     }
 
     private var notepadUseCase: NotepadUseCase = mock {
-        on { getNotes() } doReturn flow { emit(emptyList()) }
+        on { getNotes() } doReturn flow { emit(emptyList<Note>()) }
     }
 
     @Before
@@ -45,7 +49,7 @@ class NotepadViewModelTest : BaseTest() {
     @Test
     fun `verify that Content state has empty list when empty notes list returned from repository`() = runBlocking {
         // Given
-        whenever(notepadUseCase.getNotes()).thenReturn(flow { emit(emptyList()) })
+        whenever(notepadUseCase.getNotes()).thenReturn(flow { emit(emptyList<Note>()) })
         val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
 
         // When
@@ -94,7 +98,7 @@ class NotepadViewModelTest : BaseTest() {
         val notepadViewModel = NotepadViewModel(notepadUseCase, noteMapper)
 
         // When
-        notepadViewModel.onNoteDelete(10L)
+        notepadViewModel.onNoteSwipe(10L, NotepadSwipeDirection.RIGHT)
 
         // Then
         val resultViewCommandList = notepadViewModel.viewCommands.getOrAwaitValue()
@@ -111,7 +115,7 @@ class NotepadViewModelTest : BaseTest() {
         whenever(notepadUseCase.deleteNote(noteUi.id)).thenThrow(IllegalStateException())
 
         // When
-        notepadViewModel.onNoteDelete(noteUi.id)
+        notepadViewModel.onNoteSwipe(noteUi.id, NotepadSwipeDirection.RIGHT)
 
         // Then
         val resultViewCommandList = notepadViewModel.viewCommands.getOrAwaitValue()

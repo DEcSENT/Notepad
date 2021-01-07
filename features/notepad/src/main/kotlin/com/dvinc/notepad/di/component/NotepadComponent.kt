@@ -8,17 +8,17 @@ package com.dvinc.notepad.di.component
 import com.dvinc.core.di.provider.ApplicationProvider
 import com.dvinc.notepad.di.module.AssistedInjectModule
 import com.dvinc.notepad.di.module.NotepadModule
-import com.dvinc.notepad.presentation.ui.note.NoteFragment
-import com.dvinc.notepad.presentation.ui.notepad.NotepadFragment
+import com.dvinc.notepad.ui.note.NoteFragment
+import com.dvinc.notepad.ui.notepad.NotepadFragment
 import dagger.Component
 
 @Component(
-    dependencies = [
-        ApplicationProvider::class
-    ],
     modules = [
         NotepadModule::class,
         AssistedInjectModule::class
+    ],
+    dependencies = [
+        ApplicationProvider::class
     ]
 )
 interface NotepadComponent {

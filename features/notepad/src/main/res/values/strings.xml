@@ -6,11 +6,7 @@
     <string name="note_toolbar_header">Note</string>
 
     <string name="note_successfully_deleted">Note deleted</string>
-
-    <string name="error_while_load_data_from_db">An error has occurred while loading from database</string>
-    <string name="error_while_deleting_note">An error has occurred while deleting note</string>
-    <string name="error_while_loading_note">Cannot load note from database</string>
-    <string name="error_while_adding_note">Cannot add note</string>
+    <string name="note_successfully_archived">Note archived</string>
 
     <!--Notepad region start-->
     <string name="fragment_notepad_filter_icon">Filter icon</string>

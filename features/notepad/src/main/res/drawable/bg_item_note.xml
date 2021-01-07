@@ -1,9 +1,0 @@
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?android:colorControlHighlight">
-    <item>
-        <shape>
-            <solid android:color="@color/noteItemBackgroundColor" />
-            <corners android:radius="10.0dp" />
-        </shape>
-    </item>
-</ripple>

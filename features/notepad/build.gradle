@@ -43,6 +43,7 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":base:notepad")
 
     implementation(
             deps.kotlin.stdlib,
@@ -67,7 +68,7 @@ dependencies {
             deps.lifecycle.view_model,
             deps.lifecycle.extensions,
 
-            deps.tools.timber,
+            deps.tools.timber
     )
 
     kapt(

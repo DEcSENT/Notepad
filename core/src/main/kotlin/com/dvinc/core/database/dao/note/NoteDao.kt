@@ -18,7 +18,7 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addNote(note: NoteEntity)
 
-    @Query("SELECT * FROM Notes ORDER BY id DESC")
+    @Query("SELECT * FROM Notes WHERE is_archived = 0 ORDER BY id DESC")
     fun getNotes(): Flow<List<NoteEntity>>
 
     @Query("DELETE FROM Notes WHERE id = :id")

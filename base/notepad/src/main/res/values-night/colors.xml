@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="noteItemBackgroundColor">@color/darkItemBackground</color>
+    <color name="noteTitleTextColor">@color/darkTextColor</color>
+    <color name="noteContentTextColor">@color/darkTextColor</color>
+</resources>

@@ -7,19 +7,19 @@
 
 package com.dvinc.notepad.domain.usecase.note
 
-import com.dvinc.notepad.domain.model.note.Note
-import com.dvinc.notepad.domain.repository.note.NoteRepository
+import com.dvinc.base.notepad.domain.model.Note
+import com.dvinc.notepad.domain.repository.notepad.NotepadRepository
 import javax.inject.Inject
 
 class NoteUseCase @Inject constructor(
-    private val noteRepository: NoteRepository
+    private val notepadRepository: NotepadRepository
 ) {
 
     suspend fun getNoteById(id: Long): Note {
-        return noteRepository.getNoteById(id)
+        return notepadRepository.getNoteById(id)
     }
 
     suspend fun saveNote(note: Note) {
-        noteRepository.addNote(note)
+        notepadRepository.addNote(note)
     }
 }

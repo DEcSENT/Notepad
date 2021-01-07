@@ -1,12 +1,19 @@
 package com.dvinc.core.ui
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel<State : ViewState>(initialViewState: State? = null) : ViewModel() {
+
+    val viewState = MutableLiveData<State>()
 
     val viewCommands = CommandsLiveData<ViewCommand>()
+
+    init {
+        setInitialViewState(initialViewState)
+    }
 
     protected fun showMessage(@StringRes messageResId: Int) {
         val showMessageCommand = ShowMessage(messageResId)
@@ -25,5 +32,11 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun navigateBack() {
         viewCommands.onNext(NavigateUp)
+    }
+
+    private fun setInitialViewState(initialViewState: State?) {
+        initialViewState?.let {
+            viewState.value = it
+        }
     }
 }

@@ -7,20 +7,24 @@
 
 package com.dvinc.notepad.domain.usecase.notepad
 
-import com.dvinc.notepad.domain.model.note.Note
-import com.dvinc.notepad.domain.repository.note.NoteRepository
+import com.dvinc.base.notepad.domain.model.Note
+import com.dvinc.notepad.domain.repository.notepad.NotepadRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NotepadUseCase @Inject constructor(
-    private val noteRepository: NoteRepository
+    private val notepadRepository: NotepadRepository
 ) {
 
     fun getNotes(): Flow<List<Note>> {
-        return noteRepository.getNotes()
+        return notepadRepository.getNotes()
     }
 
     suspend fun deleteNote(noteId: Long) {
-        noteRepository.deleteNoteById(noteId)
+        notepadRepository.deleteNoteById(noteId)
+    }
+
+    suspend fun archiveNote(noteId: Long) {
+        notepadRepository.archiveNoteById(noteId)
     }
 }
