@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="darkItemBackgroundColor">#1F1A24</color>
-
     <color name="noteItemBackgroundColor">@color/white</color>
     <color name="noteTitleTextColor">@color/black</color>
     <color name="noteContentTextColor">@color/gray</color>

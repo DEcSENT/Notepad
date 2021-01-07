@@ -14,6 +14,7 @@
     <color name="darkScreenBackgroundColor">#121212</color>
     <color name="darkTextColor">#888888</color>
     <color name="darkTextHintColor">#AAAAAA</color>
+    <color name="darkItemBackground">#1F1A24</color>
 
     <color name="screenBackgroundColor">@color/white</color>
     <color name="editTextColor">@color/black</color>

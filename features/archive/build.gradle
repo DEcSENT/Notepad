@@ -52,6 +52,8 @@ dependencies {
             deps.dagger.dagger,
             deps.dagger.assisted_inject,
 
+            deps.constraint.constraint,
+
             deps.material.material,
             deps.lifecycle.view_model,
             deps.lifecycle.extensions,
