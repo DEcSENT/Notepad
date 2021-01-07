@@ -6,6 +6,7 @@ import com.dvinc.notepad.BaseTest
 import com.dvinc.base.notepad.data.mapper.note.NoteDataMapper
 import com.dvinc.notepad.data.repository.notepad.NotepadDataRepository
 import com.dvinc.base.notepad.domain.model.Note
+import com.dvinc.core.database.dao.archive.ArchiveDao
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -31,9 +32,11 @@ class NotepadDataRepositoryTest : BaseTest() {
 
     private var noteMapper: NoteDataMapper = mock()
 
+    private var archiveDao: ArchiveDao = mock()
+
     @Before
     fun setUp() {
-        notepadRepository = NotepadDataRepository(noteDao, noteMapper)
+        notepadRepository = NotepadDataRepository(noteDao, archiveDao, noteMapper)
     }
 
     @Test

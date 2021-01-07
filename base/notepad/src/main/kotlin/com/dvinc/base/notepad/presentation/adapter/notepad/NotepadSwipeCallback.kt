@@ -10,7 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.dvinc.notepad.R
+import com.dvinc.base.notepad.R
 import com.dvinc.base.notepad.presentation.model.NoteUi
 
 class NotepadSwipeCallback(

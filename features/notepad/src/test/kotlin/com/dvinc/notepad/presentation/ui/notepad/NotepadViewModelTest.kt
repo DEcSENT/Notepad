@@ -10,13 +10,14 @@ import com.dvinc.core.ui.NavigateTo
 import com.dvinc.core.ui.ShowErrorMessage
 import com.dvinc.core.ui.ShowMessage
 import com.dvinc.notepad.BaseTest
-import com.dvinc.notepad.R
 import com.dvinc.base.notepad.domain.model.Note
 import com.dvinc.notepad.domain.usecase.notepad.NotepadUseCase
 import com.dvinc.base.notepad.presentation.adapter.notepad.NotepadSwipeDirection
 import com.dvinc.base.notepad.presentation.mapper.NotePresentationMapper
 import com.dvinc.base.notepad.presentation.model.NoteUi
+import com.dvinc.notepad.R
 import com.dvinc.notepad.presentation.ui.ViewCommandUtil
+import com.dvinc.notepad.ui.notepad.NotepadFragmentDirections
 import com.dvinc.notepad.ui.notepad.NotepadViewModel
 import com.dvinc.notepad.ui.notepad.NotepadViewState
 import com.nhaarman.mockitokotlin2.doReturn
